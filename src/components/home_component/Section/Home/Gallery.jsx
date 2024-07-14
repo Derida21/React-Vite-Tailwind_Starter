@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
-import React from "react";
+import { useEffect, useState } from 'react';
+import React from 'react';
+import img from '../../../../../assets/img/mountains-7ddde89.webp';
+
 const Gallery = () => {
-  const url = "";
+  const url = '';
   const [gallery, setGallery] = useState([]);
 
   const getGallery = async () => {
@@ -11,7 +13,7 @@ const Gallery = () => {
       setGallery(dataGallery);
       console.log(dataGallery);
     } catch (error) {
-      console.log("Error fetching gallery data:", error);
+      console.log('Error fetching gallery data:', error);
     }
   };
 
@@ -30,7 +32,7 @@ const Gallery = () => {
 
 const defaultImage = {
   id: 0,
-  image: "src/assets/img/mountains-7ddde89.webp",
+  image: 'src/assets/img/mountains-7ddde89.webp',
 };
 
 function Frame({ gallery }) {
@@ -49,12 +51,8 @@ function Frame({ gallery }) {
   return (
     <>
       {imagesToShow.map((item, index) => (
-        <div key={index} className="h-[256px]">
-          <img
-            src={item.image}
-            alt=""
-            className="object-cover h-full rounded-lg"
-          />
+        <div key={index} className='h-[256px]'>
+          <img src={img} alt='' className='object-cover h-full rounded-lg' />
         </div>
       ))}
     </>
