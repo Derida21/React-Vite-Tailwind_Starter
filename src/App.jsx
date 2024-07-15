@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
 import AdminDashboard from './pages/admin-dashboard/adminDashboard';
 import LoginPage from './pages/Login';
 import RequireAuth from './context/requireAuth';
@@ -21,42 +26,66 @@ import DetailLembaga from './components/home_component/Section/Pemerintahan/Lemb
 import Layout from './Layout';
 
 import React from 'react';
+import Produk from './pages/Produk/Produk';
 
 const App = () => {
-    return (
-        <Router>
-            <ScrollToTop />
-            <Popup />
-            <Layout>
-                <Routes>
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route element={<RequireAuth allowedRoles={['admin']} />}>
-                        <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
-                    </Route>
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/" element={<Home />} />
-                    {/* Profil */}
-                    <Route path="/profil/tentang-kami" element={<About />} />
-                    <Route path="/profil/sejarah-desa" element={<Sejarah />} />
-                    <Route path="/profil/visi-misi" element={<VisiMisi />} />
-                    <Route path="/profil/demografi-desa/statistik-penduduk" element={<StatistikPenduduk />} />
-                    <Route path="/profil/geografi-desa" element={<GeografisDesa />} />
-                    {/* Pemerintahan */}
-                    <Route path="/pemerintahan/struktur-organisasi" element={<Struktur />} />
-                    <Route path="/pemerintahan/perangkat-desa" element={<PerangkatDesa />} />
-                    <Route path="/pemerintahan/lembaga-desa" element={<LembagaDesa />} />
-                    <Route path="/pemerintahan/lembaga-desa/detail-lembaga/:slug" element={<DetailLembaga />} />
-                    {/* Informasi Publik */}
-                    <Route path="/informasi-publik/agenda-kegiatan" element={<AgendaKegiatan />} />
-                    <Route path="/informasi-publik/berita-desa" element={<BeritaDesa />} />
-                    <Route path="/informasi-publik/berita-desa/:slug" element={<DetailBerita />} />
-                    {/* Pelayanan */}
-                    <Route path="/pelayanan/pelayanan" element={<Pelayanan />} />
-                    <Route path="*" element={<Navigate to="/home" replace />} />
-                </Routes>
-            </Layout>
-        </Router>
-    );
+  return (
+    <Router>
+      <ScrollToTop />
+      <Popup />
+      <Layout>
+        <Routes>
+          <Route path='/login' element={<LoginPage />} />
+          <Route element={<RequireAuth allowedRoles={['admin']} />}>
+            <Route path='/admin-dashboard/*' element={<AdminDashboard />} />
+          </Route>
+          <Route path='/home' element={<Home />} />
+          <Route path='/' element={<Home />} />
+          {/* Profil */}
+          <Route path='/profil/tentang-kami' element={<About />} />
+          <Route path='/profil/sejarah-desa' element={<Sejarah />} />
+          <Route path='/profil/visi-misi' element={<VisiMisi />} />
+          <Route
+            path='/profil/demografi-desa/statistik-penduduk'
+            element={<StatistikPenduduk />}
+          />
+          <Route path='/profil/geografi-desa' element={<GeografisDesa />} />
+          {/* Pemerintahan */}
+          <Route
+            path='/pemerintahan/struktur-organisasi'
+            element={<Struktur />}
+          />
+          <Route
+            path='/pemerintahan/perangkat-desa'
+            element={<PerangkatDesa />}
+          />
+          <Route path='/pemerintahan/lembaga-desa' element={<LembagaDesa />} />
+          <Route
+            path='/pemerintahan/lembaga-desa/detail-lembaga/:slug'
+            element={<DetailLembaga />}
+          />
+          {/* Informasi Publik */}
+          <Route
+            path='/informasi-publik/agenda-kegiatan'
+            element={<AgendaKegiatan />}
+          />
+          <Route
+            path='/informasi-publik/berita-desa'
+            element={<BeritaDesa />}
+          />
+          <Route
+            path='/informasi-publik/berita-desa/:slug'
+            element={<DetailBerita />}
+          />
+          {/* Pelayanan */}
+          <Route path='/pelayanan/pelayanan' element={<Pelayanan />} />
+          <Route path='*' element={<Navigate to='/home' replace />} />
+          {/* Produk */}
+          <Route path='/produk' element={<Produk />} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
 };
 
 export default App;
