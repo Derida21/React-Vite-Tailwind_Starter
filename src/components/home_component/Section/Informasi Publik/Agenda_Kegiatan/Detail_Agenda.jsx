@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Card from '../../Home/News/Card';
-import List from '../Berita/List';
+import List from '../Agenda_Kegiatan/List';
 
-const DetailBerita = () => {
+const DetailKegiatan = () => {
   const { slug } = useParams();
   const [data, setData] = useState(null);
 
   const getData = async () => {
     try {
       const response = await axios.get(
-        `http://nurul-huda.org/api/berita/${slug}`
+        `http://nurul-huda.org/api/kegiatan/${slug}`
       );
       setData(response.data.data);
       console.log(response.data.data);
@@ -84,4 +84,4 @@ const DetailBerita = () => {
   );
 };
 
-export default DetailBerita;
+export default DetailKegiatan;

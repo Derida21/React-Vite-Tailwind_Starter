@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import Table from "../Table";
-import axios from "axios";
-import Chart from "chart.js/auto";
+import { useEffect, useRef, useState } from 'react';
+import Table from '../Table';
+import axios from 'axios';
+import Chart from 'chart.js/auto';
 
 export const Kelompok_Umur = () => {
   const [data, setData] = useState([]);
@@ -12,7 +12,7 @@ export const Kelompok_Umur = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://nurul-huda.org/api/demografi/umur"
+          'http://nurul-huda.org/api/demografi/umur'
         );
         console.log(response);
         setData(response.data.data);
@@ -34,28 +34,28 @@ export const Kelompok_Umur = () => {
         chartRef.current.destroy();
       }
 
-      const labels = data.map((data) => data["Kelompok Umur"]);
-      const maleData = data.map((data) => data["Laki-laki"]);
-      const femaleData = data.map((data) => data["Perempuan"]);
+      const labels = data.map((data) => data['Kelompok Umur']);
+      const maleData = data.map((data) => data['Laki-laki']);
+      const femaleData = data.map((data) => data['Perempuan']);
 
-      const ctx = canvasRef.current.getContext("2d");
+      const ctx = canvasRef.current.getContext('2d');
       chartRef.current = new Chart(ctx, {
-        type: "bar",
+        type: 'bar',
         data: {
           labels: labels,
           datasets: [
             {
-              label: "Laki-laki",
+              label: 'Laki-laki',
               data: maleData,
-              backgroundColor: "rgba(54, 162, 235, 0.6)",
-              borderColor: "rgba(54, 162, 235, 1)",
+              backgroundColor: '#5EEAD4',
+              borderColor: '#5EEAD4',
               borderWidth: 1,
             },
             {
-              label: "Perempuan",
+              label: 'Perempuan',
               data: femaleData,
-              backgroundColor: "rgba(255, 99, 132, 0.6)",
-              borderColor: "rgba(255, 99, 132, 1)",
+              backgroundColor: '#CCFBF1',
+              borderColor: '#CCFBF1',
               borderWidth: 1,
             },
           ],
@@ -64,7 +64,7 @@ export const Kelompok_Umur = () => {
           responsive: true,
           plugins: {
             legend: {
-              position: "top",
+              position: 'top',
             },
           },
           scales: {
@@ -72,13 +72,13 @@ export const Kelompok_Umur = () => {
               beginAtZero: true,
               title: {
                 display: true,
-                text: "Jumlah Penduduk",
+                text: 'Jumlah Penduduk',
               },
             },
             x: {
               title: {
                 display: true,
-                text: "Kelompok Umur",
+                text: 'Kelompok Umur',
               },
             },
           },
@@ -94,13 +94,13 @@ export const Kelompok_Umur = () => {
   }, [data]);
 
   return (
-    <div className="flex flex-col justify-center gap-5">
+    <div className='flex flex-col justify-center gap-5'>
       {data.length > 0 ? (
         <>
           <canvas
             ref={canvasRef}
-            id="myChart"
-            className="w-full md:max-w-full bg-white p-2 rounded-md "
+            id='myChart'
+            className='w-full md:max-w-full bg-white p-2 rounded-md '
           ></canvas>
           <Table>
             <thead>
@@ -114,9 +114,9 @@ export const Kelompok_Umur = () => {
             <tbody>
               {data.map((item, index) => (
                 <tr key={index}>
-                  <Table.Body>{item["Kelompok Umur"]}</Table.Body>
-                  <Table.Body>{item["Laki-laki"]}</Table.Body>
-                  <Table.Body>{item["Perempuan"]}</Table.Body>
+                  <Table.Body>{item['Kelompok Umur']}</Table.Body>
+                  <Table.Body>{item['Laki-laki']}</Table.Body>
+                  <Table.Body>{item['Perempuan']}</Table.Body>
                   <Table.Body>{item.Jumlah}</Table.Body>
                 </tr>
               ))}
@@ -124,7 +124,7 @@ export const Kelompok_Umur = () => {
           </Table>
         </>
       ) : (
-        <p className="text-center text-white text-2xl">Data belum tersedia</p>
+        <p className='text-center text-white text-2xl'>Data belum tersedia</p>
       )}
     </div>
   );

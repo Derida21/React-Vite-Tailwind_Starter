@@ -2,7 +2,7 @@ import { IconSend, IconArrowBack } from '@tabler/icons-react';
 import Form from './Form';
 import { useState } from 'react';
 
-const Form_SKTMBPJS = () => {
+const Form_Pengantar = () => {
   const [formData, setFormData] = useState({
     Nama: '',
     NIK: '',
@@ -11,6 +11,7 @@ const Form_SKTMBPJS = () => {
     Alamat: '',
     TTL: '',
     ['Jenis Kelamin']: '',
+    Status: '',
     Agama: '',
     Pekerjaan: '',
     Tujuan: '',
@@ -37,7 +38,7 @@ const Form_SKTMBPJS = () => {
   };
 
   const handleSend = () => {
-    const message = `Nama: ${formData.Nama}\nNIK: ${formData.NIK}\nKK: ${formData.KK}\nWA : ${formData.WA}\nAlamat: ${formData.Alamat}\nTempat Tanggal Lahir: ${formData.TTL}\nJenis Kelamin: ${formData['Jenis Kelamin']}\nAgama: ${formData.Agama}\nPekerjaan: ${formData.Pekerjaan}\nTujuan: ${formData.Tujuan}`;
+    const message = `Nama: ${formData.Nama}\nNIK: ${formData.NIK}\nKK: ${formData.KK}\nWA : ${formData.WA}\nAlamat: ${formData.Alamat}\nTempat Tanggal Lahir: ${formData.TTL}\nJenis Kelamin: ${formData['Jenis Kelamin']}\nAgama: ${formData.Status}\nAgama: ${formData.Agama}\nPekerjaan: ${formData.Pekerjaan}\nTujuan: ${formData.Tujuan}`;
 
     const phoneNumber = '+6285852392330';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -59,6 +60,7 @@ const Form_SKTMBPJS = () => {
       Alamat: '',
       TTL: '',
       ['Jenis Kelamin']: '',
+      Status: '',
       Agama: '',
       Pekerjaan: '',
       Tujuan: '',
@@ -140,15 +142,21 @@ const Form_SKTMBPJS = () => {
               label='Jenis Kelamin'
             />
             <Form.Input
+              label='Status Perkawinan'
+              name='Status'
+              value={formData.Status}
+              onChange={handleChange}
+            />
+            <Form.Input
               label='Agama'
               name='Agama'
-              value={formData.agama}
+              value={formData.Agama}
               onChange={handleChange}
             />
             <Form.Input
               label='Pekerjaan'
               name='Pekerjaan'
-              value={formData.pekerjaan}
+              value={formData.Pekerjaan}
               onChange={handleChange}
             />
             <Form.Input
@@ -202,4 +210,4 @@ const Form_SKTMBPJS = () => {
   );
 };
 
-export default Form_SKTMBPJS;
+export default Form_Pengantar;

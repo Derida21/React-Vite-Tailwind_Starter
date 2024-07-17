@@ -14,7 +14,7 @@ export default function Footer() {
             <div className='flex flex-col gap-1 lg:gap-2'>
               <Logo
                 className='flex items-center justify-center gap-3 lg:gap-5'
-                titleclassName='flex flex-col lg:gap-3'
+                titleclassName='flex flex-col'
                 logoclassName='h-[40px] w-[33px] md:h-[50px] md:w-[40px] lg:h-[60px] lg:w-[50px] xl:h-[70px] xl:w-[60px]'
                 text='Kampung Eka Sapta'
                 addres='Kec. Talisayan Kab. Berau Kalimantan Timur'

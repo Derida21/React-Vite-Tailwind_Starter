@@ -51,7 +51,7 @@ const News = () => {
             Baca Juga
           </p>
           <Link
-            to='/informasi-publik/berita-desa'
+            to='/informasi-publik/berita-kampung'
             className='font-[Poppins] text-[10px] font-light underline underline-offset-4 text-gray-700 hover:text-teal-700'
           >
             Lihat Semua
@@ -99,7 +99,7 @@ function Main({ judul, thumbnail, isi, author, index, tanggal, slug }) {
                 <div dangerouslySetInnerHTML={{ __html: isi }}></div>
               }
             >
-              <Link to={`/informasi-publik/berita-desa/${slug}`}>
+              <Link to={`/informasi-publik/berita-kampung/${slug}`}>
                 Baca Selengkapnya
               </Link>
             </Card.Detail>
@@ -115,7 +115,7 @@ function List({ listitems }) {
     <>
       {listitems.map((news, index) => (
         <Link
-          to={`/informasi-publik/berita-desa/${news.slug}`}
+          to={`/informasi-publik/berita-kampung/${news.slug}`}
           className='w-full'
           key={index}
         >

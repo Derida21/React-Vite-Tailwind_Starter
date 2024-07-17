@@ -3,7 +3,7 @@ import Table from '../Table';
 import axios from 'axios';
 import Chart from 'chart.js/auto';
 
-export const StatusPerkawinan = () => {
+export const Pendidikan = () => {
   const [data, setData] = useState([]);
   const chartRef = useRef(null);
   const canvasRef = useRef(null);
@@ -11,7 +11,7 @@ export const StatusPerkawinan = () => {
   const getData = async () => {
     try {
       const response = await axios.get(
-        'http://nurul-huda.org/api/demografi/status-perkawinan'
+        'http://nurul-huda.org/api/demografi/pendidikan'
       );
       setData(response.data.data);
     } catch (error) {
@@ -33,7 +33,7 @@ export const StatusPerkawinan = () => {
         chartRef.current.destroy();
       }
 
-      const labels = data.map((item) => item['Status Perkawinan']);
+      const labels = data.map((item) => item['Pendidikan']);
       const kelompokUmurLabels = data.map((item) => item['Kelompok Umur']);
       const maleData = data.map((item) => item['Laki-Laki']);
       const femaleData = data.map((item) => item['Perempuan']);
@@ -93,7 +93,7 @@ export const StatusPerkawinan = () => {
             x: {
               title: {
                 display: true,
-                text: 'Hubungan Keluarga',
+                text: 'Pendidikan',
               },
             },
           },
@@ -120,7 +120,7 @@ export const StatusPerkawinan = () => {
           <Table>
             <thead>
               <tr>
-                <Table.Header>Hubungan</Table.Header>
+                <Table.Header>Pendidikan</Table.Header>
                 <Table.Header>Kelompok Umur</Table.Header>
                 <Table.Header>Laki-laki</Table.Header>
                 <Table.Header>Perempuan</Table.Header>
@@ -130,7 +130,7 @@ export const StatusPerkawinan = () => {
             <tbody>
               {data.map((item, index) => (
                 <tr key={index}>
-                  <Table.Body>{item['Status Perkawinan']}</Table.Body>
+                  <Table.Body>{item['Pendidikan']}</Table.Body>
                   <Table.Body>{item['Kelompok Umur']}</Table.Body>
                   <Table.Body>{item['Laki-Laki']}</Table.Body>
                   <Table.Body>{item['Perempuan']}</Table.Body>

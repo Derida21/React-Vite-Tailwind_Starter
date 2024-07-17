@@ -27,6 +27,7 @@ import Layout from './Layout';
 
 import React from 'react';
 import Produk from './pages/Produk/Produk';
+import DetailKegiatan from './components/home_component/Section/Informasi Publik/Agenda_Kegiatan/Detail_Agenda';
 
 const App = () => {
   return (
@@ -43,25 +44,28 @@ const App = () => {
           <Route path='/' element={<Home />} />
           {/* Profil */}
           <Route path='/profil/tentang-kami' element={<About />} />
-          <Route path='/profil/sejarah-desa' element={<Sejarah />} />
+          <Route path='/profil/sejarah-kampung' element={<Sejarah />} />
           <Route path='/profil/visi-misi' element={<VisiMisi />} />
           <Route
-            path='/profil/demografi-desa/statistik-penduduk'
+            path='/profil/demografi-kampung/statistik-penduduk'
             element={<StatistikPenduduk />}
           />
-          <Route path='/profil/geografi-desa' element={<GeografisDesa />} />
+          <Route path='/profil/geografi-kampung' element={<GeografisDesa />} />
           {/* Pemerintahan */}
           <Route
             path='/pemerintahan/struktur-organisasi'
             element={<Struktur />}
           />
           <Route
-            path='/pemerintahan/perangkat-desa'
+            path='/pemerintahan/perangkat-kampung'
             element={<PerangkatDesa />}
           />
-          <Route path='/pemerintahan/lembaga-desa' element={<LembagaDesa />} />
           <Route
-            path='/pemerintahan/lembaga-desa/detail-lembaga/:slug'
+            path='/pemerintahan/lembaga-kampung'
+            element={<LembagaDesa />}
+          />
+          <Route
+            path='/pemerintahan/lembaga-kampung/detail-lembaga/:slug'
             element={<DetailLembaga />}
           />
           {/* Informasi Publik */}
@@ -70,15 +74,19 @@ const App = () => {
             element={<AgendaKegiatan />}
           />
           <Route
-            path='/informasi-publik/berita-desa'
+            path='/informasi-publik/agenda-kegiatan/:slug'
+            element={<DetailKegiatan />}
+          />
+          <Route
+            path='/informasi-publik/berita-kampung'
             element={<BeritaDesa />}
           />
           <Route
-            path='/informasi-publik/berita-desa/:slug'
+            path='/informasi-publik/berita-kampung/:slug'
             element={<DetailBerita />}
           />
           {/* Pelayanan */}
-          <Route path='/pelayanan/pelayanan' element={<Pelayanan />} />
+          <Route path='/pelayanan' element={<Pelayanan />} />
           <Route path='*' element={<Navigate to='/home' replace />} />
           {/* Produk */}
           <Route path='/produk' element={<Produk />} />
