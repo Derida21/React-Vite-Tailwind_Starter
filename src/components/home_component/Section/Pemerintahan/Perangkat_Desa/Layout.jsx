@@ -48,7 +48,7 @@ const Layout = () => {
             {active === index && (
               <div className='space-y-2 p-3 rounded bg-white'>
                 <h1 className='font-[Poppins] font-medium text-sm md:text-[18px] text-teal-700'>
-                  Detail Perangkat Desa
+                  Detail Perangkat Kampung
                 </h1>
                 <div className='w-full flex flex-col gap-2 lg:gap-5 md:flex-row '>
                   <img
