@@ -57,7 +57,9 @@ export default function Agenda_Kegiatan() {
               note='Agenda Tebaru'
               bg={headline.thumbnail}
               title={headline.judul}
-              description={headline.isi}
+              description={
+                <div dangerouslySetInnerHTML={{ __html: headline.isi }}></div>
+              }
             />
           </Link>
         )}

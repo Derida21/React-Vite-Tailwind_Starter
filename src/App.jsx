@@ -65,7 +65,7 @@ const App = () => {
             element={<LembagaDesa />}
           />
           <Route
-            path='/pemerintahan/lembaga-kampung/detail-lembaga/:uuid'
+            path='/pemerintahan/lembaga-kampung/:uuid'
             element={<DetailLembaga />}
           />
           {/* Informasi Publik */}

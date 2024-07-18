@@ -57,7 +57,9 @@ export default function BeritaDesa() {
               note='Berita Tebaru'
               bg={headline.thumbnail}
               title={headline.judul}
-              description={headline.isi}
+              description={
+                <div dangerouslySetInnerHTML={{ __html: headline.isi }}></div>
+              }
             />
           </Link>
         )}
