@@ -33,7 +33,7 @@ const DetailLembaga = () => {
           )}
           <div className=' flex flex-col md:flex-row gap-2 lg:gap-5 px-2 py-4 md:px-5 border bg-white shadow-lg rounded-b-lg '>
             {data.logo ? (
-              <div className='py-5'>
+              <div className='md:w-1/3 py-5'>
                 <div className='flex items-center justify-center p-5 rounded-xl border border-teal-700'>
                   <img
                     src={data.logo}
@@ -43,8 +43,8 @@ const DetailLembaga = () => {
                 </div>
               </div>
             ) : (
-              <div className='py-5'>
-                <div className='flex items-center justify-center p-5 rounded-xl border border-teal-700'>
+              <div className='md:w-1/4 py-5'>
+                <div className=' flex items-center justify-center p-5 rounded-xl border border-teal-700'>
                   <img
                     src={logo}
                     alt='Logo-lembaga'

@@ -45,9 +45,9 @@ const Navmenu = () => {
     { label: 'Download', href: '/informasi-publik/download' },
   ];
   const options4 = [
-    { label: 'APBK', href: '#' },
-    { label: 'Perancangan Pembangunan', href: '#' },
-    { label: 'Pembangunan Kampung', href: '#' },
+    { label: 'APBK', href: '/transparansi/apbk' },
+    { label: 'APBK Terealisasi', href: '/transparansi/apbk-terealisasi' },
+    { label: 'Pembangunan Kampung', href: '/transparansi/pembangunan-kampung' },
   ];
 
   const [isOpen, setIsOpen] = useState(false);

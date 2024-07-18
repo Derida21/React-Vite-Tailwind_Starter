@@ -28,6 +28,9 @@ import Layout from './Layout';
 import React from 'react';
 import Produk from './pages/Produk/Produk';
 import DetailKegiatan from './components/home_component/Section/Informasi Publik/Agenda_Kegiatan/Detail_Agenda';
+import APBK from './pages/Transparansi/APBK';
+import APBK_FIX from './pages/Transparansi/APBK-fix';
+import DetailProduk from './components/home_component/Section/Produk/Detail-Produk';
 
 const App = () => {
   return (
@@ -85,11 +88,15 @@ const App = () => {
             path='/informasi-publik/berita-kampung/:slug'
             element={<DetailBerita />}
           />
+          {/* Transparansi */}
+          <Route path='/transparansi/apbk' element={<APBK />} />
+          <Route path='/transparansi/apbk-terealisasi' element={<APBK_FIX />} />
           {/* Pelayanan */}
           <Route path='/pelayanan' element={<Pelayanan />} />
           <Route path='*' element={<Navigate to='/home' replace />} />
           {/* Produk */}
           <Route path='/produk' element={<Produk />} />
+          <Route path='/produk/:slug' element={<DetailProduk />} />
         </Routes>
       </Layout>
     </Router>

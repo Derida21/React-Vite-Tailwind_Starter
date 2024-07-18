@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logodefault from '../../../assets/img/logo-berau3.png';
+import logodefault from '../../../assets/img/Article1.png';
 import axios from 'axios';
 
-const LembagaDesa = () => {
+const APBK_FIX = () => {
   const [data, setData] = useState([]);
 
   const getData = async () => {
@@ -21,7 +21,8 @@ const LembagaDesa = () => {
     <section className=' min-h-screen px-5 md:px-[60px] lg:px-[80px] xl:px-[160px]'>
       <div className='flex flex-col pt-16 pb-5 md:pt-[120px] md:pb-[40px] lg:pt-[120px] lg:pb-20'>
         <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white rounded-t-lg border-b'>
-          Lembaga Kampung
+          Anggaran Pendapatan dan Belanja Kampung{' '}
+          <span className='text-[16px]'>(Terealisasi)</span>
         </h1>
         <div className='flex flex-col gap-2 lg:gap-5 px-2 py-4 md:p-5 border bg-white shadow-lg rounded-b-lg '>
           {data.map((item, index) => {
@@ -70,4 +71,4 @@ const LembagaDesa = () => {
     </section>
   );
 };
-export default LembagaDesa;
+export default APBK_FIX;
