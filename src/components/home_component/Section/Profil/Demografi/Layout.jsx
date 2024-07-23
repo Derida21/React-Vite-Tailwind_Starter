@@ -42,10 +42,8 @@ const Layout = () => {
         {items.map((item) => (
           <div
             key={item.id}
-            className={`flex flex-col md:rounded-md gap-3 px-4 py-3 ${
-              active === item.id
-                ? 'block bg-teal-700 duration-200 ease-in-out '
-                : 'hidden'
+            className={`flex flex-col bg-teal-700 md:rounded-md gap-3 px-4 md:px-10 py-3 ${
+              active === item.id ? 'block  duration-200 ease-in-out ' : 'hidden'
             }`}
           >
             <h2 className='w-full text-center font-bold text-white text-[16px]'>

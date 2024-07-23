@@ -93,12 +93,12 @@ function Home() {
         </div>
       </article>
       {/* Galeri */}
-      <section className='flex flex-col w-full bg-gradient-to-b from-teal-600 via-teal-700 to-teal-900 px-5 md:px-[60px] lg:px-20 xl:px-[160px] gap-5 lg:gap-[70px] py-10 lg:py-20 rounded-t-[36px]'>
+      <section className='flex flex-col w-full bg-gradient-to-b from-teal-600 via-teal-700 to-teal-900 px-5 md:px-[60px] lg:px-20 xl:px-[160px] gap-5 lg:gap-[70px] py-10 lg:py-20 rounded-t-xl md:rounded-t-[36px]'>
         <div className='flex flex-col gap-5 md:gap-10'>
           <div className='w-full flex justify-center lg:text-3xl font-[Poppins] font-bold text-white'>
             Galeri Kampung
           </div>
-          <div className='flex flex-col items-center gap-3 xl:gap-5 md:grid md:grid-cols-2 lg:grid-cols-4'>
+          <div className=' items-center gap-3 xl:gap-5 grid grid-cols-2 lg:grid-cols-3'>
             <Gallery />
           </div>
         </div>

@@ -31,9 +31,9 @@ const DetailLembaga = () => {
               {data.nama}({data.singkatan})
             </h1>
           )}
-          <div className=' flex flex-col md:flex-row gap-2 lg:gap-5 px-2 py-4 md:px-5 border bg-white shadow-lg rounded-b-lg '>
+          <div className=' flex flex-col md:flex-row md:gap-5 px-2 py-4 md:px-5 border bg-white shadow-lg rounded-b-lg '>
             {data.logo ? (
-              <div className='md:w-1/3 py-5'>
+              <div className='w-full xl:w-1/3 py-5'>
                 <div className='flex items-center justify-center p-5 rounded-xl border border-teal-700'>
                   <img
                     src={data.logo}
@@ -43,7 +43,7 @@ const DetailLembaga = () => {
                 </div>
               </div>
             ) : (
-              <div className='md:w-1/4 py-5'>
+              <div className='md:w-1/3 py-5'>
                 <div className=' flex items-center justify-center p-5 rounded-xl border border-teal-700'>
                   <img
                     src={logo}
@@ -53,13 +53,47 @@ const DetailLembaga = () => {
                 </div>
               </div>
             )}
-            <div className='flex flex-col p-5 border-l gap-3'>
-              <Label text='Deskripsi Lembaga'>
-                <p>{data.deskripsi}</p>
-              </Label>
-              <Label text='Visi' className='lg:items-center'>
-                <p>{data.alamat}</p>
-              </Label>
+            <div className='flex flex-col md:p-5 md:border-l gap-3'>
+              {data.deskripsi ? (
+                <Label text='Deskripsi Lembaga'>
+                  <p>{data.deskripsi}</p>
+                </Label>
+              ) : (
+                <Label text='Deskripsi Lembaga' className='lg:items-center'>
+                  <p>Data Belum Tersedia</p>
+                </Label>
+              )}
+              {data.visi_misi ? (
+                <>
+                  {data.visi_misi.visi ? (
+                    <Label text='Visi' className='lg:items-center'>
+                      <p>{data.visi_misi.visi}</p>
+                    </Label>
+                  ) : (
+                    <Label text='Visi'>
+                      <p>Data Belum tersedia</p>
+                    </Label>
+                  )}
+                  {data.visi_misi.misi ? (
+                    <Label text='Misi' className='lg:items-center'>
+                      <p>{data.visi_misi.misi}</p>
+                    </Label>
+                  ) : (
+                    <Label text='Misi'>
+                      <p>Data Belum tersedia</p>
+                    </Label>
+                  )}
+                </>
+              ) : (
+                <div className='flex flex-col gap-3'>
+                  <Label text='Visi' className='lg:items-center'>
+                    <p>Data Belum tersedia</p>
+                  </Label>
+                  <Label text='Misi' className='lg:items-center'>
+                    <p>Data Belum tersedia</p>
+                  </Label>
+                </div>
+              )}
               {data.alamat ? (
                 <Label text='Alamat' className='lg:items-center'>
                   <p>{data.alamat}</p>
@@ -73,9 +107,9 @@ const DetailLembaga = () => {
                 <Label text='Anggota'>
                   {data.pengurus && (
                     <table className=' text-center border-collapse border  '>
-                      <thead className='w-full'>
-                        <tr>
-                          <th className='px- lg:px-5 py-3 border border-gray-500'>
+                      <thead className='w-full  font-normal'>
+                        <tr className='text-[10px] lg:text-sm'>
+                          <th className='px-2 lg:px-5 py-3 border border-gray-500'>
                             No.
                           </th>
                           <th className='px- lg:px-5 py-3 border border-gray-500'>
@@ -126,12 +160,12 @@ const DetailLembaga = () => {
 function Label({ text, deskripsi, children, className }) {
   return (
     <div
-      className={`${className} flex flex-col md:flex-row gap-3 md:gap-5 pb-3 border-b`}
+      className={`${className} flex flex-col md:flex-row gap-3 lg:gap-5 pb-3 border-b`}
     >
-      <h1 className='min-w-[154px] font-[Poppins] font-medium text-teal-700'>
+      <h1 className='min-w-[97px] xl:min-w-[154px] font-[Poppins] md:text-[10px] lg:text-xs xl:text-[16px] font-medium text-teal-700'>
         {text}
       </h1>
-      <div className='font-[Poppins] text-xs text-gray-500'>
+      <div className='font-[Poppins] text-xs md:text-[10px] lg:text-sm text-gray-500 text-justify'>
         {deskripsi || children}
       </div>
     </div>

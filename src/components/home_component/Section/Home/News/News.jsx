@@ -57,7 +57,7 @@ const News = () => {
             Lihat Semua
           </Link>
         </div>
-        <div className='flex flex-col md:gap-3 md:flex-row md:px-0'>
+        <div className='grid md:gap-3 md:grid-cols-4 md:px-0'>
           <List listitems={list} />
         </div>
       </div>
@@ -124,11 +124,11 @@ function List({ listitems }) {
             wrapper='w-full flex flex-row md:flex-col py-2 md:p-0 gap-2 md:gap-0'
           >
             <Card.Thumbnail
-              className='w-1/2 md:w-full md:h-20 lg:h-[100px] xl:h-[150px] rounded-sm lg:rounded-t-md'
+              className='w-1/2 md:w-full h-16 md:h-20 lg:h-[100px] xl:h-[150px] rounded-sm lg:rounded-t-md'
               src={news.thumbnail}
             />
             <div className='w-1/2 md:w-full flex flex-col gap-[10px] md:py-2 lg:py-3'>
-              <div className='flex flex-col gap-3 md:gap-2 md:px-2'>
+              <div className='flex flex-col gap-2 md:gap-2 md:px-2'>
                 <div className='flex justify-between items-center'>
                   <Card.Date
                     className='[&>svg]:h-2 [&>svg]:w-2 flex items-center gap-[2px] lg:gap-1 [&>svg]:lg:h-4 [&>svg]:lg:w-4 '
@@ -136,16 +136,17 @@ function List({ listitems }) {
                     dateclassName='text-gray-500 text-[6px] font-medium font-[Poppins] lg:text-[10px] h-2 lg:h-3'
                   />
                   <Card.Author
-                    className=' flex items-center gap-[2px] lg:gap-1 [&>svg]:w-2 [&>svg]:lg:h-4 '
-                    svg='h-[6px] fill-gray-500'
+                    className=' flex items-center gap-[2px] lg:gap-1 [&>svg]:w-2 [&>svg]:h-2 lg:[&>svg]:w-3 lg:[&>svg]:h-3 '
+                    svg=' fill-gray-500'
                     author={news.author.nama}
                     authorclassName='text-gray-500 text-[6px] font-medium font-[Poppins] lg:text-[10px] '
                   />
                 </div>
                 <Card.Detail
                   className='py-0'
+                  detailclassName=''
                   title={news.judul}
-                  titleclassName='text-[10px] lg:text-[10px] xl:text-[12px] font-[Poppins] line-clamp-2 font-semibold text-gray-800'
+                  titleclassName='text-[10px] md:text-[8px] lg:text-[10px] xl:text-[12px] font-[Poppins] line-clamp-2 font-semibold text-gray-800'
                 />
               </div>
             </div>

@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
 import img from '../../../../../assets/img/mountains-7ddde89.webp';
+import axios from 'axios';
 
 const Gallery = () => {
-  const url = '';
   const [gallery, setGallery] = useState([]);
 
   const getGallery = async () => {
     try {
-      const response = await fetch(url);
-      const dataGallery = await response.json();
-      setGallery(dataGallery);
-      console.log(dataGallery);
+      const response = await axios.get('http://nurul-huda.org/api/galeri');
+      setGallery(response.data.data.data);
+      console.log(response.data.data.data);
     } catch (error) {
       console.log('Error fetching gallery data:', error);
     }
@@ -21,42 +20,25 @@ const Gallery = () => {
     getGallery();
   }, []);
 
-  const Galeri = gallery.slice(0, 8);
+  const Gallery = gallery.slice(0, 8);
 
   return (
     <>
-      <Frame gallery={Galeri} />
-    </>
-  );
-};
-
-const defaultImage = {
-  id: 0,
-  image: 'src/assets/img/mountains-7ddde89.webp',
-};
-
-function Frame({ gallery }) {
-  const imagesToShow = gallery.length
-    ? gallery
-    : [
-        defaultImage,
-        defaultImage,
-        defaultImage,
-        defaultImage,
-        defaultImage,
-        defaultImage,
-        defaultImage,
-        defaultImage,
-      ];
-  return (
-    <>
-      {imagesToShow.map((item, index) => (
-        <div key={index} className='h-[256px]'>
-          <img src={img} alt='' className='object-cover h-full rounded-lg' />
+      {Gallery.map((item, index) => (
+        <div key={index} className='h-[75px] md:h-[150px] xl:h-[240px]'>
+          <img
+            src={item.thumbnail}
+            alt=''
+            className=' h-full rounded md:rounded-lg hover:scale-105 duration-500 min-w-full'
+          />
         </div>
       ))}
     </>
   );
+};
+
+function Frame({ gallery }) {
+  return <></>;
 }
 
 export default Gallery;

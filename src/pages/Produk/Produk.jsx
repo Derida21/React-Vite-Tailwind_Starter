@@ -44,22 +44,11 @@ function Produk() {
   return (
     <div className='min-h-screen px-5 pt-14 md:px-[60px] md:pt-[120px] md:pb-10 lg:px-[80px] lg:pt-[130px] xl:px-[160px] bg-slate-100'>
       <div className='w-full p-2 md:p-5 bg-white rounded-xl shadow border border-gray-300 flex-col justify-center items-start gap-2 md:gap-8 inline-flex'>
-        {currentItems[0] && (
-          <Link to='' className='w-full'>
-            <Thumbnail
-              note='Produk Tebaru'
-              bg={currentItems[0].foto}
-              title={currentItems[0].nama_produk}
-              description={currentItems[0].deskripsi}
-            />
-          </Link>
-        )}
-
         <div className='flex flex-col gap-8 w-full'>
           <div className='flex flex-col items-center justify-center'>
-            <h1 className='text-center font-[Poppins] text-2xl font-semibold text-teal-700'>
+            <h1 className='text-center font-[Poppins] text-3xl font-semibold text-teal-700 mt-5'>
               Produk UMKM <br />
-              <span className='text-[16px] font-normal'>Kampung Eka Sapta</span>
+              <span className='text-[20px] font-normal'>Kampung Eka Sapta</span>
             </h1>
             <p className='font-[Poppins] text-gray-500'>
               Menampilkan produk, jasa, dan hasil bumi Kampung Eka Sapta
@@ -70,18 +59,19 @@ function Produk() {
               {currentItems.map((item, index) => (
                 <Card
                   key={index}
-                  container='h-full shadow-md'
-                  wrapper='flex flex-col gap-3 border pb-4 rounded-b-md '
+                  container=''
+                  wrapper='flex flex-col gap-3 border pb-4 shadow-md rounded-md h-full '
                 >
                   <Card.Thumbnail
                     src={item.foto}
-                    className='w-full h-[180px] rounded-t-md'
+                    className='w-full min-h-[150px] rounded-t-md '
                   >
                     haloo
                   </Card.Thumbnail>
                   <Card.Detail
-                    className='px-3 space-y-3'
+                    className='px-3 flex flex-col justify-between rounded-b-md h-[120px]'
                     title={item.nama_produk}
+                    titleclassName='font-[Poppins] font-medium text-gray-700'
                     description={
                       <p
                         dangerouslySetInnerHTML={{ __html: item.deskripsi }}

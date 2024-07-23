@@ -40,7 +40,7 @@ const Navmenu = () => {
   const options3 = [
     { label: 'Agenda Kegiatan', href: '/informasi-publik/agenda-kegiatan' },
     { label: 'Berita Kampung', href: '/informasi-publik/berita-kampung' },
-    { label: 'Galeri', href: '/informasi-publik/galeri' },
+    { label: 'Galeri', href: '/informasi-publik/galeri-kampung' },
     { label: 'Produk Hukum', href: '/informasi-publik/produk-hukum' },
     { label: 'Download', href: '/informasi-publik/download' },
   ];

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import imgdefault from '../../../../../assets/img/apple.png';
-import imgprofil from '../../../../../assets/img/profil.png';
 import { FaWhatsapp } from 'react-icons/fa';
+import { IconCurrencyDollar } from '@tabler/icons-react';
 
 const DetailProduk = () => {
   const { slug } = useParams();
@@ -55,23 +55,33 @@ const DetailProduk = () => {
               </h1>
               <p className='text-justify text-gray-500'>{data.deskripsi}</p>
             </div>
-            <div className='flex justify-between items-center gap-6'>
+            <div className='flex items-center gap-5'>
               {data.no_wa ? (
-                <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-2'>
                   <FaWhatsapp className='text-teal-700 w-5 h-5' />
                   <h1 className='text-sm text-teal-700 font-medium'>
                     {data.no_wa}
                   </h1>
                 </div>
               ) : (
-                <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-2'>
                   <FaWhatsapp className='text-gray-500 w-5 h-5' />
                   <h1 className='text-sm text-gray-500'>Data belum terisi</h1>
                 </div>
               )}
-              <h1 className='text-xs text-gray-500 px-3 py-2 border-2 rounded border-teal-700'>
-                Harga
-              </h1>
+              {data.harga ? (
+                <div className='flex items-center gap-2'>
+                  <IconCurrencyDollar className='text-teal-700 w-5 h-5' />
+                  <h1 className='text-sm text-teal-700 font-medium'>
+                    {data.harga}
+                  </h1>
+                </div>
+              ) : (
+                <div className='flex items-center gap-2'>
+                  <IconCurrencyDollar className='text-gray-500 w-5 h-5' />
+                  <h1 className='text-sm text-gray-500'>Data belum terisi</h1>
+                </div>
+              )}
             </div>
           </div>
         </div>

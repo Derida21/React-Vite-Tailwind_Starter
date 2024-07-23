@@ -8,9 +8,11 @@ const LembagaDesa = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get('http://nurul-huda.org/api/lembaga');
+      const response = await axios.get(`http://nurul-huda.org/api/lembaga`);
       setData(response.data.data);
-    } catch {}
+    } catch (error) {
+      console.error('Error fetching detail:', error);
+    }
   };
 
   useEffect(() => {
@@ -52,7 +54,7 @@ const LembagaDesa = () => {
                     </h1>
                     <Link
                       to={`/pemerintahan/lembaga-kampung/${item.uuid}`}
-                      className='cursor-pointer text-[8px] lg:text-[10px] text-white py-1 px-2 bg-teal-700 rounded h-fit'
+                      className='cursor-pointer text-[8px] lg:text-[10px] py-1 px-2 text-teal-700 border border-teal-700 hover:text-white hover:bg-teal-700 hover:duration-300 rounded h-fit'
                     >
                       Detail
                     </Link>

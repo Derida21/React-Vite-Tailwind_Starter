@@ -31,6 +31,7 @@ import DetailKegiatan from './components/home_component/Section/Informasi Publik
 import APBK from './pages/Transparansi/APBK';
 import APBK_FIX from './pages/Transparansi/APBK-fix';
 import DetailProduk from './components/home_component/Section/Produk/Detail-Produk';
+import Galeri_Kampung from './pages/Informasi Publik/Galeri_Kampung';
 
 const App = () => {
   return (
@@ -87,6 +88,10 @@ const App = () => {
           <Route
             path='/informasi-publik/berita-kampung/:slug'
             element={<DetailBerita />}
+          />
+          <Route
+            path='/informasi-publik/galeri-kampung'
+            element={<Galeri_Kampung />}
           />
           {/* Transparansi */}
           <Route path='/transparansi/apbk' element={<APBK />} />

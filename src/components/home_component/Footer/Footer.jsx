@@ -42,7 +42,7 @@ export default function Footer() {
         </div>
         <div className='flex justify-center items-center py-5 border-t-[1px] border-white'>
           <span className='text-[8px] text-white font-[Poppins]'>
-            Powered by Kalteam
+            Powered by LoopDev
           </span>
         </div>
       </div>

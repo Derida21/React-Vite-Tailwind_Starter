@@ -10,7 +10,7 @@ const alur = [
   },
   {
     img: alur2,
-    text: 'Setelah memilih salah satu jenis pelayanan input data sesuai document resmi pemerintah',
+    text: 'Setelah memilih salah satu jenis pelayanan input data sesuai dokumen resmi pemerintah',
     className: 'w-[345px]',
   },
   {
