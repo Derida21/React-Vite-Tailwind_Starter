@@ -49,14 +49,14 @@ const KegiatanPostMain = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8 text-center">Berita</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">Kegiatan</h1>
 
       <div className="flex  mb-6 ms-0">
         <button
           onClick={handleCreatePost}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200"
         >
-          Tambahkan Berita
+          Tambahkan Kegiatan  
         </button>
       </div>
 
@@ -69,7 +69,7 @@ const KegiatanPostMain = () => {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {data.map((item) => (
-          <div key={item.id} className="bg-white p-6 border-2 border-red-100 rounded shadow-md hover:shadow-lg transition-shadow duration-200">
+          <div key={item.slug} className="bg-white p-6 border-2 border-red-100 rounded shadow-md hover:shadow-lg transition-shadow duration-200">
             <img src={item.thumbnail} alt={item.judul} className="mb-4 rounded" />
             <h2 className="text-lg font-bold mb-2">{item.judul}</h2>
             <p className="text-gray-600 mb-2">{item.slug}</p>
@@ -83,7 +83,7 @@ const KegiatanPostMain = () => {
                 Lihat
               </button>
               <button
-                onClick={() => handleDelete(item.id)}
+                onClick={() => handleDelete(item.slug)}
                 className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-200"
               >
                 Hapus

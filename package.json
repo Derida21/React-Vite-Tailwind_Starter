@@ -10,6 +10,7 @@
     "@ckeditor/ckeditor5-build-classic": "^42.0.0",
     "@ckeditor/ckeditor5-react": "^8.0.0",
     "@fortawesome/fontawesome-free": "^6.5.2",
+    "@heroicons/react": "^2.1.5",
     "@svgr/webpack": "^8.1.0",
     "@syncfusion/ej2": "^19.4.48",
     "@syncfusion/ej2-react-calendars": "^19.4.48",
@@ -27,6 +28,7 @@
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "file-saver": "^2.0.5",
+    "heroicons": "^2.1.5",
     "react": "^18.3.1",
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.3.1",
@@ -37,6 +39,7 @@
     "react-router-dom": "^6.2.1",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
+    "react-transition-group": "^4.4.5",
     "tabler": "^1.0.0-alpha.8",
     "xlsx": "^0.18.5"
   },

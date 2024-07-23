@@ -26,10 +26,10 @@ const PostMain = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (uuid) => {
     setLoading(true);
     try {
-      await axiosInstance.delete(`/berita/${id}`);
+      await axiosInstance.delete(`/berita/${uuid}`);
       fetchData();
     } catch (error) {
       console.error('Error deleting data:', error);
@@ -91,7 +91,7 @@ const PostMain = () => {
                 Lihat
               </button>
               <button
-                onClick={() => handleDelete(item.id)}
+                onClick={() => handleDelete(item.slug)}
                 className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-200 text-sm"
               >
                 Hapus

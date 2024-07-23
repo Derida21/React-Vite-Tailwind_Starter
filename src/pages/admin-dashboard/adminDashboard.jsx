@@ -8,7 +8,7 @@ import Marketing from '../../components/admin-marketing/marketing';
 import { Data } from '../../dates/jummy';
 
 import DataPenduduk from '../../components/admin-penduduk/DataPenduduk';
-import LembagaCrud from '../../components/lmbg/LembagaCrud';
+import LembagaCrud from '../../components/admin-lembaga/LembagaCrud';
 import PostMain from '../../components/admin-berita/PostMain';
 import PostForm from '../../components/admin-berita/PostForm';
 import PostDetail from '../../components/admin-berita/PostDetail';
@@ -26,8 +26,12 @@ import ModalPotensi from '../../components/admin_potensi/modal_potensi';
 import PotensiComponent from '../../components/admin_potensi/potensi_component';
 import CrudComponent from '../../components/crudbasecomponent/crudcomponent';
 import PelayananCrud from '../../components/admin-pelayanan/pelayanan_crud';
+import ProductList from '../../components/admin-product/ProductList'; // Import the ProductList component
 
-
+import WargaList from '../../components/admin_warga/WargaList';
+import LembagaList from '../../components/admin-lembaga-2/LembagaList';
+import DashboardPost from '../../components/admin_potensi/potensi_component';
+import PejabatList from '../../components/admin-pejabat/PejabatList';
 const AdminDashboard = () => {
     const { category } = useParams();
     let cat = Data.find((categ) => categ.url === parseInt(category));
@@ -54,29 +58,40 @@ const AdminDashboard = () => {
     return (
         <div className='bg-slate-50'>
             <div className=""><Navbar /></div>
-            <div className="main max-w-[2300px] mt-[76px] flex flex-1 justify-between">
+            <div className="main max-w-[2300px] mt-[76px] flex justify-between">
                 <Sidebar />
-                <div className={`main ${state.toggle ? (state.toggleNavbar ? 'md:ml-[310px]' : 'ml-0') : (state.toggleNavbar ? 'md:ml-[90px]' : 'ml-0')} overflow-auto w-full h-full z-10`}>
+                <div className={`main ${state.toggle ? (state.toggleNavbar ? 'md:ml-[220px]' : 'ml-0') : (state.toggleNavbar ? 'md:ml-[90px]' : 'ml-0')} overflow-auto w-full h-full z-10`}>
                     <Routes>
                         <Route path="main" element={<Main />} />
                         <Route path="marketing" element={<Marketing />} />
                         <Route path="berita/*" element={<PostRoutes />} />
-                        <Route path="lmbg" element={<LembagaCrud />} />
-                        {/* <Route path="pembangunan" element={<PengembanganComponent />} /> */}
+                        {/* <Route path="lembaga" element={<LembagaCrud />} /> */}
+                        <Route path="lembaga" element={<LembagaList />} />
                         <Route path="belanja/*" element={<BelanjaRoutes />} />
                         <Route path="potensi/*" element={<PotensiRoutes/>} />
                         <Route path="kegiatan/*" element={<KegiatanRoutes/>} />
-                        {/* <Route path="belanja/*" element={<KegiatanRoutes/>} /> */}
-
                         <Route path="belanja" element={<CrudComponent endpoint="/belanja-desa"/>} />
                         <Route path="pembangunan" element={<CrudComponent endpoint="/pembangunan"/>} />
-
                         <Route path="pelayanan" element={<PelayananCrud />} /> 
                         <Route path="penduduk" element={<DataPenduduk path="/data-penduduk"/>} />
+                        <Route path="produk" element={<ProductList/>} />
+                        <Route path="keluarga" element={<WargaList/>} />
+                        <Route path="pejabat" element={<PejabatList/>} />
+                        <Route path="tentang-kampung" element={<DashboardPost  endpoint="/tentang-kami" title="Tentang Kami"/>} />
+                        <Route path="sejarah-kampung" element={<DashboardPost  endpoint="/sejarah" title="Sejarah Desa"/>} />
+                        <Route path="potensi-kampung" element={<DashboardPost  endpoint="/potensi-kampung" title="Potensi Desa"/>} />
                     </Routes>
                 </div>
             </div>
         </div>
+    );
+};
+const ProdukRoutes = () => {
+    return (
+        <Routes>
+            <Route path="/" element={<ProductList/>} />
+            <Route path=":slug" element={<ProductDetail/>} />
+        </Routes>
     );
 };
 
@@ -99,7 +114,6 @@ const BelanjaRoutes = () => {
     );
 };
 
-
 const KegiatanRoutes = () => {
     return (
         <Routes>
@@ -110,8 +124,6 @@ const KegiatanRoutes = () => {
         </Routes>
     );
 };
-
-
 
 const PostRoutes = () => {
     return (

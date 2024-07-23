@@ -4,11 +4,11 @@ import { ClipLoader } from 'react-spinners';
 
 const EditModal = ({ lembaga, onClose, onSave }) => {
   const [formData, setFormData] = useState({
-    id: lembaga?.id || '',
+    uuid: lembaga?.uuid || '',
     nama: lembaga?.nama || '',
     singkatan: lembaga?.singkatan || '',
-    logo: lembaga?.logo || '',
-    logoFile: null,
+    logo: lembaga?.logo || null ,
+    // logoFile: null,
   });
   const [modalLoading, setModalLoading] = useState(false);
 
@@ -24,7 +24,7 @@ const EditModal = ({ lembaga, onClose, onSave }) => {
       reader.onloadend = () => {
         setFormData((prev) => ({
           ...prev,
-          logoFile: file,
+          // logoFile: file,
           logo: reader.result,
         }));
         localStorage.setItem('logoURL', reader.result); // Save base64 string to local storage

@@ -84,7 +84,7 @@ const KegiatanPostForm = () => {
           },
         });
       } else {
-        await axiosInstance.post('/berita', form, {
+        await axiosInstance.post('/kegiatan', form, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -144,7 +144,7 @@ const KegiatanPostForm = () => {
             <label className="block text-gray-700">Isi</label>
             <Editor data={formData.isi} onChange={handleEditorChange} />
           </div>
-          <div>
+          {/* <div>
             <label className="block text-gray-700">Author</label>
             <input
               type="text"
@@ -163,7 +163,7 @@ const KegiatanPostForm = () => {
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
             />
-          </div>
+          </div> */}
         </div>
         <button
           type="submit"

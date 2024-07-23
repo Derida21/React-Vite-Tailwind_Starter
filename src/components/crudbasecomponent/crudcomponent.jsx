@@ -113,11 +113,11 @@ const CrudComponent = ({ endpoint }) => {
 
   return (
     <div className="container mx-auto p-10">
-      <h1 className="text-2xl font-bold mb-4">Data List</h1>
+      <h1 className="text-2xl font-bold mb-4">{endpoint}</h1>
       <div className="flex justify-between items-center mb-4">
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Cari"
           className="border px-4 py-2 rounded"
           value={search}
           onChange={(e) => setSearch(e.target.value)}

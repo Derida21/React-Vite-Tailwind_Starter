@@ -13,18 +13,30 @@ import pl5 from './imgs/Placeholder (5).png'
 
 export let Data = [
     {
+        icon: 'fa-solid fa-location-dot',
+        text: 'Home',
+        url : 'main',
+    },
+    {
+        icon: 'fa-solid fa-location-dot',
+        text: 'Pejabat',
+        url : 'pejabat',
+    },
+    {
+        icon: 'fa-solid fa-location-dot',
+        text: 'Lembaga',
+        url : 'lembaga',
+    },
+    {
         icon: 'fa-solid fa-chart-pie',
+        text : 'Section 1',
         inside: [
             {
                 icon: 'fa-solid fa-universal-access',
                 text: 'Berita',
                 url: 'berita'
             },
-            {
-                icon: 'fa-solid fa-chart-simple',
-                text: 'Produk',
-                url: 'produk'
-            },
+        
             {
                 icon: 'fa-regular fa-floppy-disk',
                 text: 'Lembaga',
@@ -62,101 +74,66 @@ export let Data = [
             },
         ]
     },
-    // {
-    //     icon: 'fa-solid fa-mug-saucer',
-    //     inside: [
-    //         {
-    //             icon: 'fa-solid fa-universal-access',
-    //             text: 'Sales',
-    //             url: 'main'
-    //         },
-    //         {
-    //             icon: 'fa-solid fa-chart-simple',
-    //             text: 'Market',
-    //             url: 'main'
-    //         },
-    //         {
-    //             icon: 'fa-solid fa-comments-dollar',
-    //             text: 'Business Summary',
-    //             url: 'main'
-    //         },
-    //         {
-    //             icon: 'fa-regular fa-floppy-disk',
-    //             text: 'Saved Reports',
-    //             url: 'main'
-    //         },
-    //         {
-    //             icon: 'fa-regular fa-comment-dots',
-    //             text: 'Feedbacks',
-    //             url: 'main'
-    //         },
-    //     ]
-    // },
     {
         icon: 'fa-solid fa-location-dot',
-        inside: [
+        text: 'Profil Kampung',
+        inside : [
             {
-                icon: 'fa-solid fa-universal-access',
-                text: 'Sales',
-                url: 'main'
-            },
-            {
-                icon: 'fa-solid fa-chart-simple',
-                text: 'Market',
-                url: 'main'
+                icon: 'fa-solid fa-comments-dollar',
+                text: 'Tentang Kampung',
+                url: 'tentang-kampung'
             },
             {
                 icon: 'fa-solid fa-comments-dollar',
-                text: 'Keuangan',
-                url: 'main'
+                text: 'Potensi',
+                url: 'potensi-kampung'
             },
-         
+            {
+                icon: 'fa-solid fa-comments-dollar',
+                text: 'Sejarah Kampung',
+                url: 'sejarah-kampung'
+            },
+            {
+                icon: 'fa-solid fa-comments-dollar',
+                text: 'Visi Misi',
+                url: 'pvisi-misi'
+            }
         ]
     },
     {
-        icon: 'fa-solid fa-calendar-days',
-        inside: [
-            {
-                icon: 'fa-solid fa-comments-dollar',
-                text: 'Keuangan',
-                url: 'main'
-            },
-            {
-                icon: 'fa-regular fa-floppy-disk',
-                text: 'Saved Reports',
-                url: 'main'
-            },
-            {
-                icon: 'fa-regular fa-comment-dots',
-                text: 'Feedbacks',
-                url: 'main'
-            },
-        ]
+        icon: 'fa-solid fa-chart-simple',
+        text: 'Produk',
+        url: 'produk'
     },
-    // {
-    //     icon: 'fa-solid fa-box',
-    //     inside: [
-    //         {
-    //             icon: 'fa-solid fa-universal-access',
-    //             text: 'Sales',
-    //             url: 'main'
-    //         },
-    //     ]
-    // },
     {
         icon: 'fa-solid fa-gear',
-        inside: [
-            {
-                icon: 'fa-regular fa-floppy-disk',
-                text: 'Saved Reports',
-                url: 'main'
-            },
-            {
-                icon: 'fa-regular fa-comment-dots',
-                text: 'Feedbacks',
-                url: 'main'
-            },
-        ]
+        text:'Berita',
+        url : 'berita'
+    },
+    {
+        icon: 'fa-solid fa-gear',
+        text:'Kegiatan',
+        url : 'kegiatan'
+    },
+    {
+        icon: 'fa-solid fa-gear',
+        text:'Pembangunan',
+        url : 'pembangunan'
+    },
+    {
+        icon: 'fa-solid fa-gear',
+        text:'Penduduk',
+        url : 'penduduk'
+    },
+    {
+        icon: 'fa-solid fa-gear',
+        text:'Pelayanan',
+        url : 'pelayanan'
+    },
+    {
+        icon: 'fa-solid fa-gear',
+        text:'Keluarga',
+        url : 'keluarga'
     }
 ]
 
