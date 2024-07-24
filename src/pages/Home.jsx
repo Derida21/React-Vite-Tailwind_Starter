@@ -60,7 +60,7 @@ function Home() {
             href='/profil/demografi-kampung/statistik-penduduk'
             src={penduduk}
             alt='data-penduduk'
-            text='Data Penduduk'
+            text='Insight Penduduk'
           />
           <Icon
             href='/pelayanan'
@@ -68,7 +68,12 @@ function Home() {
             alt='pelayanan'
             text='Pelayanan'
           />
-          <Icon href='' src={keuangan} alt='keuangan-desa' text='Anggaran' />
+          <Icon
+            href=''
+            src={keuangan}
+            alt='keuangan-desa'
+            text='Anggaran Kampung'
+          />
           <Icon
             href=''
             src={pembangunan}

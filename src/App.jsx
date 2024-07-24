@@ -32,6 +32,7 @@ import APBK from './pages/Transparansi/APBK';
 import APBK_FIX from './pages/Transparansi/APBK-fix';
 import DetailProduk from './components/home_component/Section/Produk/Detail-Produk';
 import Galeri_Kampung from './pages/Informasi Publik/Galeri_Kampung';
+import DataPenduduk from './pages/Profil/Demografi_Desa/Data_Penduduk';
 
 const App = () => {
   return (
@@ -53,6 +54,10 @@ const App = () => {
           <Route
             path='/profil/demografi-kampung/statistik-penduduk'
             element={<StatistikPenduduk />}
+          />
+          <Route
+            path='/profil/demografi-kampung/data-penduduk'
+            element={<DataPenduduk />}
           />
           <Route path='/profil/geografi-kampung' element={<GeografisDesa />} />
           {/* Pemerintahan */}
