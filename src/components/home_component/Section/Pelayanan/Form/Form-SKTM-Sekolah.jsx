@@ -1,6 +1,7 @@
 import { IconSend, IconArrowBack } from "@tabler/icons-react";
 import Form from "./Form";
 import { useState } from "react";
+import axios from 'axios';
 
 const Form_SKTM_Sekolah = () => {
   const [formData, setFormData] = useState({
@@ -54,13 +55,51 @@ const Form_SKTM_Sekolah = () => {
   };
 
   const handleSend = () => {
-    const message = `Nama: ${allFormData.step1.Nama}\nNIK: ${allFormData.step1.NIK}\nKK: ${allFormData.step1.KK}\nAlamat: ${allFormData.step1.Alamat}\nTempat Tanggal Lahir: ${allFormData.step1.TTL}\nJenis Kelamin: ${allFormData.step1["Jenis Kelamin"]}\nAgama: ${allFormData.step1.Agama}\nPekerjaan: ${allFormData.step1.Pekerjaan}\nTujuan: ${allFormData.step1.Tujuan}\n\n`;
-    const phoneNumber = "+6287892354377";
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(whatsappUrl, "_blank");
-    setShowMessage(true);
+
+    let data = {
+      nama_pengaju: allFormData.step1.Nama,
+      no_wa: allFormData.step1.WA,
+      jenis_pelayanan: 1,
+      nama_pelayanan: 'SURAT KETERANGAN TIDAK MAMPU SEKOLAH',
+      persyaratan: {
+        nama_lengkap_pelajar: allFormData.step1.Nama,
+        nik_pelajar: allFormData.step1.NIK,
+        no_kk_pelajar: allFormData.step1.KK,
+        alamat_pelajar: allFormData.step1.Alamat,
+        tempat_tanggal_lahir_pelajar: allFormData.step1.TTL,
+        pekerjaan_pelajar: allFormData.step1.Pekerjaan,
+        jenis_kelamin_pelajar: allFormData.step1['Jenis Kelamin'],
+        agama_pelajar: allFormData.step1.Agama,
+        keperluan_pelajar: allFormData.step1.Tujuan,
+        nama_lengkap_wali: allFormData.step2.Nama,
+        nik_wali: allFormData.step2.NIK,
+        no_kk_wali: allFormData.step2.KK,
+        alamat_wali: allFormData.step2.Alamat,
+        tempat_tanggal_lahir_wali: allFormData.step2.TTL,
+        pekerjaan_wali: allFormData.step2.Pekerjaan,
+        jenis_kelamin_wali: allFormData.step2['Jenis Kelamin'],
+        agama_wali: allFormData.step2.Agama,
+        keperluan_wali: allFormData.step2.Tujuan,
+      }
+    };
+
+    axios.post('http://nurul-huda.org/api/pelayanan', data)
+      .then(response => {
+        const message = `Saya ingin mengkonfirmasikan bahwa saya telah mengisi form pelayanan dengan kode pelayanan :${response.data.data.kode_pelayanan}`;
+
+        const phoneNumber = '+6285852392330';
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+          message
+        )}`;
+
+        window.open(whatsappUrl, '_blank');
+        setShowMessage(true);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    // window.open(whatsappUrl, "_blank");
+    // setShowMessage(true);
   };
 
   const handleBack = () => {

@@ -1,6 +1,7 @@
 import { IconSend, IconArrowBack } from '@tabler/icons-react';
 import Form from './Form';
 import { useState } from 'react';
+import axios from 'axios';
 
 const Form_Pengantar = () => {
   const [formData, setFormData] = useState({
@@ -38,15 +39,40 @@ const Form_Pengantar = () => {
   };
 
   const handleSend = () => {
-    const message = `Nama: ${formData.Nama}\nNIK: ${formData.NIK}\nKK: ${formData.KK}\nWA : ${formData.WA}\nAlamat: ${formData.Alamat}\nTempat Tanggal Lahir: ${formData.TTL}\nJenis Kelamin: ${formData['Jenis Kelamin']}\nAgama: ${formData.Status}\nAgama: ${formData.Agama}\nPekerjaan: ${formData.Pekerjaan}\nTujuan: ${formData.Tujuan}`;
+    let data = {
+      nama_pengaju: formData.Nama,
+      no_wa: formData.WA,
+      jenis_pelayanan: 0,
+      nama_pelayanan: 'SURAT PENGANTAR',
+      persyaratan: {
+        nama_lengkap: formData.Nama,
+        nik: formData.NIK,
+        no_kk: formData.KK,
+        alamat: formData.Alamat,
+        tempat_tanggal_lahir: formData.TTL,
+        pekerjaan: formData.Pekerjaan,
+        status_perkawinan: formData.Status,
+        jenis_kelamin: formData['Jenis Kelamin'],
+        agama: formData.Agama,
+        keperluan: formData.Tujuan,
+      }
+    };
 
-    const phoneNumber = '+6285852392330';
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message
-    )}`;
 
-    window.open(whatsappUrl, '_blank');
-    setShowMessage(true);
+    axios.post('http://nurul-huda.org/api/pelayanan', data)
+      .then(response => {
+        const message = `Saya ingin mengkonfirmasikan bahwa saya telah mengisi form pelayanan`;
+
+        const phoneNumber = '+6285852392330';
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappUrl, '_blank');
+        setShowMessage(true);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   const handleBack = () => {
