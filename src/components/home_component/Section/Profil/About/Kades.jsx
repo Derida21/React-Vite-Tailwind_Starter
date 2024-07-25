@@ -1,57 +1,31 @@
-import { useEffect, useState } from "react";
-import imgkades from "../../../../../../assets/img/Kades.png";
+import { useEffect, useState } from 'react';
+import imgkades from '../../../../../../assets/img/Kades.png';
+import axios from 'axios';
 
 const Kades = () => {
-  const url = "";
-  const [kades, setKades] = useState({
-    img: imgkades,
-    alt: "Kades Image",
-    nama: "John Die",
-    nip: "000090900909",
-    jabatan: "PJ Kepala Desa",
+  const [data, setData] = useState();
+
+  const getData = async () => {
+    const response = await axios.get('http://nurul-huda.org/api/tentang-kami');
+    setData(response.data.data);
+    console.log(response.data.data);
+  };
+
+  useEffect(() => {
+    getData();
   });
 
-  const getDataKades = async () => {
-    const response = await fetch(url);
-    const datakades = await response.json();
-    setKades(datakades);
-    console.log(kades);
-  };
-  useEffect(() => {
-    getDataKades();
-  }, []);
-
   return (
-    <div className="flex flex-col gap-2 lg:gap-5">
-      <h1 className="font-[Poppins] text-[12px] md:text-[24px] font-semibold text-teal-700">
+    <div className='flex flex-col'>
+      <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white rounded-t-lg'>
         Kepala Desa
       </h1>
-      {/* Detail Kantor Desa */}
-      <div className="flex flex-col md:flex-row border-l-2 pl-3 border-teal-700 gap-2">
-        <div className="flex justify-center w-full md:w-1/2 md:px-4">
-          <img
-            src={kades.img}
-            alt={kades.alt}
-            className="w-1/2 md:w-full lg:max-w-[400px]"
-          />
-        </div>
-        <div className="flex items-"></div>
-        <table className="table-auto h-fit">
-          <tbody>
-            <tr className="font-[Poppins] text-gray-500 text-[10px] md:text-[12px] align-top">
-              <td className="pb-2 w-[60px] md:w-[80px]">Nama</td>
-              <td className="">{kades.nama}</td>
-            </tr>
-            <tr className="font-[Poppins] text-gray-500 text-[10px] md:text-[12px] align-top">
-              <td className="pb-2 w-[60px] md:w-[80px]">NIP</td>
-              <td className="">{kades.nip}</td>
-            </tr>
-            <tr className="font-[Poppins] text-gray-500 text-[10px] md:text-[12px] align-top">
-              <td className="pb-2 w-[60px] md:w-[80px]">Jabatan</td>
-              <td className="">{kades.jabatan}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div className=' rounded-b-lg px-3 py-3 md:p-5 border md:shadow-xl'>
+        <p className='font-[Poppins] text-[12px] md:text-[16px] text-gray-500 text-justify px-2'>
+          {data
+            ? data.isi
+            : 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem accusamus distinctio tenetur provident ipsam obcaecati voluptas ratione maiores quam, vitae, officiis adipisci ab eos laboriosam deleniti magni blanditiis hic at. Dolores porro dolor natus quae consequatur. Sint dolores fugiat recusandae reprehenderit repellendus iure provident? Hic iusto voluptatibus inventore maxime totam ab minima ratione repellendus delectus possimus! Dolores hic est repellat.Eius unde amet cupiditate dolorum repellendus veritatis ullam consequuntur debitis recusandae laboriosam. Quisquam quam in, inventore voluptate explicabo dolor voluptates pariatur! Aspernatur recusandae iste provident nobis, ad illum sapiente. Quo.'}
+        </p>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const List = () => {
   const [data, setData] = useState([]);
@@ -24,16 +25,19 @@ const List = () => {
       {list.map((item, index) => (
         <div
           key={index}
-          className='flex flex-col border border-gray-200 rounded-lg shadow-xl'
+          className='flex flex-col border border-gray-200 rounded-lg hover:shadow-xl'
         >
           <img src={item.thumbnail} alt='' className='rounded max-h-[150px]' />
           <div className='flex flex-col gap-2 px-2 py-3'>
-            <h1 className='cursor-pointer font-[Poppins] text-gray-700 font-medium hover:text-teal-700'>
+            <Link
+              to={`/informasi-publik/agenda-kegiatan/${item.slug}`}
+              className='cursor-pointer font-[Poppins] text-gray-700 font-medium hover:text-teal-700'
+            >
               {item.judul}
-            </h1>
-            <p className='font-[Poppins] text-gray-500 text-xs line-clamp-2'>
-              {item.isi}
-            </p>
+            </Link>
+            <article className='font-[Poppins] text-gray-500 text-xs line-clamp-2'>
+              <div dangerouslySetInnerHTML={{ __html: item.isi }}></div>
+            </article>
           </div>
         </div>
       ))}

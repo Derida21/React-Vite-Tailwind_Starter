@@ -99,7 +99,7 @@ function Home() {
       </article>
       {/* Galeri */}
       <section className='flex flex-col w-full bg-gradient-to-b from-teal-600 via-teal-700 to-teal-900 px-5 md:px-[60px] lg:px-20 xl:px-[160px] gap-5 lg:gap-[70px] py-10 lg:py-20 rounded-t-xl md:rounded-t-[36px]'>
-        <div className='flex flex-col gap-5 md:gap-10'>
+        <div className='flex flex-col gap-5 md:gap-10 lg:gap-14'>
           <div className='w-full flex justify-center lg:text-3xl font-[Poppins] font-bold text-white'>
             Galeri Kampung
           </div>

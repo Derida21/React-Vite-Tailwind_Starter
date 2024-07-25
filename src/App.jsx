@@ -33,6 +33,7 @@ import APBK_FIX from './pages/Transparansi/APBK-fix';
 import DetailProduk from './components/home_component/Section/Produk/Detail-Produk';
 import Galeri_Kampung from './pages/Informasi Publik/Galeri_Kampung';
 import DataPenduduk from './pages/Profil/Demografi_Desa/Data_Penduduk';
+import Pembangunan from './pages/Transparansi/Pembangunan';
 
 const App = () => {
   return (
@@ -101,6 +102,11 @@ const App = () => {
           {/* Transparansi */}
           <Route path='/transparansi/apbk' element={<APBK />} />
           <Route path='/transparansi/apbk-terealisasi' element={<APBK_FIX />} />
+          <Route
+            path='/transparansi/pembangunan-kampung'
+            element={<Pembangunan />}
+          />
+
           {/* Pelayanan */}
           <Route path='/pelayanan' element={<Pelayanan />} />
           <Route path='*' element={<Navigate to='/home' replace />} />

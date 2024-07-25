@@ -21,23 +21,29 @@ const AgendaKegiatan = () => {
 
   return (
     <div className='flex flex-col gap-3 lg:gap-5'>
-      <h1 className='font-[Poppins] text-[8px] md:text-xs font-medium text-gray-500 '>
+      <Link
+        to={'/informasi-publik/agenda-kegiatan'}
+        className='font-[Poppins] text-[8px] md:text-xs font-medium text-gray-500 hover:text-teal-700'
+      >
         Agenda Kegiatan
-      </h1>
+      </Link>
       <div className='flex flex-col gap-2'>
         {kegiatan.map((item, index) => (
           <div
             key={index}
-            className='border-b-[2px] md:border-gray-300 pb-3 space-y-3'
+            className='flex border-b-[2px] md:border-gray-300 pb-3'
           >
-            <img
-              src={item.thumbnail || bg}
-              alt=''
-              className='rounded max-h-32 w-full'
-            />
+            <div
+              className='w-1/2 h-[85px]'
+              style={{
+                backgroundImage: `url(${item.thumbnail})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+              }}
+            ></div>
             <Link
               to={`/informasi-publik/agenda-kegiatan/${item.slug}`}
-              className='cursor-pointer font-[Poppins] text-xs text-gray-700 font-medium hover:text-teal-700'
+              className='w-1/2 cursor-pointer font-[Poppins] text-xs text-gray-700 font-medium hover:text-teal-700'
             >
               {item.judul}
             </Link>
