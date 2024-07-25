@@ -1,13 +1,12 @@
 import { Thumbnail } from '../../components/home_component/Section/Informasi Publik/Thumbnail';
-import bg_img from '../../../assets/img/bg_berita.png';
 import Card from '../../components/home_component/Section/Home/News/Card';
 import Items from '../../components/home_component/Section/Informasi Publik/Items';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import bg from '../../../assets/img/bg_pelayanan.jpg';
 import Berita from '../../components/home_component/Section/Informasi Publik/Agenda_Kegiatan/berita';
+import Galeri from '../../components/home_component/Section/Informasi Publik/Galeri';
 
 export default function Agenda_Kegiatan() {
   const [data, setData] = useState([]);
@@ -114,17 +113,7 @@ export default function Agenda_Kegiatan() {
             {/* Kegiatan */}
             <Berita />
             {/* Galeri */}
-            <div className='flex flex-col gap-3 lg:gap-5'>
-              <h1 className='font-[Poppins] text-[8px] md:text-xs font-medium text-gray-500'>
-                Galeri Kampung
-              </h1>
-              <div className='grid md:grid-cols-2 gap-2'>
-                <img src={bg} alt='' className='rounded-md' />
-                <img src={bg} alt='' className='rounded-md' />
-                <img src={bg} alt='' className='rounded-md' />
-                <img src={bg} alt='' className='rounded-md' />
-              </div>
-            </div>
+            <Galeri />
           </div>
         </div>
       </div>

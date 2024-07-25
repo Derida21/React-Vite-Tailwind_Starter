@@ -25,12 +25,20 @@ const Gallery = () => {
   return (
     <>
       {Gallery.map((item, index) => (
-        <div key={index} className='h-[75px] md:h-[150px] xl:h-[240px]'>
-          <img
+        <div
+          key={index}
+          className='h-[75px] md:h-[200px] xl:h-[240px] rounded-md hover:scale-105 duration-300 '
+          style={{
+            backgroundImage: `url(${item.thumbnail})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+          }}
+        >
+          {/* <img
             src={item.thumbnail}
             alt=''
             className=' h-full rounded md:rounded-lg hover:scale-105 duration-500 min-w-full'
-          />
+          /> */}
         </div>
       ))}
     </>

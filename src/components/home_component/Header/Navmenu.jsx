@@ -42,7 +42,6 @@ const Navmenu = () => {
     { label: 'Berita Kampung', href: '/informasi-publik/berita-kampung' },
     { label: 'Galeri', href: '/informasi-publik/galeri-kampung' },
     { label: 'Produk Hukum', href: '/informasi-publik/produk-hukum' },
-    { label: 'Download', href: '/informasi-publik/download' },
   ];
   const options4 = [
     { label: 'APBK', href: '/transparansi/apbk' },
@@ -109,7 +108,7 @@ const Navmenu = () => {
       <div className='hidden lg:flex'>
         <Link
           to='/home'
-          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
+          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:max-xl:text-[10px] md:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
         >
           Home
         </Link>
@@ -119,13 +118,13 @@ const Navmenu = () => {
         <Dropdown label='Transparansi' options={options4} />
         <a
           href='/pelayanan'
-          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
+          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold md:text-[12px] lg:max-xl:text-[10px] text-gray-700 hover:text-teal-700 text-nowrap'
         >
           Pelayanan
         </a>
         <a
           href='/produk'
-          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
+          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold md:text-[12px] lg:max-xl:text-[10px] text-gray-700 hover:text-teal-700 text-nowrap'
         >
           Produk
         </a>

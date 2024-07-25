@@ -12,11 +12,11 @@ export const Thumbnail = ({ bg, note, title, description }) => {
         {note}
       </h1>
       <div className='flex flex-col'>
-        <h1 className='text-teal-700 text-[8px] md:text-[32px] font-bold font-[Poppins] bg-white md:px-4 w-fit p-1 md:p-2'>
+        <h1 className='text-teal-700 text-[8px] md:text-xs lg:text-[20px] font-bold font-[Poppins] bg-white md:px-4 w-fit p-1 md:p-2'>
           {title}
         </h1>
         <div className=' p-2 md:p-4 bg bg-teal-700 bg-opacity-50'>
-          <div className=' text-justify text-white text-[5px] md:text-xl font-medium font-[Poppins] line-clamp-3'>
+          <div className=' text-justify text-white text-[5px] md:text-xs lg:text-sm font-medium font-[Poppins] line-clamp-3'>
             {description}
           </div>
         </div>

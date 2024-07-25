@@ -83,6 +83,7 @@ const DataPenduduk = () => {
                   <div className='flex items-center justify-center'>
                     <Link
                       to={item.link_maps}
+                      target='_blank'
                       className='flex items-center font-[Poppins] text-[8px] text-teal-700 border border-teal-700 p-2 rounded hover:text-white hover:bg-teal-700'
                     >
                       <IconMap className='h-4' />

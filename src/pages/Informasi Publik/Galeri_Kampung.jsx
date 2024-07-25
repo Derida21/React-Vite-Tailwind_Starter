@@ -26,14 +26,26 @@ const Galeri_Kampung = () => {
               key={index}
               className='relative border p-2 lg:p-4 md:rounded-md hover:border-teal-700 '
             >
-              <img
+              <div
+                className='flex items-end px-3 py-2 md:rounded hover:scale-110 duration-500 h-[110px] xl:h-[140px] min-w-full'
+                style={{
+                  backgroundImage: `url(${item.thumbnail})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <h1 className='text-white text-[8px] md:text-[10px] font-[Poppins]'>
+                  {item.judul}
+                </h1>
+              </div>
+              {/* <img
                 src={item.thumbnail || imggaleri}
                 alt='galeri-kampung'
                 className='md:rounded hover:scale-110 duration-500 h-[110px] xl:h-[140px] min-w-full'
               />
               <h1 className='absolute bottom-3 left-3 lg:bottom-5 lg:left-6 text-white text-[8px] md:text-[10px] font-[Poppins]'>
                 {item.judul}
-              </h1>
+              </h1> */}
             </div>
           ))}
         </div>
