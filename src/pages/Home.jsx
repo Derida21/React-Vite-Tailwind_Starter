@@ -47,7 +47,7 @@ function Home() {
   return (
     <>
       {/* Carousel */}
-      <div className='px-5 bg-slate-100 pt-14 pb-5 md:px-[60px] md:pt-[120px] lg:px-[80px] lg:pb-16 lg:pt-[130px] xl:px-[160px]'>
+      <div className='px-5 bg-slate-100 pt-16 pb-5 md:px-[60px] md:pt-[120px] lg:px-[80px] lg:pb-16 lg:pt-[130px] xl:px-[160px]'>
         <Carousel />
       </div>
       {/* Data*/}
@@ -57,18 +57,23 @@ function Home() {
         </h1>
         <div className='grid grid-cols-2 md:flex md:justify-around lg:justify-between gap-3'>
           <Icon
-            href='/profil/demografi-desa/statistik-penduduk'
+            href='/profil/demografi-kampung/statistik-penduduk'
             src={penduduk}
             alt='data-penduduk'
-            text='Data Penduduk'
+            text='Insight Penduduk'
           />
           <Icon
-            href='/pelayanan/pelayanan'
+            href='/pelayanan'
             src={pelayanan}
             alt='pelayanan'
-            text='Layanan Masyarakat '
+            text='Pelayanan'
           />
-          <Icon href='' src={keuangan} alt='keuangan-desa' text='Anggaran' />
+          <Icon
+            href=''
+            src={keuangan}
+            alt='keuangan-desa'
+            text='Anggaran Kampung'
+          />
           <Icon
             href=''
             src={pembangunan}
@@ -93,12 +98,12 @@ function Home() {
         </div>
       </article>
       {/* Galeri */}
-      <section className='flex flex-col w-full bg-gradient-to-b from-teal-600 via-teal-700 to-teal-900 px-5 md:px-[60px] lg:px-20 xl:px-[160px] gap-5 lg:gap-[70px] py-10 lg:py-20 rounded-t-[36px]'>
-        <div className='flex flex-col gap-5 md:gap-10'>
+      <section className='flex flex-col w-full bg-gradient-to-b from-teal-600 via-teal-700 to-teal-900 px-5 md:px-[60px] lg:px-20 xl:px-[160px] gap-5 lg:gap-[70px] py-10 lg:py-20 rounded-t-xl md:rounded-t-[36px]'>
+        <div className='flex flex-col gap-5 md:gap-10 lg:gap-14'>
           <div className='w-full flex justify-center lg:text-3xl font-[Poppins] font-bold text-white'>
             Galeri Kampung
           </div>
-          <div className='flex flex-col items-center gap-3 xl:gap-5 md:grid md:grid-cols-2 lg:grid-cols-4'>
+          <div className=' items-center gap-3 xl:gap-5 grid grid-cols-2 lg:grid-cols-3'>
             <Gallery />
           </div>
         </div>

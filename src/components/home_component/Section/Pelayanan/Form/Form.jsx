@@ -1,7 +1,7 @@
 const Input = ({ type, name, value, label, placeholder, onChange }) => {
   return (
     <div className="flex flex-col gap-3">
-      <label className="font-[Poppins] text-[16px] text-teal-700">
+      <label className="font-[Poppins] text-[14px] text-teal-700">
         {label}
       </label>
       <input
@@ -19,7 +19,7 @@ const Input = ({ type, name, value, label, placeholder, onChange }) => {
 const Options = ({ option, onChange, name, value, label }) => {
   return (
     <div className="flex flex-col gap-3">
-      <label className="font-[Poppins] text-[16px] text-teal-700">
+      <label className="font-[Poppins] text-[14px] text-teal-700">
         {label}
       </label>
       <select
@@ -52,7 +52,7 @@ const Button = ({ children, type }) => {
 
 function Form({ children, onSubmit }) {
   return (
-    <form onSubmit={onSubmit} className="flex flex-col ">
+    <form onSubmit={onSubmit} className="flex flex-col pb-10">
       {children}
     </form>
   );

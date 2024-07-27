@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import Table from "../Table";
-import axios from "axios";
-import Chart from "chart.js/auto";
+import { useEffect, useRef, useState } from 'react';
+import Table from '../Table';
+import axios from 'axios';
+import Chart from 'chart.js/auto';
 
 export const StatusPerkawinan = () => {
   const [data, setData] = useState([]);
@@ -11,14 +11,14 @@ export const StatusPerkawinan = () => {
   const getData = async () => {
     try {
       const response = await axios.get(
-        "http://nurul-huda.org/api/demografi/status-perkawinan"
+        'http://nurul-huda.org/api/demografi/status-perkawinan'
       );
       setData(response.data.data);
     } catch (error) {
       if (!error.response) {
-        console.error("Network error:", error);
+        console.error('Network error:', error);
       } else {
-        console.error("Error response:", error.response);
+        console.error('Error response:', error.response);
       }
     }
   };
@@ -33,29 +33,29 @@ export const StatusPerkawinan = () => {
         chartRef.current.destroy();
       }
 
-      const labels = data.map((item) => item["Status Perkawinan"]);
-      const kelompokUmurLabels = data.map((item) => item["Kelompok Umur"]);
-      const maleData = data.map((item) => item["Laki-Laki"]);
-      const femaleData = data.map((item) => item["Perempuan"]);
+      const labels = data.map((item) => item['Status Perkawinan']);
+      const kelompokUmurLabels = data.map((item) => item['Kelompok Umur']);
+      const maleData = data.map((item) => item['Laki-Laki']);
+      const femaleData = data.map((item) => item['Perempuan']);
 
-      const ctx = canvasRef.current.getContext("2d");
+      const ctx = canvasRef.current.getContext('2d');
       chartRef.current = new Chart(ctx, {
-        type: "bar",
+        type: 'bar',
         data: {
           labels: labels,
           datasets: [
             {
-              label: "Laki-laki",
+              label: 'Laki-laki',
               data: maleData,
-              backgroundColor: "rgba(54, 162, 235, 0.6)",
-              borderColor: "rgba(54, 162, 235, 1)",
+              backgroundColor: '#5EEAD4',
+              borderColor: '#5EEAD4',
               borderWidth: 1,
             },
             {
-              label: "Perempuan",
+              label: 'Perempuan',
               data: femaleData,
-              backgroundColor: "rgba(255, 99, 132, 0.6)",
-              borderColor: "rgba(255, 99, 132, 1)",
+              backgroundColor: '#CCFBF1',
+              borderColor: '#CCFBF1',
               borderWidth: 1,
             },
           ],
@@ -64,7 +64,7 @@ export const StatusPerkawinan = () => {
           responsive: true,
           plugins: {
             legend: {
-              position: "top",
+              position: 'top',
             },
             tooltip: {
               callbacks: {
@@ -87,13 +87,13 @@ export const StatusPerkawinan = () => {
               beginAtZero: true,
               title: {
                 display: true,
-                text: "Jumlah Penduduk",
+                text: 'Jumlah Penduduk',
               },
             },
             x: {
               title: {
                 display: true,
-                text: "Hubungan Keluarga",
+                text: 'Hubungan Keluarga',
               },
             },
           },
@@ -109,13 +109,13 @@ export const StatusPerkawinan = () => {
   }, [data]);
 
   return (
-    <div className="flex flex-col justify-center gap-5">
+    <div className='flex flex-col justify-center gap-5'>
       {data.length > 0 ? (
         <>
           <canvas
             ref={canvasRef}
-            id="myChart"
-            className="w-full md:max-w-full bg-white p-2 rounded-md md:pt-"
+            id='myChart'
+            className='w-full md:max-w-full bg-white p-2 rounded-md md:pt-'
           ></canvas>
           <Table>
             <thead>
@@ -130,10 +130,10 @@ export const StatusPerkawinan = () => {
             <tbody>
               {data.map((item, index) => (
                 <tr key={index}>
-                  <Table.Body>{item["Status Perkawinan"]}</Table.Body>
-                  <Table.Body>{item["Kelompok Umur"]}</Table.Body>
-                  <Table.Body>{item["Laki-Laki"]}</Table.Body>
-                  <Table.Body>{item["Perempuan"]}</Table.Body>
+                  <Table.Body>{item['Status Perkawinan']}</Table.Body>
+                  <Table.Body>{item['Kelompok Umur']}</Table.Body>
+                  <Table.Body>{item['Laki-Laki']}</Table.Body>
+                  <Table.Body>{item['Perempuan']}</Table.Body>
                   <Table.Body>{item.Jumlah}</Table.Body>
                 </tr>
               ))}
@@ -141,7 +141,7 @@ export const StatusPerkawinan = () => {
           </Table>
         </>
       ) : (
-        <p className="text-center text-white text-2xl">Data belum tersedia</p>
+        <p className='text-center text-white text-2xl'>Data belum tersedia</p>
       )}
     </div>
   );

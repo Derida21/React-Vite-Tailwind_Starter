@@ -18,11 +18,11 @@ const Navmenu = () => {
       subOptions: [
         {
           label: 'Data Penduduk',
-          href: '/profil/demografi-Kampung/data-penduduk',
+          href: '/profil/demografi-kampung/data-penduduk',
         },
         {
           label: 'Statistik Penduduk',
-          href: '/profil/demografi-Kampung/statistik-penduduk',
+          href: '/profil/demografi-kampung/statistik-penduduk',
         },
       ],
     },
@@ -39,15 +39,14 @@ const Navmenu = () => {
   ];
   const options3 = [
     { label: 'Agenda Kegiatan', href: '/informasi-publik/agenda-kegiatan' },
-    { label: 'Berita Desa', href: '/informasi-publik/berita-desa' },
-    { label: 'Galeri', href: '/informasi-publik/galeri' },
+    { label: 'Berita Kampung', href: '/informasi-publik/berita-kampung' },
+    { label: 'Galeri', href: '/informasi-publik/galeri-kampung' },
     { label: 'Produk Hukum', href: '/informasi-publik/produk-hukum' },
-    { label: 'Download', href: '/informasi-publik/download' },
   ];
   const options4 = [
-    { label: 'APBD', href: '#' },
-    { label: 'Perancangan Pembangunan', href: '#' },
-    { label: 'Pembangunan Desa', href: '#' },
+    { label: 'APBK', href: '/transparansi/apbk' },
+    { label: 'APBK Terealisasi', href: '/transparansi/apbk-terealisasi' },
+    { label: 'Pembangunan Kampung', href: '/transparansi/pembangunan-kampung' },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -91,7 +90,7 @@ const Navmenu = () => {
         <Dropdown label='Informasi Publik' options={options3} />
         <Dropdown label='Transparansi' options={options4} />
         <a
-          href='/pelayanan/pelayanan'
+          href='/pelayanan'
           className='flex w-full items-center py-3 md:pr-[40px] lg:px-3 xl:px-5 font-[Poppins] font-semibold
         text-[10px] md:text-[12px] lg:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
         >
@@ -109,7 +108,7 @@ const Navmenu = () => {
       <div className='hidden lg:flex'>
         <Link
           to='/home'
-          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
+          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:max-xl:text-[10px] md:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
         >
           Home
         </Link>
@@ -118,14 +117,14 @@ const Navmenu = () => {
         <Dropdown label='Informasi Publik' options={options3} />
         <Dropdown label='Transparansi' options={options4} />
         <a
-          href='/pelayanan/pelayanan'
-          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
+          href='/pelayanan'
+          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold md:text-[12px] lg:max-xl:text-[10px] text-gray-700 hover:text-teal-700 text-nowrap'
         >
           Pelayanan
         </a>
         <a
           href='/produk'
-          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold lg:text-[12px] text-gray-700 hover:text-teal-700 text-nowrap'
+          className='flex items-center lg:px-3 xl:px-5 font-[Poppins] font-semibold md:text-[12px] lg:max-xl:text-[10px] text-gray-700 hover:text-teal-700 text-nowrap'
         >
           Produk
         </a>
