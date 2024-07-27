@@ -29,32 +29,38 @@ const Sidebar = () => {
         onClick={() => {
           dispatch({ type: 'SET_TOOGLE_NAVBAR', payload: false });
         }}
-        className="fixed md:hidden z-40 left-0 top-0 right-0 bottom-0 bg-slate-700 backdrop-blur-3xl opacity-60"
+        className='fixed md:hidden z-40 left-0 top-0 right-0 bottom-0 bg-slate-700 backdrop-blur-3xl opacity-60'
       ></div>
-      <div className="h-full z-40 fixed drop-shadow-2xl flex">
-        <div className="w-56 h-full overflow-hidden md:overflow-auto py-6 bg-white border-r border-neutral-200 flex-col justify-start items-start gap-4 inline-flex">
+      <div className='h-full z-40 fixed drop-shadow-2xl'>
+        <div className=' h-full overflow-hidden md:overflow-auto py-6 bg-white border-r border-neutral-200 flex-col justify-start items-start gap-4 inline-flex'>
           {Data.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="w-full">
+            <div key={sectionIndex} className='w-full'>
               {section.inside ? (
                 <div>
                   <div
                     onClick={() => toggleSection(section.icon)}
-                    className="self-stretch duration-300 cursor-pointer px-[30px] py-3.5 justify-start items-center gap-3 bg-transparent bg-neutral-200 hover:bg-neutral-300 flex"
+                    className='self-stretch duration-300 cursor-pointer px-[30px] py-3.5 justify-start items-center gap-3 bg-transparent bg-neutral-200 hover:bg-neutral-300 flex'
                   >
-                    <div className="w-6 relative text-xl text-zinc-500">
-                      <i className={`${section.icon}`}></i>
+                    <div className='w-8 h-8 flex items-center justify-center p-2 bg-teal-500 rounded-full '>
+                      <i className={`text-sm text-white ${section.icon}`}></i>
                     </div>
-                    <div className="grow shrink basis-0 text-zinc-500 font-normal text-sm leading-tight">
+                    <div className='font-[Poppins] grow shrink basis-0 text-zinc-500 font-normal text-sm leading-tight text-nowrap'>
                       {section.text}
                     </div>
-                    <div className="text-zinc-500 ml-auto">
-                      <i className={`fa-solid ${expandedSections[section.icon] ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+                    <div className='text-zinc-500 ml-auto text-xs'>
+                      <i
+                        className={`fa-solid ${
+                          expandedSections[section.icon]
+                            ? 'fa-chevron-up'
+                            : 'fa-chevron-down'
+                        }`}
+                      ></i>
                     </div>
                   </div>
                   <CSSTransition
                     in={expandedSections[section.icon]}
                     timeout={300}
-                    classNames="dropdown"
+                    classNames='dropdown'
                     unmountOnExit
                   >
                     <div>
@@ -63,16 +69,18 @@ const Sidebar = () => {
                           to={`/admin-dashboard/${url}`}
                           onClick={() => setActiveCat(text)}
                           key={index}
-                          className={` duration-300  px-[40px] ${activeCat === text
-                            ? ' bg-opacity-80 '
-                            : 'text-zinc-500 hover:bg-neutral-200'
-                            } py-3.5 justify-start items-center gap-3 flex`}
+                          className={`font-[Poppins] duration-300 pl-[74px] ${
+                            activeCat === text
+                              ? ' bg-opacity-80 '
+                              : 'text-zinc-500 hover:bg-neutral-200'
+                          } py-3.5 justify-start items-center gap-3 flex`}
                         >
                           <div
-                            className={`grow shrink basis-0 ${activeCat === text
-                              ? 'text-green-400 font-semibold'
-                              : 'text-zinc-500 font-normal'
-                              } text-sm leading-tight`}
+                            className={`text-xs  ${
+                              activeCat === text
+                                ? 'text-black font-bold'
+                                : 'text-zinc-500 font-normal'
+                            } text-sm leading-tight`}
                           >
                             {text}
                           </div>
@@ -85,22 +93,22 @@ const Sidebar = () => {
                 <Link
                   to={`/admin-dashboard/${section.url}`}
                   onClick={() => setActiveCat(section.text)}
-                  className={`self-stretch duration-300 cursor-pointer px-[30px] py-3.5 justify-start items-center gap-3 ${activeCat === section.text
-                    ? 'bg-neutral-300'
-                    : 'text-zinc-500 hover:bg-neutral-200'
-                    } flex`}
+                  className={`self-stretch duration-300 cursor-pointer px-[30px] py-3.5 justify-start items-center gap-3 ${
+                    activeCat === section.text
+                      ? 'bg-teal-200 '
+                      : 'text-zinc-500 hover:bg-neutral-200'
+                  } flex`}
                 >
-                  <div className="w-6 relative text-xl text-zinc-500">
-                    <i className={`${section.icon}`}></i>
+                  <div className='w-8 h-8 flex items-center justify-center p-2 bg-teal-500 rounded-full '>
+                    <i className={`text-sm text-white ${section.icon}`}></i>
                   </div>
-                  <div className="grow shrink basis-0 text-zinc-500 font-normal text-sm leading-tight">
+                  <div className='font-[Poppins] grow shrink basis-0 text-zinc-500 font-normal text-sm leading-tight'>
                     {section.text}
                   </div>
                 </Link>
               )}
             </div>
           ))}
-
         </div>
       </div>
     </div>
