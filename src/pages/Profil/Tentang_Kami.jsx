@@ -33,12 +33,12 @@ const About = () => {
         {/* Kepala Desa dan Alamat */}
         <div className='flex flex-col md:flex-row gap-5'>
           <Kades />
-          <div className='flex flex-col'>
+          <div className='flex flex-col md:w-1/2'>
             <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white rounded-t-lg'>
-              Tentang Kami
+              Kantor Kampung
             </h1>
             <div className=' rounded-b-lg px-3 py-3 md:p-5 border md:shadow-xl'>
-              <p className='font-[Poppins] text-[12px] md:text-[16px] text-gray-500 text-justify px-2'>
+              <p className='font-[Poppins] text-[10px] md:text-[16px] text-gray-500 text-justify px-2'>
                 {data
                   ? data.isi
                   : 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem accusamus distinctio tenetur provident ipsam obcaecati voluptas ratione maiores quam, vitae, officiis adipisci ab eos laboriosam deleniti magni blanditiis hic at. Dolores porro dolor natus quae consequatur. Sint dolores fugiat recusandae reprehenderit repellendus iure provident? Hic iusto voluptatibus inventore maxime totam ab minima ratione repellendus delectus possimus! Dolores hic est repellat.Eius unde amet cupiditate dolorum repellendus veritatis ullam consequuntur debitis recusandae laboriosam. Quisquam quam in, inventore voluptate explicabo dolor voluptates pariatur! Aspernatur recusandae iste provident nobis, ad illum sapiente. Quo.'}

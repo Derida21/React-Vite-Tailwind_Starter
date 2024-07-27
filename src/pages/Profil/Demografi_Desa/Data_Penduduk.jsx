@@ -33,7 +33,7 @@ const DataPenduduk = () => {
           >
             <input
               type='text'
-              placeholder='Cari Nama Kepala Keluarga'
+              placeholder='Cari Nama'
               className='text-xs rounded-full w-full md:w-[300px] focus:outline-none focus:ring-2 focus:ring-teal-700'
             />
             <button
