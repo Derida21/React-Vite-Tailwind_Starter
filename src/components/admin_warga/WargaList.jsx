@@ -72,7 +72,8 @@ const WargaList = () => {
           setError(response.data.message);
         }
       } else {
-        const response = await axiosInstance.post('/warga', formData);
+        console.log(warga)
+        const response = await axiosInstance.post('/warga', warga);
         if (response.data.success) {
           fetchWarga();
           closeModal();

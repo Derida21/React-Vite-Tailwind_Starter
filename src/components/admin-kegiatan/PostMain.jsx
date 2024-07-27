@@ -7,7 +7,7 @@ const KegiatanPostMain = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { axiosInstance } = useAppContext(); 
+  const { axiosInstance } = useAppContext();
 
   useEffect(() => {
     fetchData();
@@ -46,6 +46,22 @@ const KegiatanPostMain = () => {
   const handleCreatePost = () => {
     navigate(`new`);
   };
+  const stripHtml = (html) => {
+    let text = html.replace(/<\/?[^>]+(>|$)/g, "");
+    // Ganti entitas HTML
+    text = text.replace(/&nbsp;/g, " ");
+    return text;
+  };
+
+  const truncateString = (str, num) => {
+    // Jika panjang string lebih pendek atau sama dengan batas, kembalikan string apa adanya
+    if (str.length <= num) {
+      return str;
+    }
+    // Potong string dan tambahkan elipsis
+    return str.slice(0, num) + '...';
+  };
+
 
   return (
     <div className="container mx-auto p-6">
@@ -56,7 +72,7 @@ const KegiatanPostMain = () => {
           onClick={handleCreatePost}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200"
         >
-          Tambahkan Kegiatan  
+          Tambahkan Kegiatan
         </button>
       </div>
 
@@ -73,7 +89,7 @@ const KegiatanPostMain = () => {
             <img src={item.thumbnail} alt={item.judul} className="mb-4 rounded" />
             <h2 className="text-lg font-bold mb-2">{item.judul}</h2>
             <p className="text-gray-600 mb-2">{item.slug}</p>
-            <p className="text-gray-800 mb-2">{item.isi}</p>
+            <p className="text-gray-800 mb-2">{truncateString(stripHtml(item.isi), 120)}</p>
             <p className="text-gray-500 mb-4">Author: {item.author.nama}</p>
             <div className="flex justify-between">
               <button

@@ -32,10 +32,7 @@ const KegiatanPostForm = () => {
       setFormData({
         thumbnail: data.thumbnail,
         judul: data.judul,
-        slug: data.slug,
         isi: data.isi,
-        author: data.author,
-        type: data.type,
       });
       console.log('Fetched data:', data);
     } catch (error) {
@@ -126,16 +123,6 @@ const KegiatanPostForm = () => {
               type="text"
               name="judul"
               value={formData.judul}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Slug</label>
-            <input
-              type="text"
-              name="slug"
-              value={formData.slug}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
             />
