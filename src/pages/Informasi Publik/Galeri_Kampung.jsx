@@ -27,7 +27,7 @@ const Galeri_Kampung = () => {
               className='relative border p-2 lg:p-4 md:rounded-md hover:border-teal-700 '
             >
               <div
-                className='flex items-end px-3 py-2 md:rounded hover:scale-110 duration-500 h-[110px] xl:h-[140px] min-w-full'
+                className='flex items-end px-3 py-2 md:rounded hover:scale-110 duration-500 h-[110px] xl:h-[160px] min-w-full'
                 style={{
                   backgroundImage: `url(${item.thumbnail})`,
                   backgroundSize: 'cover',

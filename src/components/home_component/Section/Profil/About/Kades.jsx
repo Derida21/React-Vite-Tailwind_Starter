@@ -3,30 +3,59 @@ import imgkades from '../../../../../../assets/img/Kades.png';
 import axios from 'axios';
 
 const Kades = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
 
   const getData = async () => {
-    const response = await axios.get('http://nurul-huda.org/api/tentang-kami');
-    setData(response.data.data);
-    console.log(response.data.data);
+    try {
+      const response = await axios.get('http://nurul-huda.org/api/pejabat');
+      const kades = response.data.data.find((item) => item.id === 1);
+      setData(kades);
+      console.log(kades);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   useEffect(() => {
     getData();
-  });
+  }, []);
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col md:w-1/2'>
       <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white rounded-t-lg'>
-        Kepala Desa
+        Kepala Kampung
       </h1>
-      <div className=' rounded-b-lg px-3 py-3 md:p-5 border md:shadow-xl'>
-        <p className='font-[Poppins] text-[12px] md:text-[16px] text-gray-500 text-justify px-2'>
-          {data
-            ? data.isi
-            : 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem accusamus distinctio tenetur provident ipsam obcaecati voluptas ratione maiores quam, vitae, officiis adipisci ab eos laboriosam deleniti magni blanditiis hic at. Dolores porro dolor natus quae consequatur. Sint dolores fugiat recusandae reprehenderit repellendus iure provident? Hic iusto voluptatibus inventore maxime totam ab minima ratione repellendus delectus possimus! Dolores hic est repellat.Eius unde amet cupiditate dolorum repellendus veritatis ullam consequuntur debitis recusandae laboriosam. Quisquam quam in, inventore voluptate explicabo dolor voluptates pariatur! Aspernatur recusandae iste provident nobis, ad illum sapiente. Quo.'}
-        </p>
-      </div>
+      {data && (
+        <div className='flex flex-col md:flex-row gap-5  rounded-b-lg px-3 py-3 md:p-5 border md:shadow-xl'>
+          <div className='border p-5 rounded-md md:w-1/2 md:max-w-[208px]'>
+            <img src={data.foto || imgkades} alt='' className=' max-h-60' />
+          </div>
+          <table className='table-auto h-fit'>
+            <tbody>
+              <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className=' text-gray-700 font-medium pb-2'>Nama</td>
+                <td className='pl-3 pb-2 text-gray-500'>{data.nama}</td>
+              </tr>
+              <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className=' text-gray-700 font-medium pb-2'>NIP</td>
+                <td className='pl-3 pb-2 text-gray-500'>
+                  {data.nip || 'Data belum tersedia'}
+                </td>
+              </tr>
+              <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className=' text-gray-700 font-medium pb-2'>Alamat</td>
+                <td className='pl-3 pb-2 text-gray-500'>{data.alamat}</td>
+              </tr>
+              <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className=' text-gray-700 font-medium pb-2'>Pendidikan</td>
+                <td className='pl-3 pb-2 text-gray-500'>
+                  {data.pendidikan || 'Data belum tersedia'}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
