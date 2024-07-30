@@ -48,6 +48,11 @@ export let Data = [
     inside: [
       {
         icon: 'fa-solid fa-comments-dollar',
+        text: 'Profil Kampung',
+        url: 'profil',
+      },
+      {
+        icon: 'fa-solid fa-comments-dollar',
         text: 'Tentang Kampung',
         url: 'tentang-kampung',
       },
@@ -60,6 +65,11 @@ export let Data = [
         icon: 'fa-solid fa-comments-dollar',
         text: 'Sejarah Kampung',
         url: 'sejarah-kampung',
+      },
+      {
+        icon: 'fa-solid fa-comments-dollar',
+        text: 'Geografis Kampung',
+        url: 'geografis-kampung',
       },
       {
         icon: 'fa-solid fa-comments-dollar',

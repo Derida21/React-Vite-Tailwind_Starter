@@ -1,65 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useAppContext from '../../context/useAppContext';
 import { toast } from 'react-toastify';
 import Editor from '../ck-editor/ck-editor.jsx';
 
-const PostEditForm = () => {
+const TentangKamiPostForm = ({ endpoint, title }) => {
+  console.log(title)
   const [formData, setFormData] = useState({
-    thumbnail: null, // Changed to null for file handling
+    thumbnail: null,
     judul: '',
-    slug: '',
     isi: '',
-    author: '',
-    type: '',
   });
   const [loading, setLoading] = useState(false);
-  const { slug } = useParams();
   const navigate = useNavigate();
   const { axiosInstance } = useAppContext();
 
   useEffect(() => {
-    if (slug) {
-      fetchDetail();
-    }
-  }, [slug]);
+    const fetchDetail = async () => {
+      setLoading(true);
+      try {
+        const { data } = await axiosInstance.get(endpoint);
+        setFormData(data.data);
+      } catch (error) {
+        console.error('Error fetching detail:', error);
+        toast.error('Error fetching detail');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchDetail = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosInstance.get(`/berita/${slug}`);
-      const data = response.data.data;
-      setFormData({
-        thumbnail: data.thumbnail,
-        judul: data.judul,
-        slug: data.slug,
-        isi: data.isi,
-        author: data.author,
-        type: data.type,
-      });
-      console.log('Fetched data:', data);
-    } catch (error) {
-      console.error('Error fetching detail:', error);
-      toast.error('Error fetching detail');
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchDetail();
+  }, [endpoint, axiosInstance]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-    console.log('Form data:', formData);
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData((prevState) => ({ ...prevState, thumbnail: file }));
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
   };
 
   const handleEditorChange = (data) => {
-    setFormData((prevState) => ({ ...prevState, isi: data }));
-    console.log('Editor data:', data);
+    setFormData(prev => ({ ...prev, isi: data }));
   };
 
   const handleSubmit = async (e) => {
@@ -67,29 +49,15 @@ const PostEditForm = () => {
     setLoading(true);
     try {
       const form = new FormData();
-      form.append('judul', formData.judul);
-      form.append('slug', formData.slug);
-      form.append('isi', formData.isi);
-      form.append('thumbnail', formData.thumbnail);
-      form.append('_method', 'put'); // Add _method for PUT request
+      Object.entries(formData).forEach(([key, value]) => form.append(key, value));
+      form.append('_method', 'put');
 
-      console.log('FormData:', Array.from(form.entries()));
+      await axiosInstance.post(endpoint, form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
 
-      if (slug) {
-        await axiosInstance.post(`/berita/${slug}`, form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-      } else {
-        await axiosInstance.post('/berita', form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-      }
-
-      navigate('/admin-dashboard/berita');
+      navigate('/admin-dashboard/tentang-kami');
+      toast.success('Data berhasil diperbarui');
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Error submitting form');
@@ -107,14 +75,14 @@ const PostEditForm = () => {
         Back
       </button>
       <form onSubmit={handleSubmit} className="mb-8 bg-white p-6 rounded shadow-md">
-        <h2 className="text-xl font-bold mb-6 text-center">{slug ? 'Edit Post' : 'Create Post'}</h2>
+        <h2 className="text-xl font-bold mb-6 text-center">{title}</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
             <label className="block text-gray-700">Thumbnail</label>
             <input
               type="file"
               name="thumbnail"
-              onChange={handleFileChange} // Use handleFileChange for file input
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
             />
           </div>
@@ -124,7 +92,7 @@ const PostEditForm = () => {
               type="text"
               name="judul"
               value={formData.judul}
-              onChange={handleInputChange}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
             />
           </div>
@@ -137,7 +105,7 @@ const PostEditForm = () => {
           type="submit"
           className="mt-6 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
         >
-          {slug ? 'Update Post' : 'Create Post'}
+          Update Tentang Kami
         </button>
       </form>
       {loading && (
@@ -149,4 +117,4 @@ const PostEditForm = () => {
   );
 };
 
-export default PostEditForm;
+export default TentangKamiPostForm;

@@ -4,14 +4,12 @@ import useAppContext from '../../context/useAppContext';
 import { toast } from 'react-toastify';
 import Editor from '../ck-editor/ck-editor.jsx';
 
-const KegiatanPostEditForm = () => {
+const PotensiForm = ({ endpoint, title }) => {
+  console.log("haha");
   const [formData, setFormData] = useState({
     thumbnail: null, // Changed to null for file handling
     judul: '',
-    slug: '',
     isi: '',
-    author: '',
-    type: '',
   });
   const [loading, setLoading] = useState(false);
   const { slug } = useParams();
@@ -19,23 +17,19 @@ const KegiatanPostEditForm = () => {
   const { axiosInstance } = useAppContext();
 
   useEffect(() => {
-    if (slug) {
-      fetchDetail();
-    }
+    fetchDetail();
   }, [slug]);
 
   const fetchDetail = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(`/kegiatan/${slug}`);
+      const response = await axiosInstance.get(endpoint);
       const data = response.data.data;
+      console.log(data);
       setFormData({
         thumbnail: data.thumbnail,
         judul: data.judul,
-        slug: data.slug,
         isi: data.isi,
-        author: data.author,
-        type: data.type,
       });
       console.log('Fetched data:', data);
     } catch (error) {
@@ -68,28 +62,19 @@ const KegiatanPostEditForm = () => {
     try {
       const form = new FormData();
       form.append('judul', formData.judul);
-      form.append('slug', formData.slug);
       form.append('isi', formData.isi);
       form.append('thumbnail', formData.thumbnail);
       form.append('_method', 'put'); // Add _method for PUT request
 
       console.log('FormData:', Array.from(form.entries()));
 
-      if (slug) {
-        await axiosInstance.post(`/berita/${slug}`, form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-      } else {
-        await axiosInstance.post('/berita', form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-      }
+      await axiosInstance.post(`/tentang-kami`, form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-      navigate('/admin-dashboard/berita');
+      navigate('/admin-dashboard/tentang-kami');
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Error submitting form');
@@ -132,32 +117,12 @@ const KegiatanPostEditForm = () => {
             <label className="block text-gray-700">Isi</label>
             <Editor data={formData.isi} onChange={handleEditorChange} />
           </div>
-          {/* <div>
-            <label className="block text-gray-700">Author</label>
-            <input
-              type="text"
-              name="author"
-              value={formData.author}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div> */}
-          {/* <div>
-            <label className="block text-gray-700">Type</label>
-            <input
-              type="text"
-              name="type"
-              value={formData.type}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div> */}
         </div>
         <button
           type="submit"
           className="mt-6 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
         >
-          {slug ? 'Update Post' : 'Create Post'}
+          Update Tentang Kami
         </button>
       </form>
       {loading && (
@@ -169,4 +134,4 @@ const KegiatanPostEditForm = () => {
   );
 };
 
-export default KegiatanPostEditForm;
+export default PotensiForm;

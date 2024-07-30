@@ -32,6 +32,10 @@ import WargaList from '../../components/admin_warga/WargaList';
 import LembagaList from '../../components/admin-lembaga-2/LembagaList';
 import DashboardPost from '../../components/admin_potensi/potensi_component';
 import PejabatList from '../../components/admin-pejabat/PejabatList';
+
+import TentangKamiPostForm from '../../components/admin_potensi/post_form';
+import ProfilKampung from '../../components/admin-Profil/Main';
+
 const AdminDashboard = () => {
   const { category } = useParams();
   let cat = Data.find((categ) => categ.url === parseInt(category));
@@ -65,15 +69,14 @@ const AdminDashboard = () => {
       <div className='main max-w-[2300px] mt-[75px] flex justify-between'>
         <Sidebar />
         <div
-          className={`main ${
-            state.toggle
-              ? state.toggleNavbar
-                ? 'md:ml-[270px]'
-                : 'ml-0'
-              : state.toggleNavbar
+          className={`main ${state.toggle
+            ? state.toggleNavbar
+              ? 'md:ml-[270px]'
+              : 'ml-0'
+            : state.toggleNavbar
               ? 'md:ml-[90px]'
               : 'ml-0'
-          } overflow-auto w-full h-full z-10`}
+            } overflow-auto w-full h-full z-10`}
         >
           <Routes>
             <Route path='main' element={<Main />} />
@@ -82,7 +85,6 @@ const AdminDashboard = () => {
             {/* <Route path="lembaga" element={<LembagaCrud />} /> */}
             <Route path='lembaga' element={<LembagaList />} />
             <Route path='belanja/*' element={<BelanjaRoutes />} />
-            <Route path='potensi/*' element={<PotensiRoutes />} />
             <Route path='kegiatan/*' element={<KegiatanRoutes />} />
             <Route
               path='belanja'
@@ -100,27 +102,48 @@ const AdminDashboard = () => {
             <Route path='produk' element={<ProductList />} />
             <Route path='keluarga' element={<WargaList />} />
             <Route path='pejabat' element={<PejabatList />} />
+
+            <Route path='profil' element={<ProfilKampung />} />
             <Route
               path='tentang-kampung'
               element={
                 <DashboardPost endpoint='/tentang-kami' title='Tentang Kami' />
               }
             />
+            <Route path='tentang-kampung/post' element={
+              <TentangKamiPostForm endpoint='/tentang-kami' title='Tentang Kami' />
+            } />
             <Route
               path='sejarah-kampung'
               element={
-                <DashboardPost endpoint='/sejarah' title='Sejarah Desa' />
+                <DashboardPost endpoint='/sejarah' title='Sejarah kampung' />
               }
             />
+            <Route path='sejarah-kampung/post' element={
+              <TentangKamiPostForm endpoint='/sejarah-kampung' title='Tentang Kami' />
+            } />
+            <Route
+              path='geografis-kampung'
+              element={
+                <DashboardPost endpoint='/geografis' title='Geografis kampung' />
+              }
+            />
+            <Route path='geografis-kampung/post' element={
+              <TentangKamiPostForm endpoint='/geografis' title='Geografis kampung' />
+            } />
             <Route
               path='potensi-kampung'
               element={
                 <DashboardPost
-                  endpoint='/potensi-kampung'
-                  title='Potensi Desa'
+                  endpoint='/potensi-desa'
+                  title='Potensi Kampung'
                 />
               }
             />
+
+            <Route path='potensi-kampung/post' element={
+              <TentangKamiPostForm endpoint='/potensi-desa' title='Potensi Kampung' />
+            } />
           </Routes>
         </div>
       </div>
@@ -132,15 +155,6 @@ const ProdukRoutes = () => {
     <Routes>
       <Route path='/' element={<ProductList />} />
       <Route path=':slug' element={<ProductDetail />} />
-    </Routes>
-  );
-};
-
-const PotensiRoutes = () => {
-  return (
-    <Routes>
-      <Route path='/' element={<PotensiComponent />} />
-      <Route path=':slug' element={<ModalPotensi />} />
     </Routes>
   );
 };

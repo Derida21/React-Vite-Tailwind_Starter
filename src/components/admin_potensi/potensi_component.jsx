@@ -5,6 +5,8 @@ import { FaChevronRight } from 'react-icons/fa';
 import useAppContext from '../../context/useAppContext';
 import Modal from 'react-modal';
 import ModalPotensi from './modal_potensi';
+import { useNavigate } from 'react-router-dom';
+
 
 const customStyles = {
   overlay: {
@@ -31,6 +33,7 @@ const DashboardPost = ({ endpoint, title }) => {
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { axiosInstance } = useAppContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +51,7 @@ const DashboardPost = ({ endpoint, title }) => {
   }, [endpoint]);
 
   const openModal = () => {
-    setModalIsOpen(true);
+    navigate('post')
   };
 
   const closeModal = () => {
@@ -81,14 +84,7 @@ const DashboardPost = ({ endpoint, title }) => {
           <div className="self-stretch flex-col justify-start items-start gap-4 flex">
             <h3 className="text-xl font-semibold">{data.judul}</h3>
             <p className="text-gray-700 mb-4">{data.tanggal}</p>
-            <p className="text-gray-700 whitespace-pre-line">{data.isi}</p>
-            {data.thumbnail && (
-              <img
-                src={data.thumbnail}
-                alt={data.judul}
-                className="w-full h-auto rounded-lg mb-4"
-              />
-            )}
+            <p className="text-gray-700 whitespace-pre-line"><div dangerouslySetInnerHTML={{ __html: data.isi }} /></p>
           </div>
         </div>
         <div className="w-full px-6 py-4 justify-between items-center gap-4 inline-flex">
