@@ -128,7 +128,7 @@ export let Data = [
   {
     icon: 'fa-solid fa-file',
     text: 'E-arsip',
-    url: 'pelayanan',
+    url: 'e-arsip',
   },
 ];
 
