@@ -20,13 +20,20 @@ const Form_Pengantar = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
-  const options = [
+  const Gender = [
     { value: 'Laki - laki', label: 'Laki - Laki' },
     { value: 'Perempuan', label: 'Perempuan' },
   ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === 'NIK' || name === 'KK' || name === 'WA') {
+      if (!/^[\d-]*$/.test(value)) {
+        return;
+      }
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -55,12 +62,12 @@ const Form_Pengantar = () => {
         jenis_kelamin: formData['Jenis Kelamin'],
         agama: formData.Agama,
         keperluan: formData.Tujuan,
-      }
+      },
     };
 
-
-    axios.post('http://nurul-huda.org/api/pelayanan', data)
-      .then(response => {
+    axios
+      .post('http://nurul-huda.org/api/pelayanan', data)
+      .then((response) => {
         const message = `Saya ingin mengkonfirmasikan bahwa saya telah mengisi form pelayanan`;
 
         const phoneNumber = '+6285852392330';
@@ -70,7 +77,7 @@ const Form_Pengantar = () => {
         window.open(whatsappUrl, '_blank');
         setShowMessage(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error:', error);
       });
   };
@@ -161,7 +168,7 @@ const Form_Pengantar = () => {
               onChange={handleChange}
             />
             <Form.Options
-              option={options}
+              option={Gender}
               name='Jenis Kelamin'
               value={formData['Jenis Kelamin']}
               onChange={handleChange}
