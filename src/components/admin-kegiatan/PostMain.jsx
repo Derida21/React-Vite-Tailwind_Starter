@@ -41,8 +41,8 @@ const KegiatanPostMain = () => {
 
   const handleViewDetail = (slug) => {
     navigate(`${slug}`);
-  };
-
+  ccccc};
+[]
   const handleCreatePost = () => {
     navigate(`new`);
   };

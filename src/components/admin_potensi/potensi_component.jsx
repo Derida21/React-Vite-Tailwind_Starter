@@ -1,10 +1,9 @@
-// src/components/DashboardPost.js
-
 import React, { useEffect, useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import useAppContext from '../../context/useAppContext';
 import Modal from 'react-modal';
-import ModalPotensi from './modal_potensi';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const customStyles = {
   overlay: {
@@ -21,6 +20,12 @@ const customStyles = {
     maxWidth: '500px',
     width: '90%',
     padding: '20px',
+    maxHeight: '80vh', // Adjust the maximum height of the modal
+    overflow: 'hidden', // Hide overflow initially
+  },
+  editorContainer: {
+    maxHeight: '60vh', // Set a maximum height for the editor container
+    overflowY: 'auto', // Enable vertical scrolling
   },
 };
 
@@ -30,6 +35,8 @@ const DashboardPost = ({ endpoint, title }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [editedContent, setEditedContent] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
   const { axiosInstance } = useAppContext();
 
   useEffect(() => {
@@ -37,6 +44,8 @@ const DashboardPost = ({ endpoint, title }) => {
       try {
         const response = await axiosInstance.get(endpoint);
         setData(response.data.data);
+        setEditedContent(response.data.data.isi); // Initialize edited content
+        setThumbnail(response.data.data.thumbnail); // Initialize thumbnail
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -45,7 +54,7 @@ const DashboardPost = ({ endpoint, title }) => {
     };
 
     fetchData();
-  }, [endpoint]);
+  }, [endpoint, axiosInstance]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -53,6 +62,20 @@ const DashboardPost = ({ endpoint, title }) => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setEditedContent(data);
+  };
+
+  const saveChanges = async () => {
+    try {
+      await axiosInstance.post(`${endpoint}`, { ...data, isi: editedContent, thumbnail });
+      closeModal();
+    } catch (error) {
+      console.error("Error saving changes:", error);
+    }
   };
 
   if (loading) {
@@ -72,7 +95,7 @@ const DashboardPost = ({ endpoint, title }) => {
   }
 
   return (
-    <div className="min-w-[220px] xl:w-full grow shrink basis-0 rounded-xl drop-shadow justify-start items-start gap-4 bg-white flex">
+    <div className="p-10 min-w-[220px] xl:w-full grow shrink basis-0 rounded-xl drop-shadow justify-start items-start gap-4 bg-white flex">
       <div className="grow shrink basis-0 bg-white rounded-xl flex-col justify-start items-start inline-flex" onClick={openModal}>
         <div className="w-full h-auto px-6 pt-6 pb-4 bg-white rounded-xl shadow flex-col justify-start items-start gap-6 flex">
           <div className="self-stretch justify-start items-center gap-3 inline-flex">
@@ -81,10 +104,10 @@ const DashboardPost = ({ endpoint, title }) => {
           <div className="self-stretch flex-col justify-start items-start gap-4 flex">
             <h3 className="text-xl font-semibold">{data.judul}</h3>
             <p className="text-gray-700 mb-4">{data.tanggal}</p>
-            <p className="text-gray-700 whitespace-pre-line">{data.isi}</p>
-            {data.thumbnail && (
+            <div className="text-gray-700 whitespace-pre-line content-container" dangerouslySetInnerHTML={{ __html: editedContent }}></div>
+            {thumbnail && (
               <img
-                src={data.thumbnail}
+                src={thumbnail}
                 alt={data.judul}
                 className="w-full h-auto rounded-lg mb-4"
               />
@@ -102,7 +125,15 @@ const DashboardPost = ({ endpoint, title }) => {
         style={customStyles}
         contentLabel="Edit Modal"
       >
-        <ModalPotensi post={data} closeModal={closeModal} />
+        <div style={customStyles.editorContainer}>
+          <CKEditor
+            editor={ClassicEditor}
+            data={editedContent}
+            onChange={handleEditorChange}
+          />
+        </div>
+        <button onClick={saveChanges} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">Save</button>
+        <button onClick={closeModal} className="mt-4 bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 transition duration-200">Close</button>
       </Modal>
     </div>
   );

@@ -79,7 +79,7 @@ const AdminDashboard = () => {
                         <Route path="pejabat" element={<PejabatList/>} />
                         <Route path="tentang-kampung" element={<DashboardPost  endpoint="/tentang-kami" title="Tentang Kami"/>} />
                         <Route path="sejarah-kampung" element={<DashboardPost  endpoint="/sejarah" title="Sejarah Desa"/>} />
-                        <Route path="potensi-kampung" element={<DashboardPost  endpoint="/potensi-kampung" title="Potensi Desa"/>} />
+                        <Route path="potensi-kampung" element={<DashboardPost  endpoint="/potensi-desa" title="Potensi Desa"/>} />
                     </Routes>
                 </div>
             </div>
