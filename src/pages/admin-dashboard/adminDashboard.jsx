@@ -37,188 +37,157 @@ import TentangKamiPostForm from '../../components/admin_potensi/post_form';
 import ProfilKampung from '../../components/admin-Profil/Main';
 
 const AdminDashboard = () => {
-  const { category } = useParams();
-  let cat = Data.find((categ) => categ.url === parseInt(category));
+    const { category } = useParams();
+    let cat = Data.find((categ) => categ.url === parseInt(category));
 
-  const { state, dispatch } = useContext(Context);
-  const [size, setSize] = useState(1000);
+    const { state, dispatch } = useContext(Context);
+    const [size, setSize] = useState(1000);
 
-  useEffect(() => {
-    const handleResize = (e) => {
-      setSize(e.currentTarget.innerWidth);
-    };
+    useEffect(() => {
+        const handleResize = (e) => {
+            setSize(e.currentTarget.innerWidth);
+        };
 
-    window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
-  useEffect(() => {
-    size < 768
-      ? dispatch({ type: 'SET_TOGGLE_NAVBAR', payload: false })
-      : dispatch({ type: 'SET_TOGGLE_NAVBAR', payload: true });
-  }, [size, dispatch]);
+    useEffect(() => {
+        size < 768
+            ? dispatch({ type: 'SET_TOGGLE_NAVBAR', payload: false })
+            : dispatch({ type: 'SET_TOGGLE_NAVBAR', payload: true });
+    }, [size, dispatch]);
 
-<<<<<<< HEAD
     return (
         <div className='bg-slate-50'>
-            <div className=""><Navbar /></div>
-            <div className="main max-w-[2300px] mt-[76px] flex justify-between">
+            <div className=''>
+                <Navbar />
+            </div>
+            <div className='main max-w-[2300px] mt-[75px] flex justify-between'>
                 <Sidebar />
-                <div className={`main ${state.toggle ? (state.toggleNavbar ? 'md:ml-[220px]' : 'ml-0') : (state.toggleNavbar ? 'md:ml-[90px]' : 'ml-0')} overflow-auto w-full h-full z-10`}>
+                <div
+                    className={`main ${state.toggle
+                        ? state.toggleNavbar
+                            ? 'md:ml-[270px]'
+                            : 'ml-0'
+                        : state.toggleNavbar
+                            ? 'md:ml-[90px]'
+                            : 'ml-0'
+                        } overflow-auto w-full h-full z-10`}
+                >
                     <Routes>
-                        <Route path="main" element={<Main />} />
-                        <Route path="marketing" element={<Marketing />} />
-                        <Route path="berita/*" element={<PostRoutes />} />
+                        <Route path='main' element={<Main />} />
+                        <Route path='marketing' element={<Marketing />} />
+                        <Route path='berita/*' element={<PostRoutes />} />
                         {/* <Route path="lembaga" element={<LembagaCrud />} /> */}
-                        <Route path="lembaga" element={<LembagaList />} />
-                        <Route path="belanja/*" element={<BelanjaRoutes />} />
-                        <Route path="potensi/*" element={<PotensiRoutes/>} />
-                        <Route path="kegiatan/*" element={<KegiatanRoutes/>} />
-                        <Route path="belanja" element={<CrudComponent endpoint="/belanja-desa"/>} />
-                        <Route path="pembangunan" element={<CrudComponent endpoint="/pembangunan"/>} />
-                        <Route path="pelayanan" element={<PelayananCrud />} /> 
-                        <Route path="penduduk" element={<DataPenduduk path="/data-penduduk"/>} />
-                        <Route path="produk" element={<ProductList/>} />
-                        <Route path="keluarga" element={<WargaList/>} />
-                        <Route path="pejabat" element={<PejabatList/>} />
-                        <Route path="tentang-kampung" element={<DashboardPost  endpoint="/tentang-kami" title="Tentang Kami"/>} />
-                        <Route path="sejarah-kampung" element={<DashboardPost  endpoint="/sejarah" title="Sejarah Desa"/>} />
-                        <Route path="potensi-kampung" element={<DashboardPost  endpoint="/potensi-desa" title="Potensi Desa"/>} />
+                        <Route path='lembaga' element={<LembagaList />} />
+                        <Route path='belanja/*' element={<BelanjaRoutes />} />
+                        <Route path='kegiatan/*' element={<KegiatanRoutes />} />
+                        <Route
+                            path='belanja'
+                            element={<CrudComponent endpoint='/belanja-desa' />}
+                        />
+                        <Route
+                            path='pembangunan'
+                            element={<CrudComponent endpoint='/pembangunan' />}
+                        />
+                        <Route path='pelayanan' element={<PelayananCrud />} />
+                        <Route
+                            path='penduduk'
+                            element={<DataPenduduk path='/data-penduduk' />}
+                        />
+                        <Route path='produk' element={<ProductList />} />
+                        <Route path='keluarga' element={<WargaList />} />
+                        <Route path='pejabat' element={<PejabatList />} />
+
+                        <Route path='profil' element={<ProfilKampung />} />
+                        <Route
+                            path='tentang-kampung'
+                            element={
+                                <DashboardPost endpoint='/tentang-kami' title='Tentang Kami' />
+                            }
+                        />
+                        <Route path='tentang-kampung/post' element={
+                            <TentangKamiPostForm endpoint='/tentang-kami' title='Tentang Kami' />
+                        } />
+                        <Route
+                            path='sejarah-kampung'
+                            element={
+                                <DashboardPost endpoint='/sejarah' title='Sejarah kampung' />
+                            }
+                        />
+                        <Route path='sejarah-kampung/post' element={
+                            <TentangKamiPostForm endpoint='/sejarah-kampung' title='Tentang Kami' />
+                        } />
+                        <Route
+                            path='geografis-kampung'
+                            element={
+                                <DashboardPost endpoint='/geografis' title='Geografis kampung' />
+                            }
+                        />
+                        <Route path='geografis-kampung/post' element={
+                            <TentangKamiPostForm endpoint='/geografis' title='Geografis kampung' />
+                        } />
+                        <Route
+                            path='potensi-kampung'
+                            element={
+                                <DashboardPost
+                                    endpoint='/potensi-desa'
+                                    title='Potensi Kampung'
+                                />
+                            }
+                        />
+
+                        <Route path='potensi-kampung/post' element={
+                            <TentangKamiPostForm endpoint='/potensi-desa' title='Potensi Kampung' />
+                        } />
                     </Routes>
                 </div>
             </div>
-=======
-  return (
-    <div className='bg-slate-50'>
-      <div className=''>
-        <Navbar />
-      </div>
-      <div className='main max-w-[2300px] mt-[75px] flex justify-between'>
-        <Sidebar />
-        <div
-          className={`main ${state.toggle
-            ? state.toggleNavbar
-              ? 'md:ml-[270px]'
-              : 'ml-0'
-            : state.toggleNavbar
-              ? 'md:ml-[90px]'
-              : 'ml-0'
-            } overflow-auto w-full h-full z-10`}
-        >
-          <Routes>
-            <Route path='main' element={<Main />} />
-            <Route path='marketing' element={<Marketing />} />
-            <Route path='berita/*' element={<PostRoutes />} />
-            {/* <Route path="lembaga" element={<LembagaCrud />} /> */}
-            <Route path='lembaga' element={<LembagaList />} />
-            <Route path='belanja/*' element={<BelanjaRoutes />} />
-            <Route path='kegiatan/*' element={<KegiatanRoutes />} />
-            <Route
-              path='belanja'
-              element={<CrudComponent endpoint='/belanja-desa' />}
-            />
-            <Route
-              path='pembangunan'
-              element={<CrudComponent endpoint='/pembangunan' />}
-            />
-            <Route path='pelayanan' element={<PelayananCrud />} />
-            <Route
-              path='penduduk'
-              element={<DataPenduduk path='/data-penduduk' />}
-            />
-            <Route path='produk' element={<ProductList />} />
-            <Route path='keluarga' element={<WargaList />} />
-            <Route path='pejabat' element={<PejabatList />} />
-
-            <Route path='profil' element={<ProfilKampung />} />
-            <Route
-              path='tentang-kampung'
-              element={
-                <DashboardPost endpoint='/tentang-kami' title='Tentang Kami' />
-              }
-            />
-            <Route path='tentang-kampung/post' element={
-              <TentangKamiPostForm endpoint='/tentang-kami' title='Tentang Kami' />
-            } />
-            <Route
-              path='sejarah-kampung'
-              element={
-                <DashboardPost endpoint='/sejarah' title='Sejarah kampung' />
-              }
-            />
-            <Route path='sejarah-kampung/post' element={
-              <TentangKamiPostForm endpoint='/sejarah-kampung' title='Tentang Kami' />
-            } />
-            <Route
-              path='geografis-kampung'
-              element={
-                <DashboardPost endpoint='/geografis' title='Geografis kampung' />
-              }
-            />
-            <Route path='geografis-kampung/post' element={
-              <TentangKamiPostForm endpoint='/geografis' title='Geografis kampung' />
-            } />
-            <Route
-              path='potensi-kampung'
-              element={
-                <DashboardPost
-                  endpoint='/potensi-desa'
-                  title='Potensi Kampung'
-                />
-              }
-            />
-
-            <Route path='potensi-kampung/post' element={
-              <TentangKamiPostForm endpoint='/potensi-desa' title='Potensi Kampung' />
-            } />
-          </Routes>
->>>>>>> admin-v2
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 const ProdukRoutes = () => {
-  return (
-    <Routes>
-      <Route path='/' element={<ProductList />} />
-      <Route path=':slug' element={<ProductDetail />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path='/' element={<ProductList />} />
+            <Route path=':slug' element={<ProductDetail />} />
+        </Routes>
+    );
 };
 
 const BelanjaRoutes = () => {
-  return (
-    <Routes>
-      <Route path='/' element={<BelanjaComponent />} />
-      <Route path=':slug' element={<BelanjaDetail />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path='/' element={<BelanjaComponent />} />
+            <Route path=':slug' element={<BelanjaDetail />} />
+        </Routes>
+    );
 };
 
 const KegiatanRoutes = () => {
-  return (
-    <Routes>
-      <Route path='/' element={<KegiatanPostMain />} />
-      <Route path='new' element={<KegiatanPostForm />} />
-      <Route path=':slug' element={<KegiatanPostDetail />} />
-      <Route path='edit/:slug' element={<KegiatanPostForm />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path='/' element={<KegiatanPostMain />} />
+            <Route path='new' element={<KegiatanPostForm />} />
+            <Route path=':slug' element={<KegiatanPostDetail />} />
+            <Route path='edit/:slug' element={<KegiatanPostForm />} />
+        </Routes>
+    );
 };
 
 const PostRoutes = () => {
-  return (
-    <Routes>
-      <Route path='/' element={<PostMain />} />
-      <Route path='new' element={<PostForm />} />
-      <Route path=':slug' element={<PostDetail />} />
-      <Route path='edit/:slug' element={<PostForm />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path='/' element={<PostMain />} />
+            <Route path='new' element={<PostForm />} />
+            <Route path=':slug' element={<PostDetail />} />
+            <Route path='edit/:slug' element={<PostForm />} />
+        </Routes>
+    );
 };
 
 export default AdminDashboard;
