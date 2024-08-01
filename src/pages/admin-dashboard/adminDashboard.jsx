@@ -22,8 +22,6 @@ import PengembanganComponent from '../../components/admin-pengembangan/pengemban
 import BelanjaComponent from '../../components/admin-belanja2/belanja_component';
 import BelanjaDetail from '../../components/admin-belanja2/belanja_detail';
 
-import ModalPotensi from '../../components/admin_potensi/modal_potensi';
-import PotensiComponent from '../../components/admin_potensi/potensi_component';
 import CrudComponent from '../../components/crudbasecomponent/crudcomponent';
 import PelayananCrud from '../../components/admin-pelayanan/pelayanan_crud';
 import ProductList from '../../components/admin-product/ProductList'; // Import the ProductList component
@@ -76,7 +74,7 @@ const AdminDashboard = () => {
                         : state.toggleNavbar
                             ? 'md:ml-[90px]'
                             : 'ml-0'
-                        } overflow-auto w-full h-full z-10`}
+                        } overflow-auto w-full h-full z-10 font-[Poppins]`}
                 >
                     <Routes>
                         <Route path='main' element={<Main />} />
@@ -86,6 +84,11 @@ const AdminDashboard = () => {
                         <Route path='lembaga' element={<LembagaList />} />
                         <Route path='belanja/*' element={<BelanjaRoutes />} />
                         <Route path='kegiatan/*' element={<KegiatanRoutes />} />
+                        <Route path='produk' element={<ProductList />} />
+                        <Route path='keluarga' element={<WargaList />} />
+                        <Route path='pejabat' element={<PejabatList />} />
+                        <Route path='profil' element={<ProfilKampung />} />
+
                         <Route
                             path='belanja'
                             element={<CrudComponent endpoint='/belanja-desa' />}
@@ -99,11 +102,7 @@ const AdminDashboard = () => {
                             path='penduduk'
                             element={<DataPenduduk path='/data-penduduk' />}
                         />
-                        <Route path='produk' element={<ProductList />} />
-                        <Route path='keluarga' element={<WargaList />} />
-                        <Route path='pejabat' element={<PejabatList />} />
 
-                        <Route path='profil' element={<ProfilKampung />} />
                         <Route
                             path='tentang-kampung'
                             element={
@@ -113,6 +112,7 @@ const AdminDashboard = () => {
                         <Route path='tentang-kampung/post' element={
                             <TentangKamiPostForm endpoint='/tentang-kami' title='Tentang Kami' />
                         } />
+
                         <Route
                             path='sejarah-kampung'
                             element={
@@ -120,8 +120,9 @@ const AdminDashboard = () => {
                             }
                         />
                         <Route path='sejarah-kampung/post' element={
-                            <TentangKamiPostForm endpoint='/sejarah-kampung' title='Tentang Kami' />
+                            <TentangKamiPostForm endpoint='/sejarah' title='Tentang Kami' />
                         } />
+
                         <Route
                             path='geografis-kampung'
                             element={
@@ -131,6 +132,7 @@ const AdminDashboard = () => {
                         <Route path='geografis-kampung/post' element={
                             <TentangKamiPostForm endpoint='/geografis' title='Geografis kampung' />
                         } />
+
                         <Route
                             path='potensi-kampung'
                             element={
@@ -140,7 +142,6 @@ const AdminDashboard = () => {
                                 />
                             }
                         />
-
                         <Route path='potensi-kampung/post' element={
                             <TentangKamiPostForm endpoint='/potensi-desa' title='Potensi Kampung' />
                         } />

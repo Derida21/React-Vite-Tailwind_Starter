@@ -8,7 +8,7 @@ const getInitialState = () => {
     token: null,
     user: null,
   };
-  
+
   if (storedAuth) {
     try {
       auth = JSON.parse(storedAuth);
@@ -16,7 +16,7 @@ const getInitialState = () => {
       console.error("Failed to parse auth from localStorage:", e);
     }
   }
-  
+
   return {
     toggle: true,
     toggleNavbar: true,
@@ -63,7 +63,7 @@ const Provider = ({ children }) => {
   const axiosInstance = axios.create({
     baseURL,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   });
 

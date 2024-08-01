@@ -7,7 +7,7 @@ import { dateCards } from '../../dates/jummy'
 import DashboardPost from '../admin_potensi/potensi_component'
 const Main = () => {
   return (
-    <div className="p-6 mb-6 bg-slate-50 min-h-screen">
+    <div className="p-6 mb-6 bg-slate-50 min-h-screen font-[Poppins]">
       {/* <div className="">
           <Options />
         </div> */}

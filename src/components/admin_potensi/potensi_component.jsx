@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import useAppContext from '../../context/useAppContext';
 import Modal from 'react-modal';
-import ModalPotensi from './modal_potensi';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -114,22 +113,6 @@ const DashboardPost = ({ endpoint, title }) => {
           <FaChevronRight className="text-orange-600" />
         </div>
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Edit Modal"
-      >
-        <div style={customStyles.editorContainer}>
-          <CKEditor
-            editor={ClassicEditor}
-            data={editedContent}
-            onChange={handleEditorChange}
-          />
-        </div>
-        <button onClick={saveChanges} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">Save</button>
-        <button onClick={closeModal} className="mt-4 bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 transition duration-200">Close</button>
-      </Modal>
     </div>
   );
 };
