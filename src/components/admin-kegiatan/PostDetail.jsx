@@ -128,16 +128,6 @@ const KegiatanPostEditForm = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
             />
           </div>
-          <div>
-            <label className="block text-gray-700">Slug</label>
-            <input
-              type="text"
-              name="slug"
-              value={formData.slug}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
           <div className="md:col-span-2">
             <label className="block text-gray-700">Isi</label>
             <Editor data={formData.isi} onChange={handleEditorChange} />

@@ -27,6 +27,15 @@ import Layout from './Layout';
 
 import React from 'react';
 import Produk from './pages/Produk/Produk';
+import DetailKegiatan from './components/home_component/Section/Informasi Publik/Agenda_Kegiatan/Detail_Agenda';
+import APBK from './pages/Transparansi/APBK';
+import APBK_FIX from './pages/Transparansi/APBK-fix';
+import DetailProduk from './components/home_component/Section/Produk/Detail-Produk';
+import Galeri_Kampung from './pages/Informasi Publik/Galeri_Kampung';
+import DataPenduduk from './pages/Profil/Demografi_Desa/Data_Penduduk';
+import Pembangunan from './pages/Transparansi/Pembangunan';
+
+import Arsip from './pages/Arsip/EArsip';
 
 const App = () => {
   return (
@@ -38,30 +47,40 @@ const App = () => {
           <Route path='/login' element={<LoginPage />} />
           <Route element={<RequireAuth allowedRoles={['admin']} />}>
             <Route path='/admin-dashboard/*' element={<AdminDashboard />} />
+
+            {/* e-arsip */}
+            <Route path='admin-dashboard/e-arsip' element={<Arsip />} />
           </Route>
           <Route path='/home' element={<Home />} />
           <Route path='/' element={<Home />} />
           {/* Profil */}
           <Route path='/profil/tentang-kami' element={<About />} />
-          <Route path='/profil/sejarah-desa' element={<Sejarah />} />
+          <Route path='/profil/sejarah-kampung' element={<Sejarah />} />
           <Route path='/profil/visi-misi' element={<VisiMisi />} />
           <Route
-            path='/profil/demografi-desa/statistik-penduduk'
+            path='/profil/demografi-kampung/statistik-penduduk'
             element={<StatistikPenduduk />}
           />
-          <Route path='/profil/geografi-desa' element={<GeografisDesa />} />
+          <Route
+            path='/profil/demografi-kampung/data-penduduk'
+            element={<DataPenduduk />}
+          />
+          <Route path='/profil/geografi-kampung' element={<GeografisDesa />} />
           {/* Pemerintahan */}
           <Route
             path='/pemerintahan/struktur-organisasi'
             element={<Struktur />}
           />
           <Route
-            path='/pemerintahan/perangkat-desa'
+            path='/pemerintahan/perangkat-kampung'
             element={<PerangkatDesa />}
           />
-          <Route path='/pemerintahan/lembaga-desa' element={<LembagaDesa />} />
           <Route
-            path='/pemerintahan/lembaga-desa/detail-lembaga/:slug'
+            path='/pemerintahan/lembaga-kampung'
+            element={<LembagaDesa />}
+          />
+          <Route
+            path='/pemerintahan/lembaga-kampung/:uuid'
             element={<DetailLembaga />}
           />
           {/* Informasi Publik */}
@@ -70,18 +89,35 @@ const App = () => {
             element={<AgendaKegiatan />}
           />
           <Route
-            path='/informasi-publik/berita-desa'
+            path='/informasi-publik/agenda-kegiatan/:slug'
+            element={<DetailKegiatan />}
+          />
+          <Route
+            path='/informasi-publik/berita-kampung'
             element={<BeritaDesa />}
           />
           <Route
-            path='/informasi-publik/berita-desa/:slug'
+            path='/informasi-publik/berita-kampung/:slug'
             element={<DetailBerita />}
           />
+          <Route
+            path='/informasi-publik/galeri-kampung'
+            element={<Galeri_Kampung />}
+          />
+          {/* Transparansi */}
+          <Route path='/transparansi/apbk' element={<APBK />} />
+          <Route path='/transparansi/apbk-terealisasi' element={<APBK_FIX />} />
+          <Route
+            path='/transparansi/pembangunan-kampung'
+            element={<Pembangunan />}
+          />
+
           {/* Pelayanan */}
-          <Route path='/pelayanan/pelayanan' element={<Pelayanan />} />
+          <Route path='/pelayanan' element={<Pelayanan />} />
           <Route path='*' element={<Navigate to='/home' replace />} />
           {/* Produk */}
           <Route path='/produk' element={<Produk />} />
+          <Route path='/produk/:slug' element={<DetailProduk />} />
         </Routes>
       </Layout>
     </Router>

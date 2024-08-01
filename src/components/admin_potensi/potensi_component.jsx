@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import useAppContext from '../../context/useAppContext';
 import Modal from 'react-modal';
+<<<<<<< HEAD
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+=======
+import ModalPotensi from './modal_potensi';
+import { useNavigate } from 'react-router-dom';
+
+>>>>>>> admin-v2
 
 const customStyles = {
   overlay: {
@@ -38,6 +44,7 @@ const DashboardPost = ({ endpoint, title }) => {
   const [editedContent, setEditedContent] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const { axiosInstance } = useAppContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +64,7 @@ const DashboardPost = ({ endpoint, title }) => {
   }, [endpoint, axiosInstance]);
 
   const openModal = () => {
-    setModalIsOpen(true);
+    navigate('post')
   };
 
   const closeModal = () => {
@@ -104,6 +111,7 @@ const DashboardPost = ({ endpoint, title }) => {
           <div className="self-stretch flex-col justify-start items-start gap-4 flex">
             <h3 className="text-xl font-semibold">{data.judul}</h3>
             <p className="text-gray-700 mb-4">{data.tanggal}</p>
+<<<<<<< HEAD
             <div className="text-gray-700 whitespace-pre-line content-container" dangerouslySetInnerHTML={{ __html: editedContent }}></div>
             {thumbnail && (
               <img
@@ -112,6 +120,9 @@ const DashboardPost = ({ endpoint, title }) => {
                 className="w-full h-auto rounded-lg mb-4"
               />
             )}
+=======
+            <p className="text-gray-700 whitespace-pre-line"><div dangerouslySetInnerHTML={{ __html: data.isi }} /></p>
+>>>>>>> admin-v2
           </div>
         </div>
         <div className="w-full px-6 py-4 justify-between items-center gap-4 inline-flex">

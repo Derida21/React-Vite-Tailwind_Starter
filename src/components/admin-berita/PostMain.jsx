@@ -7,7 +7,7 @@ const PostMain = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { axiosInstance } = useAppContext(); 
+  const { axiosInstance } = useAppContext();
 
   useEffect(() => {
     fetchData();
@@ -26,10 +26,12 @@ const PostMain = () => {
     }
   };
 
-  const handleDelete = async (uuid) => {
+  const handleDelete = async (slug) => {
     setLoading(true);
+
+    console.log(slug)
     try {
-      await axiosInstance.delete(`/berita/${uuid}`);
+      await axiosInstance.delete(`/berita/${slug}`);
       fetchData();
     } catch (error) {
       console.error('Error deleting data:', error);
@@ -50,6 +52,23 @@ const PostMain = () => {
   const truncateText = (text, length) => {
     if (text.length <= length) return text;
     return text.substring(0, length) + '...';
+  };
+
+
+  const stripHtml = (html) => {
+    let text = html.replace(/<\/?[^>]+(>|$)/g, "");
+    // Ganti entitas HTML
+    text = text.replace(/&nbsp;/g, " ");
+    return text;
+  };
+
+  const truncateString = (str, num) => {
+    // Jika panjang string lebih pendek atau sama dengan batas, kembalikan string apa adanya
+    if (str.length <= num) {
+      return str;
+    }
+    // Potong string dan tambahkan elipsis
+    return str.slice(0, num) + '...';
   };
 
   return (
@@ -80,7 +99,7 @@ const PostMain = () => {
             <div>
               <h2 className="text-lg font-bold mb-2">{item.judul}</h2>
               <p className="text-gray-600 mb-2">{item.slug}</p>
-              <p className="text-gray-800 mb-2">{truncateText(item.isi, 100)}</p>
+              <p className="text-gray-800 mb-2">{truncateString(stripHtml(item.isi), 120)}</p>
               <p className="text-gray-500 mb-4">Author: {item.author.nama}</p>
             </div>
             <div className="flex justify-between mt-auto">

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Editor from '../ck-editor/ck-editor.jsx';
 
 const KegiatanPostForm = () => {
+
   const [formData, setFormData] = useState({
     thumbnail: null, // Changed to null for file handling
     judul: '',
@@ -32,10 +33,7 @@ const KegiatanPostForm = () => {
       setFormData({
         thumbnail: data.thumbnail,
         judul: data.judul,
-        slug: data.slug,
         isi: data.isi,
-        author: data.author,
-        type: data.type,
       });
       console.log('Fetched data:', data);
     } catch (error) {
@@ -130,40 +128,10 @@ const KegiatanPostForm = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
             />
           </div>
-          <div>
-            <label className="block text-gray-700">Slug</label>
-            <input
-              type="text"
-              name="slug"
-              value={formData.slug}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
           <div className="md:col-span-2">
             <label className="block text-gray-700">Isi</label>
-            <Editor data={formData.isi} onChange={handleEditorChange} />
+            <Editor data={editorData} onChange={handleEditorChange} />
           </div>
-          {/* <div>
-            <label className="block text-gray-700">Author</label>
-            <input
-              type="text"
-              name="author"
-              value={formData.author}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Type</label>
-            <input
-              type="text"
-              name="type"
-              value={formData.type}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div> */}
         </div>
         <button
           type="submit"
