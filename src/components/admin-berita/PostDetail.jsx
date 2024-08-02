@@ -17,6 +17,7 @@ const PostEditForm = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { axiosInstance } = useAppContext();
+  const [editorKey, setEditorKey] = useState(0);
 
   useEffect(() => {
     if (slug) {
@@ -29,6 +30,7 @@ const PostEditForm = () => {
     try {
       const response = await axiosInstance.get(`/berita/${slug}`);
       const data = response.data.data;
+      setEditorKey(prevKey => prevKey + 1);
       setFormData({
         thumbnail: data.thumbnail,
         judul: data.judul,
@@ -130,7 +132,7 @@ const PostEditForm = () => {
           </div>
           <div className="md:col-span-2">
             <label className="block text-gray-700">Isi</label>
-            <Editor data={formData.isi} onChange={handleEditorChange} />
+            <Editor key={editorKey} data={formData.isi} onChange={handleEditorChange} />
           </div>
         </div>
         <button

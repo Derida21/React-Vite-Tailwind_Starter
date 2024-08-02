@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import Editor from '../ck-editor/ck-editor.jsx';
 
 const TentangKamiPostForm = ({ endpoint, title }) => {
-  console.log(title)
   const [formData, setFormData] = useState({
     thumbnail: null,
     judul: '',
     isi: '',
   });
   const [loading, setLoading] = useState(false);
+  const [editorKey, setEditorKey] = useState(0); // Tambahkan state untuk key
   const navigate = useNavigate();
   const { axiosInstance } = useAppContext();
 
@@ -20,7 +20,12 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
       setLoading(true);
       try {
         const { data } = await axiosInstance.get(endpoint);
-        setFormData(data.data);
+        setFormData({
+          thumbnail: null,
+          judul: data.data.judul,
+          isi: data.data.isi,
+        });
+        setEditorKey(prevKey => prevKey + 1); // Ubah key untuk mereload CKEditor
       } catch (error) {
         console.error('Error fetching detail:', error);
         toast.error('Error fetching detail');
@@ -77,28 +82,10 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
       <form onSubmit={handleSubmit} className="mb-8 bg-white p-6 rounded shadow-md">
         <h2 className="text-xl font-bold mb-6 text-center">{title}</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div>
-            <label className="block text-gray-700">Thumbnail</label>
-            <input
-              type="file"
-              name="thumbnail"
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Judul</label>
-            <input
-              type="text"
-              name="judul"
-              value={formData.judul}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
+
           <div className="md:col-span-2">
             <label className="block text-gray-700">Isi</label>
-            <Editor data={formData.isi} onChange={handleEditorChange} />
+            <Editor key={editorKey} data={formData.isi} onChange={handleEditorChange} />
           </div>
         </div>
         <button
