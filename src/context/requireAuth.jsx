@@ -4,7 +4,7 @@ import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import useAppContext from './useAppContext';
 
 const RequireAuth = ({ allowedRoles }) => {
-  
+
   const location = useLocation();
 
   const { state, dispatch } = useAppContext();
@@ -15,7 +15,7 @@ const RequireAuth = ({ allowedRoles }) => {
   useEffect(() => {
     const storedAuth = localStorage.getItem("auth");
     if (!token && storedAuth) {
-    
+
       console.log(storedAuth);
       dispatch({ type: 'SET_AUTH', payload: JSON.parse(storedAuth) });
     } else if (!token) {
@@ -23,7 +23,6 @@ const RequireAuth = ({ allowedRoles }) => {
     }
   }, [token, dispatch]);
 
-  console.log('Token:', token);
   console.log('User:', user);
 
   if (!state.auth.token) {

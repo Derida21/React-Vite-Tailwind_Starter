@@ -4,13 +4,13 @@ import {
   IconPrinter,
   IconTrash,
 } from '@tabler/icons-react';
-import Layout from '../Layout';
-import useAppContext from '../../../context/useAppContext';
+import Layout from '../../Layout';
+import useAppContext from '../../../../context/useAppContext';
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
-import Pagination from '../pagination'; // Import the Pagination component
+import Pagination from '../../pagination'; // Import the Pagination component
 
-const Perencanaan = () => {
+const Keterangan = ({ handleback }) => {
   const { axiosInstance } = useAppContext();
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +24,9 @@ const Perencanaan = () => {
 
   const fetchPerencanaan = async () => {
     try {
-      const response = await axiosInstance.get('/arsip/perencanaan');
+      const response = await axiosInstance.get(
+        '/arsip/keuangan?subKategori=Keterangan'
+      );
       if (response.data.success) {
         setData(response.data.data);
       } else {
@@ -102,8 +104,9 @@ const Perencanaan = () => {
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <Layout>
+    <Layout className='border border-slate-50 p-0'>
       <div className='flex items-center gap-2 w-full'>
+        <Layout.ButtonBack onClick={handleback} />
         <Layout.ButtonModal onClick={() => setShowModal(true)} />
       </div>
       <Layout.List header={header} data={currentItems} listitem={listitem} />
@@ -125,4 +128,4 @@ const Perencanaan = () => {
   );
 };
 
-export default Perencanaan;
+export default Keterangan;
