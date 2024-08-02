@@ -13,6 +13,7 @@ import Logo from '../../components/home_component/Logo';
 import Home from '../../components/archive-component/archive-home/home';
 import Perencanaan from '../../components/archive-component/archive-perencanaan/perencanaan';
 import Keuangan from '../../components/archive-component/archive-keuangan/keuangan';
+import Pemerintahan from '../../components/archive-component/archive-pemerintahan/pemerintahan';
 
 const EArsip = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -39,13 +40,13 @@ const EArsip = () => {
   const renderPage = () => {
     switch (currentPage) {
       case 'Home':
-        return <Home setCurrentPage={setCurrentPage} />;
+        return <Home />;
       case 'Perencanaan':
         return <Perencanaan />;
       case 'Keuangan':
         return <Keuangan />;
       case 'Pemerintahan':
-        return <PemerintahanPage />;
+        return <Pemerintahan />;
       case 'Kesejahteraan':
         return <KesejahteraanPage />;
       case 'Pelayanan':
@@ -138,7 +139,9 @@ const EArsip = () => {
               addres='Kec. Talisayan Kab. Berau Kalimantan Timur'
             />
           </div>
-          <div className='flex flex-col gap-5 h-full'>{renderPage()}</div>
+          <div className='flex flex-col gap-5 h-full overflow-hidden'>
+            {renderPage()}
+          </div>
         </div>
       </div>
     </section>
