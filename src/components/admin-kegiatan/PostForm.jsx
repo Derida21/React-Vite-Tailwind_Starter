@@ -130,7 +130,7 @@ const KegiatanPostForm = () => {
           </div>
           <div className="md:col-span-2">
             <label className="block text-gray-700">Isi</label>
-            <Editor data={editorData} onChange={handleEditorChange} />
+            <Editor data={formData.isi} onChange={handleEditorChange} />
           </div>
         </div>
         <button

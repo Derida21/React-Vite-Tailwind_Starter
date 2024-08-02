@@ -26,7 +26,7 @@ const Navbar = () => {
   const storedAuth = JSON.parse(localStorage.getItem('auth')) || { token: null, user: null };
 
   return (
-    <div className="z-50 fixed left-0 top-0 right-0 h-[76px] px-6 py-4 bg-white border-b border-neutral-200 flex justify-between items-center gap-5">
+    <div className="z-50 fixed left-0 top-0 right-0 h-[76px] px-6 py-4 bg-white border-b border-neutral-200 flex justify-between items-center gap-5 font-[Poppins]">
       <div className="flex gap-6 items-center">
         <div className="text-xl font-semibold leading-8 text-gray-900 cursor-pointer" onClick={toggleNavbar}>Dashboard</div>
       </div>
