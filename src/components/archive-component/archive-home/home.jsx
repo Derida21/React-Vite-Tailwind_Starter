@@ -1,97 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Dropdown from './dropdown';
-import Table from './table';
-import axios from 'axios';
-import useAppContext from '../../../context/useAppContext';
 import Layout from '../Layout';
+import useAppContext from '../../../context/useAppContext';
+import { useEffect, useState } from 'react';
+import Pagination from '../pagination'; // Import the Pagination component
+import {
+  IconDownload,
+  IconFileSearch,
+  IconPrinter,
+  IconTrash,
+} from '@tabler/icons-react';
 
-const Home = ({ setCurrentPage }) => {
+const Home = () => {
   const { axiosInstance } = useAppContext();
-  const [Perencanaan, setPerencanaan] = useState({ headers: [], rows: [] });
-  const [Keuangan, setKeuangan] = useState({
-    APBK: { headers: [], rows: [] },
-    RKP: { headers: [], rows: [] },
-    SPJ: { headers: [], rows: [] },
-  });
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState();
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    const fetchPerencanaan = async () => {
-      try {
-        const response = await axiosInstance.get('/arsip/perencanaan');
-        const headers = ['Kode Arsip', 'File', 'Nama File', 'Tanggal Upload'];
-        const rows = response.data.data
-          .slice(0, 10)
-          .map((item) => Object.values(item));
-        setPerencanaan({ headers, rows });
-      } catch (error) {
-        console.error('Error fetching planning data:', error);
-      }
-    };
-
-    const fetchKeuangan = async () => {
-      try {
-        const apbkResponse = await axiosInstance.get(
-          '/arsip/keuangan?subKategori=APBK'
-        );
-        const rkpResponse = await axiosInstance.get(
-          '/arsip/keuangan?subKategori=RKP'
-        );
-        const spjResponse = await axiosInstance.get(
-          '/arsip/keuangan?subKategori=SPJ'
-        );
-
-        const processKeuangan = (data) => {
-          const headers = ['Kode Arsip', 'File', 'Nama File', 'Tanggal Upload'];
-          const rows = data.slice(0, 10).map((item) => Object.values(item));
-          return { headers, rows };
-        };
-
-        setKeuangan({
-          APBK: processKeuangan(apbkResponse.data.data),
-          RKP: processKeuangan(rkpResponse.data.data),
-          SPJ: processKeuangan(spjResponse.data.data),
-        });
-      } catch (error) {
-        console.error('Error fetching finance data:', error);
-      }
-    };
-
     fetchPerencanaan();
-    fetchKeuangan();
   }, []);
+
+  const fetchPerencanaan = async () => {
+    try {
+      const response = await axiosInstance.get('/arsip');
+      if (response.data.success) {
+        setData(response.data.data);
+      } else {
+        setError(response.data.message);
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const header = [
+    { label: ['No.'] },
+    { label: ['Kode Arsip'] },
+    { label: ['File'] },
+    { label: ['Nama File'] },
+    { label: ['Tanggal Upload'] },
+    { label: ['Aksi'] },
+  ];
+
+  const iconstyle =
+    'p-1 text-white bg-teal-400 rounded-[3px] stroke-2 cursor-pointer duration-300';
+
+  const listitem = (item, index, customstyle) => (
+    <>
+      <li className={customstyle[0]}>
+        <h1 className='font-[Poppins] text-gray-700 text-xs px-4 py-3'>
+          {index + 1}
+        </h1>
+      </li>
+      <li className={customstyle[1]}>
+        <h1 className='font-[Poppins] text-gray-700 text-xs px-4 py-3'>
+          {item.kode_file}
+        </h1>
+      </li>
+      <li className={customstyle[2]}>
+        <h1 className='font-[Poppins] text-gray-700 text-xs px-4 py-3'>
+          {item.type_file}
+        </h1>
+      </li>
+      <li className={customstyle[3]}>
+        <h1 className='font-[Poppins] text-gray-700 text-xs px-4 py-3'>
+          {item.nama_file}
+        </h1>
+      </li>
+      <li className={customstyle[4]}>
+        <h1 className='font-[Poppins] text-gray-700 text-xs px-4 py-3'>
+          {item.tanggal}
+        </h1>
+      </li>
+      <li className={customstyle[5]}>
+        <div className='flex flex-wrap gap-2 px-4 py-3'>
+          <IconFileSearch className={`${iconstyle} hover:bg-green-500`} />
+          <IconPrinter className={`${iconstyle} hover:bg-blue-500`} />
+          <IconDownload className={`${iconstyle} hover:bg-yellow-500`} />
+          <IconTrash className={`${iconstyle} hover:bg-red-500 `} />
+        </div>
+      </li>
+    </>
+  );
+
+  const handleAddData = (newData) => {
+    setData((prevData) => [...prevData, newData]);
+  };
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () =>
+    setCurrentPage((prev) =>
+      Math.min(prev + 1, Math.ceil(data.length / itemsPerPage))
+    );
+  const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <Layout>
-      {/* Perencanaan */}
-      <Dropdown
-        title='Perencanaan'
-        onClick={() => setCurrentPage('Perencanaan')}
-        href='#'
-      >
-        <Table data={Perencanaan} indexColumn={true} />
-      </Dropdown>
-      {/* Keuangan */}
-      <Dropdown
-        title='Keuangan'
-        className='flex flex-col gap-2 border border-gray-300 rounded p-4'
-        onClick={() => setCurrentPage('Keuangan')}
-        href='#'
-      >
-        <Dropdown
-          title='APBK'
-          onClick={() => setCurrentPage('Perencanaan')}
-          href='#'
-        >
-          <Table data={Keuangan.APBK} indexColumn={true} />
-        </Dropdown>
-        <Dropdown title='RKP'>
-          <Table data={Keuangan.RKP} indexColumn={true} />
-        </Dropdown>
-        <Dropdown title='SPJ'>
-          <Table data={Keuangan.SPJ} indexColumn={true} />
-        </Dropdown>
-      </Dropdown>
+      <Layout.List header={header} data={currentItems} listitem={listitem} />
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        totalItems={data.length}
+        paginate={paginate}
+        currentPage={currentPage}
+        nextPage={nextPage}
+        prevPage={prevPage}
+      />
     </Layout>
   );
 };

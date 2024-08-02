@@ -1,18 +1,24 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CKEditor } from 'ckeditor4-react';
 
-const Editor = ({ data, onChange }) => {
+const Editor = ({ key, data, onChange }) => {
+
+  const [initial, setInitial] = useState(key);
+
+  useEffect(() => {
+    setInitial(key);
+  }, [key]);
 
   const handleEditorChange = (event) => {
     const data = event.editor.getData();
     onChange(data);
   };
-  const initData = data;
 
   return (
     <CKEditor
-      initData={initData}
+      key={initial} // Tambahkan key untuk merender ulang CKEditor saat data berubah
+      initData={data}
       config={{
         versionCheck: false,
         extraPlugins: 'uploadimage,image2',

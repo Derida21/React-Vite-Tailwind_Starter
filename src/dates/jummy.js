@@ -80,7 +80,7 @@ export let Data = [
   },
   {
     icon: 'fa-solid fa-chart-pie',
-    text: 'Informasi Desa',
+    text: 'Informasi Kampung',
     inside: [
       {
         icon: 'fa-solid fa-gear',
@@ -96,16 +96,16 @@ export let Data = [
   },
   {
     icon: 'fa-solid fa-box',
-    text: 'Transparansi Desa',
+    text: 'Transparansi Kampung',
     inside: [
       {
         icon: 'fa-solid fa-gear',
-        text: 'Apbn',
+        text: 'Apbk',
         url: 'apbn',
       },
       {
         icon: 'fa-solid fa-gear',
-        text: 'Laporan Apbn',
+        text: 'Laporan Apbk',
         url: 'apbn',
       },
       {

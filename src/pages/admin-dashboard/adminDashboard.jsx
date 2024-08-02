@@ -95,7 +95,7 @@ const AdminDashboard = () => {
                         />
                         <Route
                             path='pembangunan'
-                            element={<CrudComponent endpoint='/pembangunan' />}
+                            element={<CrudComponent endpoint='pembangunan' />}
                         />
                         <Route path='pelayanan' element={<PelayananCrud />} />
                         <Route
