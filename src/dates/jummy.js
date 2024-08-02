@@ -48,6 +48,11 @@ export let Data = [
     inside: [
       {
         icon: 'fa-solid fa-comments-dollar',
+        text: 'Profil Kampung',
+        url: 'profil',
+      },
+      {
+        icon: 'fa-solid fa-comments-dollar',
         text: 'Tentang Kampung',
         url: 'tentang-kampung',
       },
@@ -60,6 +65,11 @@ export let Data = [
         icon: 'fa-solid fa-comments-dollar',
         text: 'Sejarah Kampung',
         url: 'sejarah-kampung',
+      },
+      {
+        icon: 'fa-solid fa-comments-dollar',
+        text: 'Geografis Kampung',
+        url: 'geografis-kampung',
       },
       {
         icon: 'fa-solid fa-comments-dollar',
@@ -118,7 +128,7 @@ export let Data = [
   {
     icon: 'fa-solid fa-file',
     text: 'E-arsip',
-    url: 'pelayanan',
+    url: 'e-arsip',
   },
 ];
 
@@ -485,29 +495,38 @@ export let dateOptions = [
 export let cards = [
   {
     text: 'Jumlah Penduduk',
-    icon: 'fa-solid fa-file',
-    iconColor: 'text-neutral-500',
+    icon: 'fa-solid fa-user',
+    iconColor: 'text-teal-500',
     money: '342',
     percent: '4.2%',
     percentColor: 'text-lime-500',
     trend: 'fa-solid fa-arrow-up',
   },
   {
-    text: 'Jumlah Dusun',
-    icon: 'fa-solid fa-person-rays',
-    iconColor: 'text-neutral-500',
+    text: 'Jumlah RT',
+    icon: 'fa-solid fa-users',
+    iconColor: 'text-teal-500',
     money: '90',
     percent: '2.2%',
     percentColor: 'text-lime-500',
     trend: 'fa-solid fa-arrow-up',
   },
   {
-    text: 'Layanan yang belum selesai',
+    text: 'Layanan masuk',
     icon: 'fa-solid fa-circle-xmark',
-    iconColor: 'text-orange-600',
+    iconColor: 'text-teal-600',
     money: '12',
     percent: '1.5%',
-    percentColor: 'text-orange-600',
+    percentColor: 'text-teal-600',
+    trend: 'fa-solid fa-arrow-down',
+  },
+  {
+    text: 'Layanan yang belum selesai',
+    icon: 'fa-solid fa-circle-xmark',
+    iconColor: 'text-teal-600',
+    money: '12',
+    percent: '1.5%',
+    percentColor: 'text-teal-600',
     trend: 'fa-solid fa-arrow-down',
   },
 ];

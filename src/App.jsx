@@ -35,6 +35,8 @@ import Galeri_Kampung from './pages/Informasi Publik/Galeri_Kampung';
 import DataPenduduk from './pages/Profil/Demografi_Desa/Data_Penduduk';
 import Pembangunan from './pages/Transparansi/Pembangunan';
 
+import Arsip from './pages/Arsip/EArsip';
+
 const App = () => {
   return (
     <Router>
@@ -45,6 +47,9 @@ const App = () => {
           <Route path='/login' element={<LoginPage />} />
           <Route element={<RequireAuth allowedRoles={['admin']} />}>
             <Route path='/admin-dashboard/*' element={<AdminDashboard />} />
+
+            {/* e-arsip */}
+            <Route path='admin-dashboard/e-arsip' element={<Arsip />} />
           </Route>
           <Route path='/home' element={<Home />} />
           <Route path='/' element={<Home />} />

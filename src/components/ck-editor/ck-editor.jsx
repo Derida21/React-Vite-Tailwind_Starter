@@ -1,27 +1,141 @@
-import React from 'react';
-import { CKEditor, Image } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import CKFinder from '@ckeditor/ckeditor5-build-classic';
 
-const Editor = ({ data, onChange, kategori }) => {
+import React, { useState, useEffect } from 'react';
+import { CKEditor } from 'ckeditor4-react';
+
+const Editor = ({ key, data, onChange }) => {
+
+  const [initial, setInitial] = useState(key);
+
+  useEffect(() => {
+    setInitial(key);
+  }, [key]);
+
+  const handleEditorChange = (event) => {
+    const data = event.editor.getData();
+    onChange(data);
+  };
+
   return (
     <CKEditor
-      editor={ClassicEditor}
-      data={data}
+      key={initial} // Tambahkan key untuk merender ulang CKEditor saat data berubah
+      initData={data}
       config={{
-        ckfinder: {
-          uploadUrl: `http://nurul-huda.org/api/upload?kategori=${kategori}`,
-        },
-        extraPlugins: [CKFinder],
+        versionCheck: false,
+        extraPlugins: 'uploadimage,image2',
+        filebrowserUploadUrl: 'http://nurul-huda.org/api/upload?kategori=berita', // Ganti dengan endpoint upload server Anda
+        filebrowserUploadMethod: 'form',
         toolbar: [
-          'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', 'ckfinder', 'ckboxImageEdit', 'insertImage'
+          {
+            name: 'document',
+            groups: ['mode', 'document', 'doctools'],
+            items: ['Source', '-', 'Print'],
+          },
+          {
+            name: 'clipboard',
+            groups: ['clipboard', 'undo'],
+            items: [
+              'Cut',
+              'Copy',
+              'Paste',
+              'PasteText',
+              'PasteFromWord',
+              '-',
+              'Undo',
+              'Redo',
+            ],
+          },
+          {
+            name: 'editing',
+            groups: ['find', 'selection', 'spellchecker', 'editing'],
+            items: ['-', '-'],
+          },
+          { name: 'forms', groups: ['forms'], items: [''] },
+          {
+            name: 'insert',
+            groups: ['insert'],
+            items: [
+              'Image',
+              'Table',
+              'HorizontalRule',
+              'SpecialChar',
+              'PageBreak',
+            ],
+          },
+          {
+            name: 'links',
+            groups: ['links'],
+            items: ['Link', 'Unlink', 'Anchor'],
+          },
+          {
+            name: 'tools',
+            groups: ['tools'],
+            items: ['Maximize', 'ShowBlocks'],
+          },
+          '/',
+          {
+            name: 'styles',
+            groups: ['styles'],
+            items: ['Styles', 'Format', 'Font', 'FontSize'],
+          },
+          {
+            name: 'basicstyles',
+            groups: ['basicstyles', 'cleanup'],
+            items: [
+              'Bold',
+              'Italic',
+              'Underline',
+              'Strike',
+              'Subscript',
+              'Superscript',
+              '-',
+            ],
+          },
+          {
+            name: 'colors',
+            groups: ['colors'],
+            items: ['TextColor', 'BGColor'],
+          },
+          {
+            name: 'paragraph',
+            groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'],
+            items: [
+              'NumberedList',
+              'BulletedList',
+              '-',
+              'Outdent',
+              'Indent',
+              '-',
+              'Blockquote',
+              'CreateDiv',
+              '-',
+              'JustifyLeft',
+              'JustifyCenter',
+              'JustifyRight',
+              'JustifyBlock',
+              'CodeSnippet',
+              '-',
+            ],
+          },
+          { name: 'others', groups: ['others'], items: ['-', 'AddLayout'] },
+          { name: 'about', groups: ['about'], items: [''] },
         ],
-
+        removeButtons: '',
+        extraPlugins: ['justify', 'colorbutton', 'font', 'codesnippet'],
+        codeSnippet_theme: 'monokai_sublime',
+        height: 300,
+        image: {
+          toolbar: [
+            'imageTextAlternative',
+            'imageStyle:full',
+            'imageStyle:side',
+            'linkImage',
+          ],
+        },
+        table: {
+          contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
+        },
       }}
-      onChange={(event, editor) => {
-        const data = editor.getData();
-        onChange(data);
-      }}
+      onChange={handleEditorChange}
     />
   );
 };

@@ -17,6 +17,7 @@ const KegiatanPostEditForm = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { axiosInstance } = useAppContext();
+  const [editorKey, setEditorKey] = useState(0);
 
   useEffect(() => {
     if (slug) {
@@ -29,6 +30,7 @@ const KegiatanPostEditForm = () => {
     try {
       const response = await axiosInstance.get(`/kegiatan/${slug}`);
       const data = response.data.data;
+      setEditorKey(prevKey => prevKey + 1);
       setFormData({
         thumbnail: data.thumbnail,
         judul: data.judul,
@@ -128,19 +130,9 @@ const KegiatanPostEditForm = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
             />
           </div>
-          <div>
-            <label className="block text-gray-700">Slug</label>
-            <input
-              type="text"
-              name="slug"
-              value={formData.slug}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
           <div className="md:col-span-2">
             <label className="block text-gray-700">Isi</label>
-            <Editor data={formData.isi} onChange={handleEditorChange} />
+            <Editor key={editorKey} data={formData.isi} onChange={handleEditorChange} />
           </div>
           {/* <div>
             <label className="block text-gray-700">Author</label>
