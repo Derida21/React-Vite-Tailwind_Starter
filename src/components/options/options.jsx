@@ -12,7 +12,7 @@ const Options = () => {
     let [changeMultiLocation, setChangeMultiLocation] = useState('MultiLocation')
     let [changeWalkin, setChangeWalkin] = useState('Walk-in')
     let [walkIn, setWalkIn] = useState(false)
-    
+
     let toggleModalCountries = () => {
         setModalCountries((prev) => {
             return !prev
@@ -155,7 +155,7 @@ const Options = () => {
                 </div>
             </div>
             <div className="h-[42px] w-full xl:w-auto px-3.5 py-3 bg-white rounded border border-neutral-200 justify-start items-center gap-3 flex">
-                <div className=" text-orange-600 text-lg" ><i class="fa-solid fa-calendar-days"></i></div>
+                <div className=" text-orange-600 text-lg" ><i className="fa-solid fa-calendar-days"></i></div>
                 <div className="grow shrink basis-0 w-full text-zinc-900 text-xs font-normal leading-[18px]">Today : Apr 25, 2018 12:00 AM - Apr 26, 2018 12:00 AM</div>
 
             </div>

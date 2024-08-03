@@ -28,7 +28,7 @@ const Cards = () => {
                             </div>
                             <div className=" w-full px-6 py-4 justify-between items-center gap-4 inline-flex">
                                 <div className="grow shrink basis-0 text-orange-600 text-sm font-semibold leading-tight">View detail</div>
-                                <i class="fa-solid fa-chevron-right text-orange-600"></i>
+                                <i className="fa-solid fa-chevron-right text-orange-600"></i>
                             </div>
                         </div>
                     </div>

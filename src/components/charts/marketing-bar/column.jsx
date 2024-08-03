@@ -55,7 +55,7 @@ const Column = () => {
 
                     </ChartComponent>
                 </div>
-                <div className="text-red-600 text-xs font-normal leading-[18px] text-center mt-4"><i class="fa-solid fa-chart-line pr-2"></i> 2,5% decrease average each location</div>
+                <div className="text-red-600 text-xs font-normal leading-[18px] text-center mt-4"><i className="fa-solid fa-chart-line pr-2"></i> 2,5% decrease average each location</div>
             </div>
         </div>
     )
