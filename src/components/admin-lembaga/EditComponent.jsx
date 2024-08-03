@@ -131,7 +131,7 @@ const EditComponent = ({ uuid, setEditMode, fetchData }) => {
   return (
     <div className="p-4">
       <button className="bg-gray-500 text-white px-4 py-2 rounded mb-4" onClick={() => setEditMode(false)}>
-        Back
+        Kembali
       </button>
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6">
         <div className="mb-4">
@@ -224,7 +224,7 @@ const EditComponent = ({ uuid, setEditMode, fetchData }) => {
                 className="bg-red-500 text-white px-2 py-1 rounded"
                 onClick={() => removePengurus(index)}
               >
-                Remove
+                Hapus
               </button>
             </div>
           ))}
@@ -233,7 +233,7 @@ const EditComponent = ({ uuid, setEditMode, fetchData }) => {
             className="bg-green-500 text-white px-4 py-2 rounded mt-2"
             onClick={addPengurus}
           >
-            Add Pengurus
+            Tambahkan Pengurus
           </button>
         </div>
         <div className="mb-4">
