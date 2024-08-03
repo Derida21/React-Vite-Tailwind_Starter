@@ -46,7 +46,9 @@ const Pemerintahan = () => {
           {currentView === 'Pengantar' && (
             <Pengantar handleback={handleBackClick} />
           )}
-          {currentView === 'RKP' && <Keterangan handleback={handleBackClick} />}
+          {currentView === 'Keterangan' && (
+            <Keterangan handleback={handleBackClick} />
+          )}
           {currentView === 'Hak Milik' && <Hak handleback={handleBackClick} />}
         </>
       )}
