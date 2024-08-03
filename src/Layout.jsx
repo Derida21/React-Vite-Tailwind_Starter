@@ -6,12 +6,13 @@ import Footer from './components/home_component/Footer/Footer';
 const Layout = ({ children }) => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin-dashboard');
+  const isLogin = location.pathname.startsWith('/login');
 
   return (
     <>
-      {!isAdminRoute && <Navbar />}
+      {!isAdminRoute && !isLogin && <Navbar />}
       <div className=' w-full'>{children}</div>
-      {!isAdminRoute && <Footer />}
+      {!isAdminRoute && !isLogin && <Footer />}
     </>
   );
 };

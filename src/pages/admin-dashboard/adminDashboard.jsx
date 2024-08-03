@@ -60,6 +60,7 @@ const AdminDashboard = () => {
     }, [size, dispatch]);
 
     return (
+
         <div className='bg-slate-50'>
             <div className=''>
                 <Navbar />

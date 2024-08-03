@@ -44,12 +44,12 @@ const App = () => {
       <Popup />
       <Layout>
         <Routes>
-          <Route path='/login' element={<LoginPage />} />
           <Route element={<RequireAuth allowedRoles={['admin']} />}>
             <Route path='/admin-dashboard/*' element={<AdminDashboard />} />
 
             {/* e-arsip */}
             <Route path='admin-dashboard/e-arsip' element={<Arsip />} />
+            <Route path='/login' element={<LoginPage />} />
           </Route>
           <Route path='/home' element={<Home />} />
           <Route path='/' element={<Home />} />
