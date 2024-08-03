@@ -38,10 +38,10 @@ import Pembangunan from './pages/Transparansi/Pembangunan';
 import Arsip from './pages/Arsip/EArsip';
 
 const App = () => {
+  const isLogin = location.pathname.startsWith('/login');
   return (
     <Router>
       <ScrollToTop />
-      <Popup />
       <Layout>
         <Routes>
           <Route element={<RequireAuth allowedRoles={['admin']} />}>
