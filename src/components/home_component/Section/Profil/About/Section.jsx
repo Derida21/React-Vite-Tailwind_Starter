@@ -23,11 +23,6 @@ const Section = () => {
 
   return (
     <Layout className='flex flex-col gap-2'>
-      <Layout.Thumbnail
-        title='Tentang Kami'
-        src={about.src || imgdefault}
-        alt={about.alt || 'Tentang Kami'}
-      />
       <Layout.Description>
         <div className='flex flex-col gap-2 lg:gap-5'>
           <LatarBelakang latarbelakang={about.isi} />
@@ -42,7 +37,10 @@ const LatarBelakang = ({ latarbelakang }) => (
     <h1 className='font-[Poppins] text-[12px] md:text-[24px] font-semibold text-teal-700'>
       Latar Belakang
     </h1>
-    <p className='border-l-2 pl-3 md:pl-6 border-teal-700 h-full'>
+    <p
+      className='border-l-2 pl-3 md:pl-6 border-teal-700 h-full'
+      dangerouslySetInnerHTML={{ __html: isi }}
+    >
       {latarbelakang}
     </p>
   </div>

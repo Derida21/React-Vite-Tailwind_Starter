@@ -1,8 +1,21 @@
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../../assets/img/logo-berau3.png';
+import axios from 'axios';
 
 const Logo = (props) => {
+  const [data, setData] = useState(null);
+
+  const getData = async () => {
+    try {
+      const response = await axios.get('http://nurul-huda.org/api/profil');
+      setData(response.data.data);
+    } catch {}
+  };
+
+  useEffect(() => {
+    getData();
+  });
   const {
     className = 'flex gap-1 md:justify-between items-end',
     titleclassName = 'flex flex-col',
@@ -14,12 +27,14 @@ const Logo = (props) => {
     href,
   } = props;
   return (
-    <Link to={href} className={className}>
+    <Link to={`/Home`} className={className}>
       <div className='h-full flex items-end justify-end'>
-        <img className={logoclassName} src={logo} alt='' />
+        {data && <img className={logoclassName} src={data.logo} alt='' />}
       </div>
       <div className={titleclassName}>
-        <span className={textclassName}>{text}</span>
+        {data && (
+          <span className={textclassName}>{data.nama || 'Nama Kampung'}</span>
+        )}
         <span className={addresclassName}>{addres}</span>
       </div>
     </Link>
