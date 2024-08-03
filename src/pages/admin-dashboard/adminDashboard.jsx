@@ -69,7 +69,7 @@ const AdminDashboard = () => {
                 <div
                     className={`main ${state.toggle
                         ? state.toggleNavbar
-                            ? 'md:ml-[270px]'
+                            ? 'md:ml-[300px]'
                             : 'ml-0'
                         : state.toggleNavbar
                             ? 'md:ml-[90px]'
