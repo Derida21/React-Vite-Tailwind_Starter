@@ -96,23 +96,29 @@ const DashboardPost = ({ endpoint, title }) => {
   }
 
   return (
-    <div className="p-10 min-w-[220px] xl:w-full grow shrink basis-0 rounded-xl drop-shadow justify-start items-start gap-4 bg-white flex">
-      <div className="grow shrink basis-0 bg-white rounded-xl flex-col justify-start items-start inline-flex" onClick={openModal}>
-        <div className="w-full h-auto px-6 pt-6 pb-4 bg-white rounded-xl shadow flex-col justify-start items-start gap-6 flex">
-          <div className="self-stretch justify-start items-center gap-3 inline-flex">
-            <div className="grow shrink basis-0 text-zinc-900 text-base font-medium leading-normal">{title}</div>
+
+
+    <div className="p-10">
+      <div className="container mx-auto" onClick={openModal}>
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <div class="px-6 py-6 bg-white ">
+            <div className="pb-4 mb-4 border-b-2 border-gray-200">
+              <div className="flex items-center justify-between min-h-10">
+                <div>
+                  <h1 className="text-lg font-semibold text-secondary">{title}</h1>
+                </div>
+
+              </div>
+            </div>
           </div>
-          <div className="self-stretch flex-col justify-start items-start gap-4 flex">
-            <h3 className="text-xl font-semibold">{data.judul}</h3>
-            <p className="text-gray-700 mb-4">{data.tanggal}</p>
-            <p className="text-gray-700 whitespace-pre-line"><div dangerouslySetInnerHTML={{ __html: data.isi }} /></p>
+          <div className="overflow-x-auto px-6 pb-6">
+            <div className="self-stretch flex-col justify-start items-start gap-4 flex">
+              <p className="text-gray-700 whitespace-pre-line"><div dangerouslySetInnerHTML={{ __html: data.isi }} /></p>
+            </div>
           </div>
-        </div>
-        <div className="w-full px-6 py-4 justify-between items-center gap-4 inline-flex">
-          <div className="grow shrink basis-0 text-orange-600 text-sm font-semibold leading-tight">Author: {data.author.nama}</div>
-          <FaChevronRight className="text-orange-600" />
         </div>
       </div>
+
     </div>
   );
 };

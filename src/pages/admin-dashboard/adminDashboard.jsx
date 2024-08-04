@@ -8,7 +8,7 @@ import Marketing from '../../components/admin-marketing/marketing';
 import { Data } from '../../dates/jummy';
 
 import DataPenduduk from '../../components/admin-penduduk/DataPenduduk';
-import LembagaCRUD from '../../components/admin-lembaga/LembagaCRUD';
+import LembagaCRUD from '../../components/admin-lembaga/LembagaCrud';
 import PostMain from '../../components/admin-berita/PostMain';
 import PostForm from '../../components/admin-berita/PostForm';
 import PostDetail from '../../components/admin-berita/PostDetail';

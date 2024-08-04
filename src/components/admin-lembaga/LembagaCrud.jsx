@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import  useAppContext  from '../../context/useAppContext';
+import useAppContext from '../../context/useAppContext';
 import Modal from './Modal';
 import EditComponent from './EditComponent';
 
@@ -48,68 +48,94 @@ const LembagaCRUD = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Lembaga</h1>
       {!editMode && (
-        <div className="mb-4">
-          <div className="flex justify-between items-center mb-4">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={handleSearch}
-              placeholder="Search by name"
-              className="p-2 border rounded w-1/2"
-            />
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded"
-              onClick={handleAddNew}
-            >
-              Tambahkan Data
-            </button>
+        <div className="mb-4 mt-10">
+          <div className="container mx-auto">
+            <div className="bg-white shadow-md rounded-lg overflow-hidden">
+              <div class="px-6 py-6 bg-white ">
+                <div className="pb-4 mb-4 border-b-2 border-gray-200">
+                  <div className="flex items-center justify-between min-h-10">
+                    <div>
+                      <h1 className="text-lg font-semibold text-secondary">List Lembaga</h1>
+                      <button
+                        className="bg-teal-500 text-white px-4 py-2 mt-5 rounded-md"
+                        onClick={handleAddNew}
+                      >
+                        Tambahkan Data
+                      </button>
+                    </div>
+                    <a href="/admin/guru/tambah" className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition duration-300 ease-in-out border border-transparent rounded-md shadow-sm outline-none bg-primary hover:bg-secondary">Tambah
+                    </a>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={handleSearch}
+                      placeholder="Search by name"
+                      className="block mt-11 p-2 text-sm placeholder-gray-400 border-2 border-gray-300 rounded-md shadow-sm appearance-none focus:border-primary focus:outline-none focus:ring-primary w-1/4"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="overflow-x-auto px-6 pb-6">
+                <table className="min-w-full bg-white border border-gray-200">
+                  <thead>
+                    <tr>
+                      <th className="py-2 px-4 border-b text-left">Nama</th>
+                      <th className="py-2 px-4 border-b text-left">Singkatan</th>
+                      <th className="py-2 px-4 border-b text-left">Deskripsi</th>
+                      <th className="py-2 px-4 border-b text-left">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.length > 0 ? (
+                      filteredData.map((data) => (
+                        <tr key={data.uuid}>
+                          <td className="py-2 px-4 border-b">{data.nama}</td>
+                          <td className="py-2 px-4 border-b">{data.singkatan}</td>
+                          <td className="py-2 px-4 border-b">{data.deskripsi}</td>
+                          <td className="py-2 px-4 border-b">
+                            <td class="p-3 whitespace-nowrap">
+                              <div class="flex">
+                                <button
+                                  className="pr-2 text-teal-500 font-body"
+                                  onClick={() => handleSelect(data.uuid)}
+                                >
+                                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                    </path>
+                                  </svg>
+                                </button>
+                                <button
+                                  className="text-red-500 font-body"
+                                  onClick={() => {
+                                    setSelectedUuid(data.uuid);
+                                    setModalOpen(true);
+                                  }}
+                                >
+                                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                    </path>
+                                  </svg>
+                                </button>
+                              </div>
+                            </td>
+                            <div className="flex space-x-2">
+
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="4" className="py-2 px-4 text-center">No data available</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          <table className="min-w-full bg-white border border-gray-300">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b">Nama</th>
-                <th className="py-2 px-4 border-b">Singkatan</th>
-                <th className="py-2 px-4 border-b">Deskripsi</th>
-                <th className="py-2 px-4 border-b">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.length > 0 ? (
-                filteredData.map((data) => (
-                  <tr key={data.uuid}>
-                    <td className="py-2 px-4 border-b">{data.nama}</td>
-                    <td className="py-2 px-4 border-b">{data.singkatan}</td>
-                    <td className="py-2 px-4 border-b">{data.deskripsi}</td>
-                    <td className="py-2 px-4 border-b">
-                      <div className="flex space-x-2">
-                        <button
-                          className="bg-blue-500 text-white px-4 py-2 rounded"
-                          onClick={() => handleSelect(data.uuid)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="bg-red-500 text-white px-4 py-2 rounded"
-                          onClick={() => {
-                            setSelectedUuid(data.uuid);
-                            setModalOpen(true);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4" className="py-2 px-4 text-center">No data available</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+
         </div>
       )}
       {editMode && (
