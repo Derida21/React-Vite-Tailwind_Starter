@@ -6,8 +6,6 @@ import Editor from '../ck-editor/ck-editor.jsx';
 
 const TentangKamiPostForm = ({ endpoint, title }) => {
   const [formData, setFormData] = useState({
-    thumbnail: null,
-    judul: '',
     isi: '',
   });
   const [loading, setLoading] = useState(false);
@@ -21,8 +19,6 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
       try {
         const { data } = await axiosInstance.get(endpoint);
         setFormData({
-          thumbnail: null,
-          judul: data.data.judul,
           isi: data.data.isi,
         });
         setEditorKey(prevKey => prevKey + 1); // Ubah key untuk mereload CKEditor
@@ -61,7 +57,7 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      navigate('/admin-dashboard/tentang-kami');
+      navigate(-1);
       toast.success('Data berhasil diperbarui');
     } catch (error) {
       console.error('Error submitting form:', error);
