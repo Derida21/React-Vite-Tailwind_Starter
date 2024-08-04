@@ -121,12 +121,12 @@ const ProductList = () => {
 
   return (
     <div className="container mx-auto p-5 relative">
-      <h1 className="text-3xl font-bold mb-5">Product List</h1>
+      <h1 className="text-3xl font-bold mb-5">Produk</h1>
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
         onClick={() => openModal()}
       >
-        Add Product
+        Tambahkan Produk
       </button>
       {products.length === 0 ? (
         <div className="text-center">No products available</div>

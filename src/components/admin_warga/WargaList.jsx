@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import WargaModal from './WargaModal';
 import useAppContext from '../../context/useAppContext';
 
-// Set app element for accessibility
+
 Modal.setAppElement('#root');
 
 const WargaList = () => {
@@ -56,7 +56,7 @@ const WargaList = () => {
     formData.append('kepala_keluarga', warga.kepala_keluarga);
     formData.append('link_maps', warga.link_maps);
 
-    // Append anggota_keluarga fields
+
     warga.anggota_keluarga.forEach((anggota, index) => {
       formData.append(`anggota_keluarga[${index}][nama]`, anggota.nama);
       formData.append(`anggota_keluarga[${index}][status]`, anggota.status);

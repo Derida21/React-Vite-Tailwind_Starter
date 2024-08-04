@@ -74,7 +74,7 @@ export let Data = [
       {
         icon: 'fa-solid fa-comments-dollar',
         text: 'Visi Misi',
-        url: 'pvisi-misi',
+        url: 'visi-misi',
       },
     ],
   },
@@ -101,12 +101,12 @@ export let Data = [
       {
         icon: 'fa-solid fa-gear',
         text: 'Apbk',
-        url: 'apbn',
+        url: 'apbk',
       },
       {
         icon: 'fa-solid fa-gear',
-        text: 'Laporan Apbk',
-        url: 'apbn',
+        text: 'Realisasi APBK',
+        url: 'realisasi-apbk',
       },
       {
         icon: 'fa-solid fa-gear',

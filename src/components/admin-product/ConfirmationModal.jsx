@@ -18,13 +18,13 @@ const ConfirmationModal = ({ isOpen, onConfirm, onCancel, message }) => {
             className="bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2"
             onClick={onCancel}
           >
-            Cancel
+            Batal
           </button>
           <button
             className="bg-red-500 text-white px-4 py-2 rounded"
             onClick={onConfirm}
           >
-            Delete
+            Hapus
           </button>
         </div>
       </div>

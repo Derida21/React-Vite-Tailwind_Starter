@@ -34,6 +34,11 @@ import PejabatList from '../../components/admin-pejabat/PejabatList';
 import TentangKamiPostForm from '../../components/admin_potensi/post_form';
 import ProfilKampung from '../../components/admin-Profil/Main';
 
+
+import AdminVisiMisi from '../../components/admin_visi-misi/admin_visi_misi';
+
+import RealisasiAPBKCRUD from '../../components/realisasi_apbk/RealisasiAPBKCRUD';
+import APBKCRUD from '../../components/admin-apbk/APBKCRUD';
 const AdminDashboard = () => {
     const { category } = useParams();
     let cat = Data.find((categ) => categ.url === parseInt(category));
@@ -88,11 +93,13 @@ const AdminDashboard = () => {
                         <Route path='keluarga' element={<WargaList />} />
                         <Route path='pejabat' element={<PejabatList />} />
                         <Route path='profil' element={<ProfilKampung />} />
-
-                        <Route
+                        <Route path='realisasi-apbk' element = {<RealisasiAPBKCRUD/>}/>
+                        <Route path='apbk' element = {<APBKCRUD/>}/>
+                        <Route path='visi-misi' element = {<AdminVisiMisi/>}/>
+                        {/* <Route
                             path='belanja'
                             element={<CrudComponent endpoint='/belanja-desa' />}
-                        />
+                        /> */}
                         <Route
                             path='pembangunan'
                             element={<CrudComponent endpoint='pembangunan' />}
@@ -142,6 +149,8 @@ const AdminDashboard = () => {
                                 />
                             }
                         />
+                 
+
                         <Route path='potensi-kampung/post' element={
                             <TentangKamiPostForm endpoint='/potensi-desa' title='Potensi Kampung' />
                         } />
