@@ -1,47 +1,57 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import Menu from "./Menu";
-import React from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import {
+  FaFacebook,
+  FaInstagram,
+  FaMailBulk,
+  FaPhone,
+  FaTiktok,
+  FaYoutube,
+} from 'react-icons/fa';
+import Menu from './Menu';
+import React from 'react';
 const Kontak = () => {
-  const [sosmed, setSosmed] = useState(null);
+  const [kontak, setkontak] = useState(null);
 
-  const getSosmed = async () => {
+  const getkontak = async () => {
     try {
-      const response = await axios.get("http://nurul-huda.org/api/profil");
+      const response = await axios.get('http://nurul-huda.org/api/profil');
       console.log(response);
-      setSosmed(response.data.data.sosial_media);
+      setkontak(response.data.data);
     } catch (error) {
       if (!error.response) {
-        console.error("Network error:", error);
+        console.error('Network error:', error);
       } else {
-        console.error("Error response:", error.response.data);
+        console.error('Error response:', error.response.data);
       }
     }
   };
 
   useEffect(() => {
-    getSosmed();
+    getkontak();
   }, []);
-
-  useEffect(() => {
-    console.log(sosmed);
-  }, [sosmed]);
 
   return (
     <Menu>
-      <Menu.Title text="Kontak" />
-      {sosmed && (
+      <Menu.Title text='Kontak' />
+      {kontak && (
         <Menu.List>
-          {sosmed.fb && (
-            <Menu.Data href={sosmed.fb} text={sosmed.fb}>
-              <FaFacebook />
+          {kontak.email && (
+            <Menu.Data
+              target='_blank'
+              href={`mailto:${kontak.email}`}
+              text={kontak.email}
+            >
+              <FaMailBulk />
             </Menu.Data>
           )}
-          {sosmed.ig && (
-            <Menu.Data href={sosmed.ig} text={sosmed.ig}>
-              <FaInstagram />
+          {kontak.no_hp && (
+            <Menu.Data
+              target='_blank'
+              href={`https://wa.me/${kontak.no_hp}`}
+              text={kontak.no_hp}
+            >
+              <FaPhone />
             </Menu.Data>
           )}
         </Menu.List>

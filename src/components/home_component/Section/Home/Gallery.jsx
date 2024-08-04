@@ -20,7 +20,7 @@ const Gallery = () => {
     getGallery();
   }, []);
 
-  const Gallery = gallery.slice(0, 8);
+  const Gallery = gallery.slice(0, 6);
 
   return (
     <>
