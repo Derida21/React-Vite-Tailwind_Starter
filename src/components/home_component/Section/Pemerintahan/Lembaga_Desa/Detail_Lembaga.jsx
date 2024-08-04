@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import logo from '../../../../../../assets/img/logo-berau3.png';
 
 const DetailLembaga = () => {
   const { uuid } = useParams();
@@ -25,135 +24,100 @@ const DetailLembaga = () => {
   return (
     <section className='min-h-screen px-5 md:px-[60px] lg:px-[80px] xl:px-[160px]'>
       {data && (
-        <div className='w-full h-screen flex flex-col pt-14 pb-5 md:pt-[120px] md:pb-[40px] lg:pt-[120px] lg:pb-20'>
+        <div className='w-full flex flex-col pt-14 pb-5 md:pt-[120px] md:pb-[40px] lg:pt-[120px] lg:pb-20'>
           {data.nama && (
             <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[20px] font-semibold text-white rounded-t-lg border-b'>
-              {data.nama}({data.singkatan})
+              {data.nama} ({data.singkatan})
             </h1>
           )}
-          <div className='h-full flex flex-col py-3 md:px-5 border bg-white shadow-lg rounded-b-lg '>
-            <div className='flex flex-col md:flex-row gap-3 md:gap-5'>
+          <div className='h-full flex flex-col gap-4 py-3 md:px-5 lg:p-8 border bg-white shadow-lg rounded-b-lg'>
+            <div className='flex flex-col md:flex-row md:gap-5 px-3 md:px-0'>
               {/* Logo */}
-              {data.logo ? (
-                <div className='w-full xl:w-1/3 md:py-5'>
-                  <div className='flex items-center justify-center p-5 rounded-xl border border-teal-700'>
-                    <img
-                      src={data.logo}
-                      alt={data.nama}
-                      className='min-h-[177px] max-w-[175px]'
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className='md:w-1/3 md:py-5'>
-                  <div className=' flex items-center justify-center p-5 rounded-xl border border-teal-700'>
-                    <img
-                      src={logo}
-                      alt='Logo-lembaga'
-                      className='min-h-[177px] max-w-[175px]'
-                    />
-                  </div>
+              {data.logo && (
+                <div className='flex items-center md:w-1/2 lg:min-w-[351px] max-w-[351px] lg:min-h-[351px] border rounded-md p-5'>
+                  <img src={data.logo} alt='Logo' className='w-full' />
                 </div>
               )}
               {/* Detail */}
-              <div className='flex flex-col md:p-5 md:border-l gap-3'>
-                {data.deskripsi ? (
-                  <Label text='Deskripsi Lembaga'>
-                    <p>{data.deskripsi}</p>
-                  </Label>
-                ) : (
-                  <Label text='Deskripsi Lembaga' className='lg:items-center'>
-                    <p>Data Belum Tersedia</p>
-                  </Label>
-                )}
-                {data.visi_misi ? (
-                  <>
-                    {data.visi_misi.visi ? (
-                      <Label text='Visi' className='lg:items-center'>
-                        <p>{data.visi_misi.visi}</p>
-                      </Label>
-                    ) : (
-                      <Label text='Visi'>
-                        <p>Data Belum tersedia</p>
-                      </Label>
-                    )}
-                    {data.visi_misi.misi ? (
-                      <Label text='Misi' className='lg:items-center'>
-                        <p>{data.visi_misi.misi}</p>
-                      </Label>
-                    ) : (
-                      <Label text='Misi'>
-                        <p>Data Belum tersedia</p>
-                      </Label>
-                    )}
-                  </>
-                ) : (
-                  <div className='flex flex-col gap-3'>
-                    <Label text='Visi' className='lg:items-center'>
-                      <p>Data Belum tersedia</p>
-                    </Label>
-                    <Label text='Misi' className='lg:items-center'>
-                      <p>Data Belum tersedia</p>
-                    </Label>
-                  </div>
-                )}
-                {data.alamat ? (
-                  <Label text='Alamat' className='lg:items-center'>
-                    <p>{data.alamat}</p>
-                  </Label>
-                ) : (
-                  <Label text='Alamat' className='lg:items-center'>
-                    <p>Data Belum Tersedia</p>
-                  </Label>
-                )}
-              </div>
+              <ul role='list' className='w-full font-[Poppins]'>
+                <List
+                  tag='Deskripsi'
+                  detail={
+                    typeof data.deskripsi === 'string'
+                      ? data.deskripsi
+                      : 'Data Belum Tersedia'
+                  }
+                />
+                <List
+                  tag='Alamat'
+                  detail={
+                    typeof data.alamat === 'string'
+                      ? data.alamat
+                      : 'Data Belum Tersedia'
+                  }
+                />
+                <List
+                  tag='Dasar Hukum'
+                  detail={
+                    typeof data.dasar_hukum === 'string'
+                      ? data.dasar_hukum
+                      : 'Data Belum Tersedia'
+                  }
+                />
+                <List
+                  tag='Visi Misi'
+                  detail={
+                    typeof data.visi_misi === 'string'
+                      ? data.visi_misi
+                      : 'Data Belum Tersedia'
+                  }
+                />
+              </ul>
             </div>
-            <div>
-              {data.pengurus ? (
-                <Label text='Anggota' className='border-none w-full'>
-                  {data.pengurus && (
-                    <table className=' text-center border-collapse border  '>
-                      <thead className='w-full  font-normal'>
-                        <tr className='text-[10px] lg:text-sm'>
-                          <th className='px-2 lg:px-5 py-3 border border-gray-500'>
-                            No.
-                          </th>
-                          <th className='px- lg:px-5 py-3 border border-gray-500'>
-                            Nama
-                          </th>
-                          <th className='px- lg:px-5 py-3 border border-gray-500'>
-                            Jabatan
-                          </th>
-                          <th className='px- lg:px-5 py-3 border border-gray-500'>
-                            Pendidikan
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.pengurus.map((item, index) => (
-                          <tr key={index}>
-                            <td className='px- lg:px-5 py-3 border border-gray-500'>
-                              {index + 1}
-                            </td>
-                            <td className='px- lg:px-5 py-3 border border-gray-500'>
-                              {item.nama}
-                            </td>
-                            <td className='px- lg:px-5 py-3 border border-gray-500'>
-                              {item.jabatan}
-                            </td>
-                            <td className='px- lg:px-5 py-3 border border-gray-500'>
-                              {item.pendidikan}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </Label>
+            {/* Anggota */}
+            <div className='flex flex-col gap-2 px-3'>
+              <h1 className='md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm lg:text-lg'>
+                Daftar Anggota
+              </h1>
+              {data.pengurus && data.pengurus.length > 0 ? (
+                <table className='w-full font-[Poppins] mt-1 border-separate'>
+                  <thead>
+                    <tr>
+                      <td className='font-medium text-gray-700 text-center border text-[10px] md:text-sm py-2'>
+                        No.
+                      </td>
+                      <td className='font-medium text-gray-700 text-center border text-[10px] md:text-sm py-2'>
+                        Nama
+                      </td>
+                      <td className='font-medium text-gray-700 text-center border text-[10px] md:text-sm py-2'>
+                        Jabatan
+                      </td>
+                      <td className='font-medium text-gray-700 text-center border text-[10px] md:text-sm py-2'>
+                        Pendidikan
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.pengurus.map((item, index) => (
+                      <tr key={index}>
+                        <td className='text-gray-700 text-center border py-2 text-[8px] md:text-xs'>
+                          {index + 1}
+                        </td>
+                        <td className='text-gray-700 text-center border py-2 text-[8px] md:text-xs'>
+                          {item.nama}
+                        </td>
+                        <td className='text-gray-700 text-center border py-2 text-[8px] md:text-xs'>
+                          {item.jabatan}
+                        </td>
+                        <td className='text-gray-700 text-center border py-2 text-[8px] md:text-xs'>
+                          {item.pendidikan}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               ) : (
-                <Label text='Anggota' className='lg:items-center'>
-                  <p>Data Belum tersedia</p>
-                </Label>
+                <p>Data belum Tersedia</p>
               )}
             </div>
           </div>
@@ -163,19 +127,17 @@ const DetailLembaga = () => {
   );
 };
 
-function Label({ text, deskripsi, children, className }) {
+const List = ({ tag, detail, className }) => {
   return (
-    <div
-      className={`${className} flex flex-col md:flex-row gap-3 lg:gap-5 pb-3 border-b w-full`}
+    <li
+      className={`${className} flex flex-col md:flex-row w-full border-b py-3`}
     >
-      <h1 className='min-w-[97px] xl:min-w-[154px] font-[Poppins] md:text-[10px] lg:text-xs xl:text-[16px] font-medium text-teal-700'>
-        {text}
+      <h1 className='md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm lg:text-lg'>
+        {tag}
       </h1>
-      <div className='font-[Poppins] text-xs md:text-[10px] lg:text-sm text-gray-500 text-justify'>
-        {deskripsi || children}
-      </div>
-    </div>
+      <span className='text-gray-500 text-xs lg:text-[16px]'>{detail}</span>
+    </li>
   );
-}
+};
 
 export default DetailLembaga;

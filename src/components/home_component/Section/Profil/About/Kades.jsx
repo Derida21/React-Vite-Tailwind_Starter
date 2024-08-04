@@ -51,7 +51,7 @@ const Kades = () => {
                 </td>
               </tr>
               <tr className='font-[Poppins] text-[10px] align-top '>
-                <td className='text-gray-700 font-medium pb-2'>NIP</td>
+                <td className='text-gray-700 font-medium pb-2'>Jabatan</td>
                 <td className='pl-3 pb-2 text-gray-500'>
                   {data.jabatan || 'Data belum tersedia'}
                 </td>
