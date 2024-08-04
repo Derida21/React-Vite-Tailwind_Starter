@@ -17,7 +17,7 @@ export default function Footer() {
 
   useEffect(() => {
     getData();
-  });
+  }, []);
 
   return (
     <div className='flex flex-col'>
@@ -31,12 +31,12 @@ export default function Footer() {
                 titleclassName='flex flex-col'
                 logoclassName='h-[40px] w-[33px] md:h-[50px] md:w-[40px] lg:h-[60px] lg:w-[50px] xl:h-[70px] xl:w-[60px]'
                 addres='Kec. Talisayan Kab. Berau Kalimantan Timur'
-                textclassName='text-white font-bold text-[22px] md:text-[26px] lg:text-[32px] xl:text-[40px] font-[Poppins] text-nowrap'
+                textclassName='capitalize text-white font-bold text-[22px] md:text-[26px] lg:text-[32px] xl:text-[40px] font-[Poppins] text-nowrap'
                 addresclassName='font-[Poppins] font-semibold text-white text-[10px] md:text-[12px] lg:text-[14px] xl:text-[18px]'
                 href='/home'
               />
               {data && (
-                <span className='text-white text-[7px] md:text-[8px] lg:text-[10px] xl:text-[12px] font-inter text-center lg:tracking-wide '>
+                <span className='capitalize text-white text-[7px] md:text-[8px] lg:text-[10px] xl:text-[12px] font-inter text-center lg:tracking-wide '>
                   {data.alamat}
                 </span>
               )}
