@@ -14,6 +14,8 @@ import Home from '../../components/archive-component/archive-home/home';
 import Perencanaan from '../../components/archive-component/archive-perencanaan/perencanaan';
 import Keuangan from '../../components/archive-component/archive-keuangan/keuangan';
 import Pemerintahan from '../../components/archive-component/archive-pemerintahan/pemerintahan';
+import Kesejahteraan from '../../components/archive-component/archive-kesejahteraan/kesejahteraan';
+import Pelayanan from '../../components/archive-component/archive-pelayanan/pelayanan';
 
 const EArsip = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -48,9 +50,9 @@ const EArsip = () => {
       case 'Pemerintahan':
         return <Pemerintahan />;
       case 'Kesejahteraan':
-        return <KesejahteraanPage />;
+        return <Kesejahteraan />;
       case 'Pelayanan':
-        return <PelayananPage />;
+        return <Pelayanan />;
       default:
         return <Home />;
     }

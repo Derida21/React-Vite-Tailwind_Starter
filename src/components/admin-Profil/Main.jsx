@@ -85,28 +85,25 @@ const ProfilKampung = () => {
     setLoading(true);
     try {
       const form = new FormData();
+      form.append('_method', 'put');
       form.append('nama', formData.nama);
       form.append('email', formData.email);
       form.append('alamat', formData.alamat);
       form.append('peta', formData.peta);
       form.append('no_hp', formData.no_hp);
-      form.append('fb', formData.fb);
-      form.append('ig', formData.ig);
-      form.append('yt', formData.yt);
-      form.append('struktur_organisasi', formData.struktur_organisasi);
+      form.append(`sosial_media[fb]`, formData.fb);
+      form.append(`sosial_media[ig]`, formData.ig);
+      form.append(`sosial_media[yt]`, formData.yt);
+
+      if (formData.struktur_organisasi && typeof formData.struktur_organisasi !== 'string') {
+        form.append('struktur_organisasi', formData.struktur_organisasi);
+      }
 
       if (formData.logo && typeof formData.logo !== 'string') {
         form.append('logo', formData.logo);
       }
-      let data = {
-        nama: formData.nama,
-        email: formData.email,
-        alamat: formData.alamat,
-        peta: formData.peta,
-      };
-      console.log('FormData:', data);
 
-      await axiosInstance.put('/profil', form);
+      await axiosInstance.post('/profil', form);
 
       navigate('/admin-dashboard/profil');
     } catch (error) {

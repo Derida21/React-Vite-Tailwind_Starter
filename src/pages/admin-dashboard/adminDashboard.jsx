@@ -8,7 +8,7 @@ import Marketing from '../../components/admin-marketing/marketing';
 import { Data } from '../../dates/jummy';
 
 import DataPenduduk from '../../components/admin-penduduk/DataPenduduk';
-import LembagaCrud from '../../components/admin-lembaga/LembagaCrud';
+import LembagaCRUD from '../../components/admin-lembaga/LembagaCrud';
 import PostMain from '../../components/admin-berita/PostMain';
 import PostForm from '../../components/admin-berita/PostForm';
 import PostDetail from '../../components/admin-berita/PostDetail';
@@ -81,8 +81,8 @@ const AdminDashboard = () => {
                         <Route path='main' element={<Main />} />
                         <Route path='marketing' element={<Marketing />} />
                         <Route path='berita/*' element={<PostRoutes />} />
-                        {/* <Route path="lembaga" element={<LembagaCrud />} /> */}
-                        <Route path='lembaga' element={<LembagaList />} />
+                        <Route path="lembaga" element={<LembagaCRUD />} />
+                        {/* <Route path='lembaga' element={<LembagaList />} /> */}
                         <Route path='belanja/*' element={<BelanjaRoutes />} />
                         <Route path='kegiatan/*' element={<KegiatanRoutes />} />
                         <Route path='produk' element={<ProductList />} />
