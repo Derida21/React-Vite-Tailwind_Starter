@@ -11,7 +11,7 @@ const GeografisDesa = () => {
 
   useEffect(() => {
     getData();
-  });
+  }, []);
 
   return (
     <section className='min-h-screen px-5 md:px-[60px] lg:px-[80px] xl:px-[160px]'>
