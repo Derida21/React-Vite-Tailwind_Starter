@@ -69,13 +69,13 @@ function Home() {
             text='Pelayanan'
           />
           <Icon
-            href=''
+            href='/transparansi/apbk'
             src={keuangan}
             alt='keuangan-desa'
             text='Anggaran Kampung'
           />
           <Icon
-            href=''
+            href='/transparansi/pembangunan-kampung'
             src={pembangunan}
             alt='pembangunan-desa'
             text='Pembangunan'

@@ -19,11 +19,11 @@ const Pembangunan = () => {
 
   return (
     <section className=' min-h-screen px-5 md:px-[60px] lg:px-[80px] xl:px-[160px]'>
-      <div className='flex flex-col pt-16 pb-5 md:pt-[120px] md:pb-[40px] lg:pt-[120px] lg:pb-20'>
+      <div className='flex flex-col pt-16 pb-5 md:pt-[120px] md:pb-[40px] lg:pt-[120px] lg:pb-20 min-h-screen'>
         <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white rounded-t-lg border-b'>
           Pembangunan Kampung
         </h1>
-        <div className='flex flex-col gap-2 lg:gap-5 px-2 py-4 md:p-5 border bg-white shadow-lg rounded-b-lg '>
+        <div className='flex flex-col gap-2 lg:gap-5 px-2 py-4 md:p-5 border bg-white shadow-lg rounded-b-lg h-full'>
           {data.map((item, index) => {
             return (
               <div
@@ -45,7 +45,7 @@ const Pembangunan = () => {
                     />
                   )}
                 </div>
-                <div className='w-full flex flex-col  gap-1 lg:gap-2 font-[Poppins]'>
+                <div className='w-full flex flex-col gap-1 lg:gap-2 font-[Poppins]'>
                   <div className='flex md:max-lg:gap-2 lg:items-center justify-between'>
                     <h1 className='text-teal-700 font-medium text-[12px] lg:text-[20px]'>
                       {item.judul}
