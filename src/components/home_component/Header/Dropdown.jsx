@@ -56,7 +56,7 @@ const Dropdown = ({ label, options }) => {
       >
         <button
           onClick={() => handleSubOptionClick(index)}
-          className={`flex justify-between py-2 md:max-lg:pr-10 lg:px-3 xl:px-5 lg:block cursor-pointer lg:max-xl:text-[8px] hover:text-teal-700 items-center w-full ${
+          className={`flex justify-between py-2 md:max-lg:pr-10 lg:px-3 xl:px-5 lg:block cursor-pointer lg:text-[8px] xl:text-xs hover:text-teal-700 items-center w-full ${
             isDesktop ? 'block' : ''
           }`}
         >

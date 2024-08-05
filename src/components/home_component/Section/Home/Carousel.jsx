@@ -24,7 +24,7 @@ const Carousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((currentIndex + 1) % slides.length);
-    }, 2000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [currentIndex, slides.length]);
@@ -55,9 +55,9 @@ const Carousel = () => {
             <div className='absolute bg-black w-full bg-opacity-50 h-full z-10'></div>
             <Link
               to={`/informasi-publik/berita-kampung/${item.slug}`}
-              className=' flex flex-col w-full p-5 md:p-10 z-20'
+              className=' flex flex-col w-full px-2 py-5 md:p-10 z-20'
             >
-              <h2 className='truncate text-white  rounded-t px-3 font-[Poppins] font-semibold text-[12px] md:text-[16px] lg:text-[32px]'>
+              <h2 className='truncate text-white rounded-t px-3 font-[Poppins] font-semibold text-[10px] md:text-[16px] lg:text-[32px]'>
                 {item.judul}
               </h2>
               <div className=' text-white rounded-b px-3 text-[8px] md:text-[10px] lg:text-[16px] font-[Poppins] text-justify line-clamp-3 '>
