@@ -75,12 +75,12 @@ const AdminVisiMisi = () => {
           className="mb-8 bg-white p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300"
           onClick={() => setEditMode(true)}
         >
-              <div className=" mx-auto text-left">
+          <div className=" mx-auto text-left">
             <h3 className="text-2xl font-bold text-gray-900 mb-2">Visi</h3>
-            <p className="text-3xl text-gray-700 mb-6">{visiMisi.visi}</p>
+            <p className="text-3xl text-gray-700 mb-6"><div dangerouslySetInnerHTML={{ __html: visiMisi.visi }} /> </p>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">Misi</h3>
-            <p className="text-3xl text-gray-700 mb-6">{visiMisi.misi}</p>
-        
+            <p className="text-3xl text-gray-700 mb-6"><div dangerouslySetInnerHTML={{ __html: visiMisi.misi }} /> </p>
+
           </div>
         </div>
       )}
