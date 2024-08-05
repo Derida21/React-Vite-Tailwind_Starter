@@ -123,7 +123,7 @@ const ProfilKampung = () => {
         form.append('logo', formData.logo);
       }
 
-      await axiosInstance.put('/profil', form);
+      await axiosInstance.post('/profil', form);
 
       navigate('/admin-dashboard/profil');
       toast.success('Profil updated successfully');
@@ -138,7 +138,7 @@ const ProfilKampung = () => {
   return (
     <div className="container mx-auto p-6 font-[Poppins]">
       <form onSubmit={handleSubmit} className="mb-8 bg-white p-6 rounded shadow-md">
-        <h2 className="text-xl font-bold mb-6 text-center">Profil Desa</h2>
+        <h2 className="text-xl font-bold mb-6 text-center">Profil Kampung</h2>
         <div className="max-w-md mx-auto mt-10">
           <div className="mb-4">
             <input
@@ -171,7 +171,7 @@ const ProfilKampung = () => {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
           <div>
-            <label className="block text-gray-700">Nama Desa</label>
+            <label className="block text-gray-700">Nama Kampung</label>
             <input
               type="text"
               name="nama"
@@ -181,7 +181,7 @@ const ProfilKampung = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Maps Desa</label>
+            <label className="block text-gray-700">Maps Kampung</label>
             <input
               type="text"
               name="peta"
@@ -191,7 +191,7 @@ const ProfilKampung = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Alamat Desa</label>
+            <label className="block text-gray-700">Alamat Kampung</label>
             <textarea
               name="alamat"
               value={formData.alamat}
@@ -200,10 +200,10 @@ const ProfilKampung = () => {
             />
           </div>
         </div>
-        <h2 className="mt-6 text-ls font-bold mb-6">Kontak desa</h2>
+        <h2 className="mt-6 text-ls font-bold mb-6">Kontak Kampung</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
-            <label className="block text-gray-700">Email Desa</label>
+            <label className="block text-gray-700">Email Kampung</label>
             <input
               type="text"
               name="email"
@@ -213,7 +213,7 @@ const ProfilKampung = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Telepon Desa</label>
+            <label className="block text-gray-700">Telepon Kampung</label>
             <input
               type="text"
               name="no_hp"
