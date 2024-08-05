@@ -1,5 +1,7 @@
 import {
+  IconCircleArrowLeft,
   IconCircleArrowLeftFilled,
+  IconCircleArrowRight,
   IconCircleArrowRightFilled,
 } from '@tabler/icons-react';
 import axios from 'axios';
@@ -54,7 +56,7 @@ const Carousel = () => {
           >
             <div className='absolute bg-black w-full bg-opacity-50 h-full z-10'></div>
             <Link
-              to={`/informasi-publik/berita-kampung/${item.slug}`}
+              to={`/informasi-publik/agenda-kegiatan/${item.slug}`}
               className=' flex flex-col w-full px-2 py-5 md:p-10 z-20'
             >
               <h2 className='truncate text-white rounded-t px-3 font-[Poppins] font-semibold text-[10px] md:text-[16px] lg:text-[32px]'>
@@ -72,16 +74,16 @@ const Carousel = () => {
       </div>
 
       <button
-        className='absolute z-30 left-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
+        className='absolute z-30 left-0 top-1/2 transform -translate-y-1/2 text-gray-700 p-2 rounded'
         onClick={Prev}
       >
-        <IconCircleArrowLeftFilled className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8' />
+        <IconCircleArrowLeft className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 hover:text-white' />
       </button>
       <button
-        className='absolute z-30 right-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
+        className='absolute z-30 right-0 top-1/2 transform -translate-y-1/2 text-gray-700 p-2 rounded'
         onClick={Next}
       >
-        <IconCircleArrowRightFilled className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8' />
+        <IconCircleArrowRight className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 hover:text-white' />
       </button>
 
       <div className='absolute bottom-0 left-0 right-0 flex justify-center p-2 space-x-2'>

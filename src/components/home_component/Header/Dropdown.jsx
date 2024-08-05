@@ -81,7 +81,7 @@ const Dropdown = ({ label, options }) => {
               <li key={subIndex} className='relative'>
                 <Link
                   to={subOption.href}
-                  className='px-2 lg:px-4 hover:text-teal-700'
+                  className='px-2 lg:px-4 hover:text-teal-700 lg:text-[8px] xl:text-sm'
                 >
                   {subOption.label}
                 </Link>

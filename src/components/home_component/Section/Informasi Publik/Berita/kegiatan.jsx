@@ -31,7 +31,7 @@ const AgendaKegiatan = () => {
         {kegiatan.map((item, index) => (
           <div
             key={index}
-            className='flex border-b-[2px] md:border-gray-300 pb-3'
+            className='flex gap-2 border-b-[2px] md:border-gray-300 pb-3'
           >
             <div
               className='w-1/2 h-[85px]'

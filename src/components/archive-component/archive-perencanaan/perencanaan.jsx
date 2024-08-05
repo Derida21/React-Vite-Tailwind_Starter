@@ -8,7 +8,7 @@ import Layout from '../Layout';
 import useAppContext from '../../../context/useAppContext';
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
-import Pagination from '../pagination'; // Import the Pagination component
+import Pagination from '../pagination';
 
 const Perencanaan = () => {
   const { axiosInstance } = useAppContext();
