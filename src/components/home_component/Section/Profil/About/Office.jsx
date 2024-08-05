@@ -1,69 +1,68 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import imgkantor from '../../../../../../assets/img/Slide1.png';
-
-const defaultOffice = [
-  {
-    id: 1,
-    data: 'Alamat',
-    detail:
-      'Jl. Pulau Dewata RT.001 Kampung Eka Sapta Kec. Talisayan Kab. Berau Kalimantan Timur',
-  },
-  {
-    id: 2,
-    data: 'No.Tlp',
-    detail: '08666474465',
-  },
-];
 
 const Office = () => {
-  const url = '';
-  const [office, setOffice] = useState(defaultOffice);
+  const [data, setData] = useState(null);
 
-  const getDataOffice = async () => {
-    const response = await fetch(url);
-    const dataOffice = await response.json();
-    setOffice(dataOffice);
-    console.log(office);
+  const getData = async () => {
+    try {
+      const response = await axios.get(`http://nurul-huda.org/api/profil`);
+      setData(response.data.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+
   useEffect(() => {
-    getDataOffice();
+    getData();
   }, []);
 
   return (
-    <div className='flex flex-col gap-2 lg:gap-5'>
-      <h1 className='font-[Poppins] text-[12px] md:text-[24px] font-semibold text-teal-700'>
-        Kantor Desa
+    <div className='flex flex-col lg:w-1/2 '>
+      <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white rounded-t-lg'>
+        Kantor Kampung
       </h1>
-      {/* Detail Kantor Desa */}
-      <div className='border-l-2 pl-3 md:pl-6 border-teal-700 h-full'>
-        <table className='table-auto'>
-          <tbody>
-            {office.map((office) => {
-              return (
-                <TableRow
-                  key={office.id}
-                  data={office.data}
-                  detail={office.detail}
-                />
-              );
-            })}
-          </tbody>
-        </table>
+      <div className='rounded-b-lg px-3 py-3 md:p-5 border md:shadow-xl h-full'>
+        {data && (
+          <table className='table-auto h-fit'>
+            <tbody>
+              {data.alamat && (
+                <tr className='font-[Poppins] text-[10px] align-top '>
+                  <td className='text-gray-700 font-medium pb-2'>Alamat</td>
+                  <td className='pl-3 pb-2 text-gray-500'>
+                    {data.alamat || 'Data belum tersedia'}
+                  </td>
+                </tr>
+              )}
+              <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className='text-gray-700 font-medium pb-2'>No.Tlp</td>
+                <td className='pl-3 pb-2 text-gray-500'>
+                  {data.no_hp || 'Data belum tersedia'}
+                </td>
+              </tr>
+              <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className='text-gray-700 font-medium pb-2'>Email</td>
+                <td className='pl-3 pb-2 text-gray-500'>
+                  {data.email || 'Data belum tersedia'}
+                </td>
+              </tr>
+              {/* <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className='text-gray-700 font-medium pb-2'>Alamat</td>
+                <td className='pl-3 pb-2 text-gray-500'>
+                  {data.alamat || 'Data belum tersedia'}
+                </td>
+              </tr>
+              <tr className='font-[Poppins] text-[10px] align-top '>
+                <td className='text-gray-700 font-medium pb-2'>Pendidikan</td>
+                <td className='pl-3 pb-2 text-gray-500'>
+                  {data.pendidikan || 'Data belum tersedia'}
+                </td>
+              </tr> */}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 };
-
-function TableRow(props) {
-  return (
-    <tr
-      key={props.id}
-      className='font-[Poppins] text-gray-500 text-[10px] md:text-[12px] align-top  '
-    >
-      <td className='pb-2 w-[60px] md:w-1/4'>{props.data}</td>
-      <td className='pb-2 '>{props.detail}</td>
-    </tr>
-  );
-}
-
 export default Office;

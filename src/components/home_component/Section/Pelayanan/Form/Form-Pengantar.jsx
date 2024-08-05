@@ -132,28 +132,24 @@ const Form_Pengantar = () => {
               name='Nama'
               value={formData.Nama}
               onChange={handleChange}
-              placeholder='John Die'
             />
             <Form.Input
               label='NIK'
               name='NIK'
               value={formData.NIK}
               onChange={handleChange}
-              placeholder='XX-XX-XX-XXXXXX-XXXX'
             />
             <Form.Input
               label='KK'
               name='KK'
               value={formData.KK}
               onChange={handleChange}
-              placeholder='XXXXXXXXXXXXXXXXX'
             />
             <Form.Input
               label='No.WA'
               name='WA'
               value={formData.WA}
               onChange={handleChange}
-              placeholder='+62'
             />
             <Form.Input
               label='Alamat'

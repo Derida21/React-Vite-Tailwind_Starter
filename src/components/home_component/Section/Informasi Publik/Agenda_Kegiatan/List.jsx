@@ -21,7 +21,7 @@ const List = () => {
   const list = data.slice(-5);
 
   return (
-    <div className='w-1/3 flex flex-col gap-3 rounded-lg border p-3'>
+    <div className='hidden lg:w-1/3 lg:flex lg:flex-col gap-3 rounded-lg border p-3'>
       {list.map((item, index) => (
         <div
           key={index}
