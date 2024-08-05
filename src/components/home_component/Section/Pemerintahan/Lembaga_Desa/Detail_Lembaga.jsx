@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import logo from '../../../../../../assets/img/apple.png';
 
 const DetailLembaga = () => {
   const { uuid } = useParams();
@@ -33,9 +34,13 @@ const DetailLembaga = () => {
           <div className='h-full flex flex-col gap-4 py-3 md:px-5 lg:p-8 border bg-white shadow-lg rounded-b-lg'>
             <div className='flex flex-col md:flex-row md:gap-5 px-3 md:px-0'>
               {/* Logo */}
-              {data.logo && (
+              {data.logo ? (
                 <div className='flex items-center md:w-1/2 lg:min-w-[351px] max-w-[351px] lg:min-h-[351px] border rounded-md p-5'>
                   <img src={data.logo} alt='Logo' className='w-full' />
+                </div>
+              ) : (
+                <div className='flex items-center md:w-1/2 lg:min-w-[351px] max-w-[351px] lg:min-h-[351px] border rounded-md p-5'>
+                  <img src={logo} alt='Logo' className='w-full' />
                 </div>
               )}
               {/* Detail */}
@@ -55,6 +60,7 @@ const DetailLembaga = () => {
                       ? data.alamat
                       : 'Data Belum Tersedia'
                   }
+                  className='md:items-center'
                 />
                 <List
                   tag='Dasar Hukum'

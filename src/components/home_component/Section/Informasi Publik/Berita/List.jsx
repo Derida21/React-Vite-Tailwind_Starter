@@ -21,13 +21,17 @@ const List = () => {
   const list = data.slice(-5);
 
   return (
-    <div className='w-1/3 flex flex-col gap-3 rounded-lg border p-3'>
+    <div className='hidden lg:w-1/3 lg:flex lg:flex-col gap-3 rounded-lg border p-3'>
       {list.map((item, index) => (
         <div
           key={index}
           className='flex flex-col border border-gray-200 rounded-lg hover:shadow-xl'
         >
-          <img src={item.thumbnail} alt='' className='rounded max-h-[150px]' />
+          <img
+            src={item.thumbnail}
+            alt=''
+            className='rounded max-h-[150px] w-full'
+          />
           <div className='flex flex-col gap-2 px-2 py-3'>
             <Link
               to={`/informasi-publik/berita-kampung/${item.slug}`}

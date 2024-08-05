@@ -26,6 +26,12 @@ const Form_SKTMBPJS = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === 'NIK' || name === 'KK' || name === 'WA') {
+      if (!/^[\d-]*$/.test(value)) {
+        return;
+      }
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -38,7 +44,6 @@ const Form_SKTMBPJS = () => {
   };
 
   const handleSend = () => {
-
     let data = {
       nama_pengaju: formData.Nama,
       no_wa: formData.WA,
@@ -54,11 +59,12 @@ const Form_SKTMBPJS = () => {
         jenis_kelamin: formData['Jenis Kelamin'],
         agama: formData.Agama,
         keperluan: formData.Tujuan,
-      }
+      },
     };
 
-    axios.post('http://nurul-huda.org/api/pelayanan', data)
-      .then(response => {
+    axios
+      .post('http://nurul-huda.org/api/pelayanan', data)
+      .then((response) => {
         const message = `Saya ingin mengkonfirmasikan bahwa saya telah mengisi form pelayanan dengan kode pelayanan :${response.data.data.kode_pelayanan}`;
 
         const phoneNumber = '+6285852392330';
@@ -69,10 +75,9 @@ const Form_SKTMBPJS = () => {
         window.open(whatsappUrl, '_blank');
         setShowMessage(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error:', error);
       });
-
   };
 
   const handleBack = () => {
@@ -124,28 +129,24 @@ const Form_SKTMBPJS = () => {
               name='Nama'
               value={formData.Nama}
               onChange={handleChange}
-              placeholder='John Die'
             />
             <Form.Input
               label='NIK'
               name='NIK'
               value={formData.NIK}
               onChange={handleChange}
-              placeholder='XX-XX-XX-XXXXXX-XXXX'
             />
             <Form.Input
               label='KK'
               name='KK'
               value={formData.KK}
               onChange={handleChange}
-              placeholder='XXXXXXXXXXXXXXXXX'
             />
             <Form.Input
               label='No.WA'
               name='WA'
               value={formData.WA}
               onChange={handleChange}
-              placeholder='+62'
             />
             <Form.Input
               label='Alamat'
