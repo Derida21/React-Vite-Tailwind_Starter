@@ -12,7 +12,7 @@ const Carousel = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get(`http://nurul-huda.org/api/berita`);
+      const response = await axios.get(`http://nurul-huda.org/api/kegiatan`);
       setSlides(response.data.data.data.slice(0, 3));
     } catch {}
   };
@@ -43,8 +43,8 @@ const Carousel = () => {
         {slides.map((item, index) => (
           <div
             key={index}
-            className={`absolute h-full w-full flex items-end justify-end  transition-opacity duration-1000 ease-in-out ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
+            className={`absolute h-full w-full flex items-end justify-end transition-opacity duration-1000 ease-in-out ${
+              index === currentIndex ? ' opacity-100' : 'opacity-0'
             } `}
             style={{
               backgroundImage: `url(${item.thumbnail})`,
@@ -52,14 +52,15 @@ const Carousel = () => {
               backgroundPosition: 'center',
             }}
           >
+            <div className='absolute bg-black w-full bg-opacity-50 h-full z-10'></div>
             <Link
               to={`/informasi-publik/berita-kampung/${item.slug}`}
-              className=' flex flex-col w-full p-5 md:p-10'
+              className=' flex flex-col w-full p-5 md:p-10 z-20'
             >
-              <h2 className='text-white bg-gray-500 rounded-t px-3 font-[Poppins] font-semibold text-[12px] md:text-[16px] lg:text-[32px]'>
+              <h2 className='truncate text-white  rounded-t px-3 font-[Poppins] font-semibold text-[12px] md:text-[16px] lg:text-[32px]'>
                 {item.judul}
               </h2>
-              <div className=' text-white bg-gray-700 bg-opacity-90 rounded-b px-3 text-[8px] md:text-[10px] lg:text-[16px] font-[Poppins] text-justify line-clamp-3 '>
+              <div className=' text-white rounded-b px-3 text-[8px] md:text-[10px] lg:text-[16px] font-[Poppins] text-justify line-clamp-3 '>
                 <p
                   className='h-full'
                   dangerouslySetInnerHTML={{ __html: item.isi }}
@@ -71,13 +72,13 @@ const Carousel = () => {
       </div>
 
       <button
-        className='absolute left-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
+        className='absolute z-30 left-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
         onClick={Prev}
       >
         <IconCircleArrowLeftFilled className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8' />
       </button>
       <button
-        className='absolute right-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
+        className='absolute z-30 right-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
         onClick={Next}
       >
         <IconCircleArrowRightFilled className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8' />

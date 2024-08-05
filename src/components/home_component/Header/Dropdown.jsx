@@ -103,7 +103,7 @@ const Dropdown = ({ label, options }) => {
         onClick={handleClick}
         aria-expanded={isOpen}
         aria-haspopup='true'
-        className='[&>svg]:w-3 [&>svg]:h-3 [&>svg]:lg:hidden flex w-full justify-between items-center py-3 lg:items-center md:pr-[40px] lg:px-3 xl:px-5 font-[Poppins] font-semibold text-[10px] md:text-[12px] lg:max-xl:text-[10px] text-gray-700 hover:text-teal-700 text-nowrap'
+        className='[&>svg]:w-3 [&>svg]:h-3 [&>svg]:lg:hidden flex w-full justify-between items-center py-3 lg:items-center md:pr-[40px] lg:px-3 xl:px-5 font-[Poppins] font-semibold text-[10px] md:text-[12px] lg:max-xl:text-[10px] xl:text-sm text-gray-700 hover:text-teal-700 text-nowrap'
       >
         <span>{label}</span>
         {isOpen ? <IconChevronUp /> : <IconChevronDown />}
