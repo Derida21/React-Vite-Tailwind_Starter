@@ -6,7 +6,7 @@ import Editor from '../ck-editor/ck-editor.jsx';
 
 const ProfilKampung = () => {
   const [formData, setFormData] = useState({
-    logo: null, // Changed to null for file handling
+    logo: null,
     nama: '',
     alamat: '',
     peta: '',
@@ -15,31 +15,16 @@ const ProfilKampung = () => {
     fb: '',
     ig: '',
     yt: '',
-    struktur_organisasi: '',
+    struktur_organisasi: null,
+    visi: '',
+    misi: '',
   });
   const [loading, setLoading] = useState(false);
   const { slug } = useParams();
   const navigate = useNavigate();
   const { axiosInstance } = useAppContext();
-
   const [preview, setPreview] = useState('');
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      logo: file,
-    });
-    setPreview(URL.createObjectURL(file));
-  };
-
-  const handleRemoveImage = () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      logo: null,
-    }));
-    setPreview('');
-  };
+  const [strukturPreview, setStrukturPreview] = useState('');
 
   useEffect(() => {
     fetchDetail();
@@ -52,6 +37,7 @@ const ProfilKampung = () => {
       const data = response.data.data;
 
       setPreview(data.logo);
+      setStrukturPreview(data.struktur_organisasi);
       setFormData({
         logo: data.logo,
         nama: data.nama,
@@ -59,10 +45,12 @@ const ProfilKampung = () => {
         peta: data.peta,
         no_hp: data.no_hp,
         email: data.email,
-        ig: data.sosial_media.ig,
-        fb: data.sosial_media.fb,
-        yt: data.sosial_media.yt,
-        struktur_organisasi: data.struktur_organisasi,
+        fb: data.sosial_media.fb || '',
+        ig: data.sosial_media.ig || '',
+        yt: data.sosial_media.yt || '',
+        struktur_organisasi: data.struktur_organisasi || null,
+        visi: data.visi_misi.visi || '',
+        misi: data.visi_misi.misi || '',
       });
     } catch (error) {
       toast.error('Error fetching detail');
@@ -71,13 +59,43 @@ const ProfilKampung = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      logo: file,
+    });
+    setPreview(URL.createObjectURL(file));
+  };
+
+  const handleStrukturImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      struktur_organisasi: file,
+    });
+    setStrukturPreview(URL.createObjectURL(file));
+  };
+
+  const handleRemoveImage = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      logo: null,
+    }));
+    setPreview('');
+  };
+
+  const handleRemoveStrukturImage = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      struktur_organisasi: null,
+    }));
+    setStrukturPreview('');
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleEditorChange = (data) => {
-    setFormData((prevState) => ({ ...prevState, struktur_organisasi: data }));
   };
 
   const handleSubmit = async (e) => {
@@ -91,9 +109,11 @@ const ProfilKampung = () => {
       form.append('alamat', formData.alamat);
       form.append('peta', formData.peta);
       form.append('no_hp', formData.no_hp);
-      form.append(`sosial_media[fb]`, formData.fb);
-      form.append(`sosial_media[ig]`, formData.ig);
-      form.append(`sosial_media[yt]`, formData.yt);
+      form.append('sosial_media[fb]', formData.fb);
+      form.append('sosial_media[ig]', formData.ig);
+      form.append('sosial_media[yt]', formData.yt);
+      form.append('visi_misi[visi]', formData.visi);
+      form.append('visi_misi[misi]', formData.misi);
 
       if (formData.struktur_organisasi && typeof formData.struktur_organisasi !== 'string') {
         form.append('struktur_organisasi', formData.struktur_organisasi);
@@ -103,9 +123,10 @@ const ProfilKampung = () => {
         form.append('logo', formData.logo);
       }
 
-      await axiosInstance.post('/profil', form);
+      await axiosInstance.put('/profil', form);
 
       navigate('/admin-dashboard/profil');
+      toast.success('Profil updated successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Error submitting form');
@@ -235,7 +256,58 @@ const ProfilKampung = () => {
             />
           </div>
         </div>
+        <h2 className="mt-6 text-ls font-bold mb-6">Visi dan Misi</h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div>
+            <label className="block text-gray-700">Visi</label>
+            <textarea
+              name="visi"
+              value={formData.visi}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Misi</label>
+            <textarea
+              name="misi"
+              value={formData.misi}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
+            />
+          </div>
+        </div>
 
+        <h2 className="mt-6 text-ls font-bold mb-6">Struktur Organisasi</h2>
+        <div className="max-w-md mx-auto mt-10">
+          <div className="mb-4">
+            <input
+              type="file"
+              name="struktur_organisasi"
+              onChange={handleStrukturImageChange}
+              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            />
+          </div>
+
+          {strukturPreview && (
+            <div className="relative mb-4">
+              <div className="relative w-64 h-64 mx-auto border-4 border-dashed border-gray-300 rounded-lg overflow-hidden">
+                <img
+                  src={strukturPreview}
+                  alt="Struktur Preview"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={handleRemoveStrukturImage}
+                  type="button"
+                  className="absolute top-0 right-0 mt-2 mr-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 focus:outline-none"
+                >
+                  &times;
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
 
         <button
           type="submit"

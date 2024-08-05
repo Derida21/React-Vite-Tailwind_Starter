@@ -56,7 +56,7 @@ const LembagaCRUD = () => {
                 <div className="pb-4 mb-4 border-b-2 border-gray-200">
                   <div className="flex items-center justify-between min-h-10">
                     <div>
-                      <h1 className="text-lg font-semibold text-secondary">List Lembaga</h1>
+                      <h1 className="text-lg font-semibold text-secondary">Lembaga</h1>
                       <button
                         className="bg-teal-500 text-white px-4 py-2 mt-5 rounded-md"
                         onClick={handleAddNew}
@@ -64,8 +64,7 @@ const LembagaCRUD = () => {
                         Tambahkan Data
                       </button>
                     </div>
-                    <a href="/admin/guru/tambah" className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition duration-300 ease-in-out border border-transparent rounded-md shadow-sm outline-none bg-primary hover:bg-secondary">Tambah
-                    </a>
+                 
                     <input
                       type="text"
                       value={searchQuery}
