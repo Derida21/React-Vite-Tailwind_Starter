@@ -56,10 +56,10 @@ const Carousel = () => {
               to={`/informasi-publik/berita-kampung/${item.slug}`}
               className=' flex flex-col w-full p-5 md:p-10'
             >
-              <h2 className='text-teal-700 bg-white px-3 font-[Poppins] font-semibold text-[12px] md:text-[16px] lg:text-[32px]'>
+              <h2 className='text-white bg-gray-500 rounded-t px-3 font-[Poppins] font-semibold text-[12px] md:text-[16px] lg:text-[32px]'>
                 {item.judul}
               </h2>
-              <div className=' text-white bg-teal-700 bg-opacity-70 px-3 text-[8px] md:text-[10px] lg:text-[16px] font-[Poppins] text-justify line-clamp-3 '>
+              <div className=' text-white bg-gray-700 bg-opacity-90 rounded-b px-3 text-[8px] md:text-[10px] lg:text-[16px] font-[Poppins] text-justify line-clamp-3 '>
                 <p
                   className='h-full'
                   dangerouslySetInnerHTML={{ __html: item.isi }}

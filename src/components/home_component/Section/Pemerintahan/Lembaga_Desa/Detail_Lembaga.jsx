@@ -82,7 +82,7 @@ const DetailLembaga = () => {
             </div>
             {/* Anggota */}
             <div className='flex flex-col gap-2 px-3'>
-              <h1 className='md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm lg:text-lg'>
+              <h1 className='md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm lg:text-lg w-full md:text-center'>
                 Daftar Anggota
               </h1>
               {data.pengurus && data.pengurus.length > 0 ? (
