@@ -125,36 +125,47 @@ const PejabatList = () => {
   }
 
   return (
-    <div className="container mx-auto p-5 relative">
-      <h1 className="text-3xl font-bold mb-5">Daftar Pejabat</h1>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-        onClick={() => openModal()}
-      >
-        Tambah Pejabat
-      </button>
-      {pejabatList.length === 0 ? (
-        <div className="text-center">No pejabat available</div>
-      ) : (
-        <div className="overflow-x-auto">
-          <PejabatTable pejabatList={pejabatList} onEdit={openModal} onDelete={handleDelete} />
+    <div className="container mx-auto p-5 mt-10 relative">
+      <div className="container mx-auto">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <div class="px-6 py-6 bg-white ">
+            <div className="border-b-2 border-gray-200 pb-3">
+              <h1 className="text-lg font-semibold text-secondary">Daftar Pejabat</h1>
+              <button
+                className="bg-teal-500 text-white px-4 py-2 mt-5 rounded-md"
+                onClick={() => openModal()}
+              >
+                Tambah Pejabat
+              </button>
+            </div>
+            <div className="overflow-x-auto px-6 pb-6 ">
+
+            </div>
+            {pejabatList.length === 0 ? (
+              <div className="text-center">No pejabat available</div>
+            ) : (
+              <div className="overflow-x-auto">
+                <PejabatTable pejabatList={pejabatList} onEdit={openModal} onDelete={handleDelete} />
+              </div>
+            )}
+            {isModalOpen && (
+              <PejabatModal
+                pejabat={currentPejabat}
+                onClose={closeModal}
+                onSave={handleSave}
+                saving={saving}
+              />
+            )}
+            {error && <ErrorMessage message={error} />}
+            {isConfirmingDelete && (
+              <DeleteConfirmation
+                onCancel={cancelDelete}
+                onConfirm={confirmDelete}
+              />
+            )}
+          </div>
         </div>
-      )}
-      {isModalOpen && (
-        <PejabatModal
-          pejabat={currentPejabat}
-          onClose={closeModal}
-          onSave={handleSave}
-          saving={saving}
-        />
-      )}
-      {error && <ErrorMessage message={error} />}
-      {isConfirmingDelete && (
-        <DeleteConfirmation
-          onCancel={cancelDelete}
-          onConfirm={confirmDelete}
-        />
-      )}
+      </div>
     </div>
   );
 };
