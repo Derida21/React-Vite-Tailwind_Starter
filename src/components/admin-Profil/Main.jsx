@@ -256,27 +256,6 @@ const ProfilKampung = () => {
             />
           </div>
         </div>
-        <h2 className="mt-6 text-ls font-bold mb-6">Visi dan Misi</h2>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div>
-            <label className="block text-gray-700">Visi</label>
-            <textarea
-              name="visi"
-              value={formData.visi}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Misi</label>
-            <textarea
-              name="misi"
-              value={formData.misi}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded mt-1"
-            />
-          </div>
-        </div>
 
         <h2 className="mt-6 text-ls font-bold mb-6">Struktur Organisasi</h2>
         <div className="max-w-md mx-auto mt-10">
