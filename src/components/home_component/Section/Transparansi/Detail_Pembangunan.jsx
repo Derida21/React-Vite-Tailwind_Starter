@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import logo from '../../../../../../assets/img/apple.png';
+import logo from '../../../../../assets/img/apple.png';
 
-const DetailLembaga = () => {
-  const { uuid } = useParams();
+const Detail_Pembangunan = () => {
+  const { slug } = useParams();
   const [data, setData] = useState(null);
 
   const getDetail = async () => {
     try {
       const response = await axios.get(
-        `http://nurul-huda.org/api/lembaga/${uuid}`
+        `http://nurul-huda.org/api/pembangunan/${slug}`
       );
       setData(response.data.data);
     } catch (error) {
@@ -20,26 +20,32 @@ const DetailLembaga = () => {
 
   useEffect(() => {
     getDetail();
-  }, [uuid]);
+  }, [slug]);
 
   return (
     <section className='min-h-screen px-5 md:px-[60px] lg:px-[80px] xl:px-[160px]'>
       {data && (
         <div className='w-full flex flex-col pt-14 pb-5 md:pt-[120px] md:pb-[40px] lg:pt-[120px] lg:pb-20'>
-          {data.nama && (
+          {data.judul && (
             <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[20px] font-semibold text-white rounded-t-lg border-b'>
-              {data.nama} ({data.singkatan})
+              {data.judul}
             </h1>
           )}
-          <div className='h-full flex flex-col gap-4 py-3 md:px-5 lg:p-8 border bg-white shadow-lg rounded-b-lg'>
-            <div className='flex flex-col md:flex-row md:gap-5 px-3 md:px-0'>
+          <div className='h-full flex flex-col gap-3 py-3 md:px-5 lg:p-8 border bg-white shadow-lg rounded-b-lg'>
+            <div className='flex flex-col gap-2 lg:gap-5 px-3 md:px-0'>
               {/* Logo */}
-              {data.logo ? (
-                <div className='flex items-center md:w-1/2 lg:min-w-[351px] max-w-[351px] lg:min-h-[351px] border rounded-md p-5'>
-                  <img src={data.logo} alt='Logo' className='w-full' />
-                </div>
+              {data.thumbnail ? (
+                <div
+                  className='h-32 md:h-60 lg:h-80 xl:h-[500px]'
+                  style={{
+                    backgroundImage: `url(${data.thumbnail})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    borderRadius: '6px',
+                  }}
+                ></div>
               ) : (
-                <div className='flex items-center md:w-1/2 lg:min-w-[351px] max-w-[351px] lg:min-h-[351px] border rounded-md p-5'>
+                <div className='flex items-center border rounded-md p-5'>
                   <img src={logo} alt='Logo' className='w-full' />
                 </div>
               )}
@@ -48,8 +54,8 @@ const DetailLembaga = () => {
                 <List
                   tag='Deskripsi'
                   detail={
-                    typeof data.deskripsi === 'string'
-                      ? data.deskripsi
+                    typeof data.isi === 'string'
+                      ? data.isi
                       : `'Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Consequatur minima culpa, tenetur ea, animi laborum quaerat
                   voluptas error esse sint atque! Ab provident magni fugit? Quia
@@ -59,39 +65,15 @@ const DetailLembaga = () => {
                   nostrum corrupti quidem tempora, debitis porro atque? Officia?'`
                   }
                 />
-                <List
-                  tag='Alamat'
-                  detail={
-                    typeof data.alamat === 'string'
-                      ? data.alamat
-                      : 'Data Belum Tersedia'
-                  }
-                />
-                <List
-                  tag='Dasar Hukum'
-                  detail={
-                    typeof data.dasar_hukum === 'string'
-                      ? data.dasar_hukum
-                      : 'Data Belum Tersedia'
-                  }
-                />
-                <List
-                  tag='Visi Misi'
-                  detail={
-                    typeof data.visi_misi === 'string'
-                      ? data.visi_misi
-                      : 'Data Belum Tersedia'
-                  }
-                />
               </ul>
             </div>
             {/* Anggota */}
             <div className='flex flex-col gap-2 px-3 md:px-0'>
               <h1 className='md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm lg:text-lg w-full md:text-center'>
-                Daftar Anggota
+                Progres {data.judul}
               </h1>
               {data.pengurus && data.pengurus.length > 0 ? (
-                <table className='w-full font-[Poppins] mt-1 border-separate'>
+                <table className='w-full font-[Poppins] border-separate'>
                   <thead>
                     <tr>
                       <td className='font-medium text-gray-700 text-center border text-[10px] md:text-sm py-2'>
@@ -128,14 +110,8 @@ const DetailLembaga = () => {
                   </tbody>
                 </table>
               ) : (
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Consequatur minima culpa, tenetur ea, animi laborum quaerat
-                  voluptas error esse sint atque! Ab provident magni fugit? Quia
-                  possimus praesentium maiores iste. Est hic unde itaque
-                  voluptatum nemo vel rem, repudiandae quis aut! Tenetur ipsam
-                  nulla ut. Nemo laboriosam iusto dignissimos molestiae quae est
-                  nostrum corrupti quidem tempora, debitis porro atque? Officia?
+                <p className='font-[Poppins] text-xs lg:text-sm xl:text-[16px] md:text-center font-medium text-gray-500'>
+                  Data Belum Tersedia
                 </p>
               )}
             </div>
@@ -149,10 +125,10 @@ const DetailLembaga = () => {
 const List = ({ tag, detail, className }) => {
   return (
     <li
-      className={`${className} flex flex-col md:flex-row w-full border-b py-3`}
+      className={`${className} flex flex-col justify-center md:items-center w-full`}
     >
       <div className='min-h-full flex items-start'>
-        <h1 className=' md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm xl:text-lg'>
+        <h1 className=' text-teal-700 font-medium text-xs md:text-sm lg:text-lg'>
           {tag}
         </h1>
       </div>
@@ -163,4 +139,4 @@ const List = ({ tag, detail, className }) => {
   );
 };
 
-export default DetailLembaga;
+export default Detail_Pembangunan;
