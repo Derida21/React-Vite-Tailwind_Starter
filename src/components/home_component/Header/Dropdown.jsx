@@ -56,7 +56,7 @@ const Dropdown = ({ label, options }) => {
       >
         <button
           onClick={() => handleSubOptionClick(index)}
-          className={`flex justify-between py-2 md:max-lg:pr-10 lg:px-3 xl:px-5 lg:block cursor-pointer lg:max-xl:text-[8px] hover:text-teal-700 items-center w-full ${
+          className={`flex justify-between py-2 md:max-lg:pr-10 lg:px-3 xl:px-5 lg:block cursor-pointer lg:text-[8px] xl:text-xs hover:text-teal-700 items-center w-full ${
             isDesktop ? 'block' : ''
           }`}
         >
@@ -81,7 +81,7 @@ const Dropdown = ({ label, options }) => {
               <li key={subIndex} className='relative'>
                 <Link
                   to={subOption.href}
-                  className='px-2 lg:px-4 hover:text-teal-700'
+                  className='px-2 lg:px-4 hover:text-teal-700 lg:text-[8px] xl:text-sm'
                 >
                   {subOption.label}
                 </Link>
@@ -103,7 +103,7 @@ const Dropdown = ({ label, options }) => {
         onClick={handleClick}
         aria-expanded={isOpen}
         aria-haspopup='true'
-        className='[&>svg]:w-3 [&>svg]:h-3 [&>svg]:lg:hidden flex w-full justify-between items-center py-3 lg:items-center md:pr-[40px] lg:px-3 xl:px-5 font-[Poppins] font-semibold text-[10px] md:text-[12px] lg:max-xl:text-[10px] text-gray-700 hover:text-teal-700 text-nowrap'
+        className='[&>svg]:w-3 [&>svg]:h-3 [&>svg]:lg:hidden flex w-full justify-between items-center py-3 lg:items-center md:pr-[40px] lg:px-3 xl:px-5 font-[Poppins] font-semibold text-[10px] md:text-[12px] lg:max-xl:text-[10px] xl:text-sm text-gray-700 hover:text-teal-700 text-nowrap'
       >
         <span>{label}</span>
         {isOpen ? <IconChevronUp /> : <IconChevronDown />}

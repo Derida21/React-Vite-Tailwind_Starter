@@ -21,7 +21,7 @@ const Sejarah = () => {
         <h1 className='font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white rounded-t-lg'>
           Sejarah Kampung
         </h1>
-        <div className=' rounded-b-lg px-3 py-3 md:p-5 border md:shadow-xl'>
+        <div className='min-h-screen rounded-b-lg px-3 py-3 md:p-5 border md:shadow-xl'>
           <article className='font-[Poppins] text-[10px] md:text-[16px] text-gray-500 text-justify px-2'>
             {data ? (
               <div dangerouslySetInnerHTML={{ __html: data.isi }}></div>

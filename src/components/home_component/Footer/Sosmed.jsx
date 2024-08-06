@@ -47,7 +47,7 @@ const Sosmed = () => {
           {sosmed.ig && (
             <Menu.Data
               target='_blank'
-              href={`https://instgram.com/${sosmed.ig}`}
+              href={`https://instagram.com/${sosmed.ig}`}
               text={sosmed.ig}
             >
               <FaInstagram />

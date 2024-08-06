@@ -7,8 +7,9 @@ import Form_Pengantar from './Form/Form-Pengantar';
 
 const Layout = () => {
   const [active, setActive] = useState(null);
-  const [dropdownMenu, setdropdownMenu] = useState('');
+  const [dropdownMenu, setDropdownMenu] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedServiceLabel, setSelectedServiceLabel] = useState('');
 
   const items = [
     { id: 'alur', label: 'Alur Pengajuan Form' },
@@ -27,17 +28,19 @@ const Layout = () => {
       setDropdownOpen(!dropdownOpen);
     } else {
       setDropdownOpen(false);
-      setdropdownMenu('');
+      setDropdownMenu('');
+      setSelectedServiceLabel('');
     }
   };
 
-  const handleServiceChange = (serviceId) => {
-    setdropdownMenu(serviceId);
+  const handleServiceChange = (serviceId, serviceLabel) => {
+    setDropdownMenu(serviceId);
+    setSelectedServiceLabel(serviceLabel);
     setDropdownOpen(false);
   };
 
   useEffect(() => {
-    setdropdownMenu('');
+    setDropdownMenu('');
   }, []);
 
   return (
@@ -53,7 +56,9 @@ const Layout = () => {
                 : 'bg-teal-700 md:bg-opacity-60 md:hover:bg-opacity-100 duration-300 ease-in md:hover:text-white text-white'
             }`}
           >
-            {item.label}
+            {item.id === 'pelayanan' && selectedServiceLabel
+              ? selectedServiceLabel
+              : item.label}
             {item.id === 'pelayanan' && (
               <>
                 {dropdownOpen ? (
@@ -73,7 +78,9 @@ const Layout = () => {
                   {services.map((service) => (
                     <li
                       key={service.id}
-                      onClick={() => handleServiceChange(service.id)}
+                      onClick={() =>
+                        handleServiceChange(service.id, service.label)
+                      }
                       className='px-8 py-3 rounded-md cursor-pointer hover:bg-gray-200 md:text-[16px] font-normal'
                     >
                       {service.label}

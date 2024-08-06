@@ -1,4 +1,4 @@
-import { IconMessageDots, IconUserFilled } from '@tabler/icons-react';
+import { IconMessageDots, IconUserFilled, IconX } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const Popup = () => {
   };
 
   return (
-    <div className='z-[999999] fixed h-screen right-2 lg:right-5 xl:right-10 flex items-end justify-end py-5'>
+    <div className='z-[999999] fixed bottom-2 right-2 lg:right-5 xl:right-10 flex items-end justify-end py-5'>
       <div className='relative'>
         <div
           className={`transition-all duration-500 ease-in-out mt-6 ${
@@ -36,9 +36,9 @@ const Popup = () => {
         </div>
         <button
           onClick={handleButtonClick}
-          className='flex justify-center items-center w-[50px] h-[50px] bg-white  rounded-full shadow-lg'
+          className='flex justify-center items-center p-2 md:p-4 bg-white outline-1 rounded-full shadow-lg transition-all duration-300 '
         >
-          <IconMessageDots />
+          {showContacts ? <IconX /> : <IconMessageDots />}
         </button>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import {
+  IconCircleArrowLeft,
   IconCircleArrowLeftFilled,
+  IconCircleArrowRight,
   IconCircleArrowRightFilled,
 } from '@tabler/icons-react';
 import axios from 'axios';
@@ -12,7 +14,7 @@ const Carousel = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get(`http://nurul-huda.org/api/berita`);
+      const response = await axios.get(`http://nurul-huda.org/api/kegiatan`);
       setSlides(response.data.data.data.slice(0, 3));
     } catch {}
   };
@@ -24,7 +26,7 @@ const Carousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((currentIndex + 1) % slides.length);
-    }, 2000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [currentIndex, slides.length]);
@@ -43,8 +45,8 @@ const Carousel = () => {
         {slides.map((item, index) => (
           <div
             key={index}
-            className={`absolute h-full w-full flex items-end justify-end  transition-opacity duration-1000 ease-in-out ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
+            className={`absolute h-full w-full flex items-end justify-end transition-opacity duration-1000 ease-in-out ${
+              index === currentIndex ? ' opacity-100' : 'opacity-0'
             } `}
             style={{
               backgroundImage: `url(${item.thumbnail})`,
@@ -52,14 +54,15 @@ const Carousel = () => {
               backgroundPosition: 'center',
             }}
           >
+            <div className='absolute bg-black w-full bg-opacity-50 h-full z-10'></div>
             <Link
-              to={`/informasi-publik/berita-kampung/${item.slug}`}
-              className=' flex flex-col w-full p-5 md:p-10'
+              to={`/informasi-publik/agenda-kegiatan/${item.slug}`}
+              className=' flex flex-col w-full px-2 py-5 md:p-10 z-20'
             >
-              <h2 className='text-teal-700 bg-white px-3 font-[Poppins] font-semibold text-[12px] md:text-[16px] lg:text-[32px]'>
+              <h2 className='truncate text-white rounded-t px-3 font-[Poppins] font-semibold text-[10px] md:text-[16px] lg:text-[32px]'>
                 {item.judul}
               </h2>
-              <div className=' text-white bg-teal-700 bg-opacity-70 px-3 text-[8px] md:text-[10px] lg:text-[16px] font-[Poppins] text-justify line-clamp-3 '>
+              <div className=' text-white rounded-b px-3 text-[8px] md:text-[10px] lg:text-[16px] font-[Poppins] text-justify line-clamp-3 '>
                 <p
                   className='h-full'
                   dangerouslySetInnerHTML={{ __html: item.isi }}
@@ -71,16 +74,16 @@ const Carousel = () => {
       </div>
 
       <button
-        className='absolute left-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
+        className='absolute z-30 left-0 top-1/2 transform -translate-y-1/2 text-slate-400 p-2 rounded'
         onClick={Prev}
       >
-        <IconCircleArrowLeftFilled className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8' />
+        <IconCircleArrowLeft className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 hover:text-white' />
       </button>
       <button
-        className='absolute right-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded'
+        className='absolute z-30 right-0 top-1/2 transform -translate-y-1/2 text-slate-400 p-2 rounded'
         onClick={Next}
       >
-        <IconCircleArrowRightFilled className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8' />
+        <IconCircleArrowRight className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 hover:text-white' />
       </button>
 
       <div className='absolute bottom-0 left-0 right-0 flex justify-center p-2 space-x-2'>

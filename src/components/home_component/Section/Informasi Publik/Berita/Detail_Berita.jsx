@@ -29,8 +29,8 @@ const DetailBerita = () => {
   }, [slug]);
 
   return (
-    <div className='px-5 pt-14 pb-5 md:px-[60px] md:pt-[120px] md:pb-10 lg:px-[80px] lg:pt-[130px] xl:px-[160px]'>
-      <div className='flex flex-col lg:flex-row p-2 md:p-5 bg-white rounded-xl shadow border border-gray-300 justify-center items-start gap-2 md:gap-5'>
+    <div className='min-h-screen px-5 pt-14 pb-5 md:px-[60px] md:pt-[120px] md:pb-10 lg:px-[80px] lg:pt-[130px] xl:px-[160px]'>
+      <div className='min-h-screen flex flex-col lg:flex-row p-2 md:p-5 bg-white rounded-xl shadow border border-gray-300 justify-center items-start gap-2 md:gap-5'>
         {data && (
           <div className='w-full flex flex-col drop-shadow-lg bg-white border-l-[1px] border-gray-300 rounded-md'>
             {data.thumbnail && (
