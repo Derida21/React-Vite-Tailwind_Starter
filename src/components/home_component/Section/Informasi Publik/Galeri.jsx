@@ -30,7 +30,8 @@ const Galeri = () => {
         {limit.map((item, index) => (
           <div
             key={index}
-            className='h-[93px] rounded-md'
+            onClick={handleClick}
+            className='h-[93px] rounded-md cursor-pointer'
             style={{
               backgroundImage: `url(${item.thumbnail})`,
               backgroundPosition: 'center',

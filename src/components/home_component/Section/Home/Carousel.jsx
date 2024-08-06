@@ -74,13 +74,13 @@ const Carousel = () => {
       </div>
 
       <button
-        className='absolute z-30 left-0 top-1/2 transform -translate-y-1/2 text-gray-700 p-2 rounded'
+        className='absolute z-30 left-0 top-1/2 transform -translate-y-1/2 text-slate-400 p-2 rounded'
         onClick={Prev}
       >
         <IconCircleArrowLeft className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 hover:text-white' />
       </button>
       <button
-        className='absolute z-30 right-0 top-1/2 transform -translate-y-1/2 text-gray-700 p-2 rounded'
+        className='absolute z-30 right-0 top-1/2 transform -translate-y-1/2 text-slate-400 p-2 rounded'
         onClick={Next}
       >
         <IconCircleArrowRight className='w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 hover:text-white' />
