@@ -54,7 +54,7 @@ const Carousel = () => {
               backgroundPosition: 'center',
             }}
           >
-            <div className='absolute bg-black w-full bg-opacity-50 h-full z-10'></div>
+            <div className='absolute bg-black w-full bg-opacity-30 h-full z-10'></div>
             <Link
               to={`/informasi-publik/agenda-kegiatan/${item.slug}`}
               className=' flex flex-col w-full px-2 py-5 md:p-10 z-20'

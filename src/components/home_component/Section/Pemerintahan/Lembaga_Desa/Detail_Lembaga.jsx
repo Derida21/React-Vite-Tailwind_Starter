@@ -50,7 +50,13 @@ const DetailLembaga = () => {
                   detail={
                     typeof data.deskripsi === 'string'
                       ? data.deskripsi
-                      : 'Data Belum Tersedia'
+                      : `'Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Consequatur minima culpa, tenetur ea, animi laborum quaerat
+                  voluptas error esse sint atque! Ab provident magni fugit? Quia
+                  possimus praesentium maiores iste. Est hic unde itaque
+                  voluptatum nemo vel rem, repudiandae quis aut! Tenetur ipsam
+                  nulla ut. Nemo laboriosam iusto dignissimos molestiae quae est
+                  nostrum corrupti quidem tempora, debitis porro atque? Officia?'`
                   }
                 />
                 <List
@@ -123,7 +129,15 @@ const DetailLembaga = () => {
                   </tbody>
                 </table>
               ) : (
-                <p>Data belum Tersedia</p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Consequatur minima culpa, tenetur ea, animi laborum quaerat
+                  voluptas error esse sint atque! Ab provident magni fugit? Quia
+                  possimus praesentium maiores iste. Est hic unde itaque
+                  voluptatum nemo vel rem, repudiandae quis aut! Tenetur ipsam
+                  nulla ut. Nemo laboriosam iusto dignissimos molestiae quae est
+                  nostrum corrupti quidem tempora, debitis porro atque? Officia?
+                </p>
               )}
             </div>
           </div>
@@ -136,11 +150,13 @@ const DetailLembaga = () => {
 const List = ({ tag, detail, className }) => {
   return (
     <li
-      className={`${className} flex flex-col md:flex-row w-full border-b py-3`}
+      className={`${className} flex flex-col items-center md:flex-row w-full border-b py-3`}
     >
-      <h1 className='md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm lg:text-lg'>
-        {tag}
-      </h1>
+      <div className='h-full flex items-start'>
+        <h1 className='md:min-w-[120px] lg:min-w-[150px] text-teal-700 font-medium text-xs md:text-sm lg:text-lg'>
+          {tag}
+        </h1>
+      </div>
       <span className='text-gray-500 text-xs lg:text-[16px]'>{detail}</span>
     </li>
   );

@@ -34,7 +34,7 @@ const Berita = () => {
             className='flex gap-2 border-b-[2px] md:border-gray-300 pb-3 '
           >
             <div
-              className='w-1/2 h-[85px]'
+              className='w-1/2 h-[85px] rounded-md'
               style={{
                 backgroundImage: `url(${item.thumbnail})`,
                 backgroundPosition: 'center',
