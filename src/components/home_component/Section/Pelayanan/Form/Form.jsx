@@ -6,6 +6,7 @@ const Input = ({
   placeholder,
   onChange,
   pattern,
+  required,
 }) => {
   return (
     <div className='flex flex-col gap-3'>
@@ -19,13 +20,14 @@ const Input = ({
         value={value}
         onChange={onChange}
         pattern={pattern}
+        required
         className='border-2 text-[12px] border-teal-700 p-2 rounded font-[Poppins]'
       />
     </div>
   );
 };
 
-const Options = ({ option, onChange, name, value, label }) => {
+const Options = ({ required, option, onChange, name, value, label }) => {
   return (
     <div className='flex flex-col gap-3'>
       <label className='font-[Poppins] text-[14px] text-teal-700'>
@@ -35,6 +37,7 @@ const Options = ({ option, onChange, name, value, label }) => {
         name={name}
         value={value}
         onChange={onChange}
+        required
         className='border-2 border-teal-700 min-h-[37.2px] text-[12px] rounded text-gray-500'
       >
         <option value=''></option>
