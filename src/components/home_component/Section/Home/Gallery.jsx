@@ -45,8 +45,4 @@ const Gallery = () => {
   );
 };
 
-function Frame({ gallery }) {
-  return <></>;
-}
-
 export default Gallery;

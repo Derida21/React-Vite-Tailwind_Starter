@@ -34,7 +34,7 @@ const AgendaKegiatan = () => {
             className='flex gap-2 border-b-[2px] md:border-gray-300 pb-3'
           >
             <div
-              className='w-1/2 h-[85px]'
+              className='w-1/2 h-[85px] rounded-md'
               style={{
                 backgroundImage: `url(${item.thumbnail})`,
                 backgroundPosition: 'center',
@@ -43,7 +43,7 @@ const AgendaKegiatan = () => {
             ></div>
             <Link
               to={`/informasi-publik/agenda-kegiatan/${item.slug}`}
-              className='w-1/2 cursor-pointer font-[Poppins] text-xs text-gray-700 font-medium hover:text-teal-700'
+              className='w-1/2 cursor-pointer font-[Poppins] text-[10px] text-gray-700 hover:text-teal-700 line-clamp-3 overflow-hidden'
             >
               {item.judul}
             </Link>

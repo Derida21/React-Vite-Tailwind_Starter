@@ -51,7 +51,7 @@ const Pembangunan = () => {
                       {item.judul}
                     </h1>
                     <Link
-                      to={`/pemerintahan/lembaga-kampung/${item.slug}`}
+                      to={`/transparansi/pembangunan-kampung/${item.slug}`}
                       className='cursor-pointer text-[8px] lg:text-[10px] py-1 px-2 text-teal-700 border border-teal-700 hover:text-white hover:bg-teal-700 hover:duration-300 rounded h-fit'
                     >
                       Detail
