@@ -62,8 +62,8 @@ const Galeri_Kampung = () => {
         <h1 className='w-full font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white md:rounded-t-lg'>
           Galeri Kampung
         </h1>
-        <div className='flex flex-col h-screen w-full shadow-md bg-white md:p-4 xl:p-5 '>
-          <div className='h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4 '>
+        <div className='flex flex-col w-full shadow-md bg-white md:p-4 xl:p-5 '>
+          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4 '>
             {currentItems.map((item, index) => (
               <div
                 key={index}

@@ -12,7 +12,6 @@ import About from './pages/Profil/Tentang_Kami';
 import Sejarah from './pages/Profil/Sejarah';
 import VisiMisi from './pages/Profil/Visi_misi';
 import GeografisDesa from './pages/Profil/Geografi_Desa';
-import Popup from './components/home_component/Pop-up';
 import Struktur from './pages/Pemerintahan/Struktur_Organisasi';
 import ScrollToTop from './scrooltop';
 import PerangkatDesa from './pages/Pemerintahan/Perangkat_Desa';
@@ -24,7 +23,6 @@ import AgendaKegiatan from './pages/Informasi Publik/Agenda_Kegiatan';
 import StatistikPenduduk from './pages/Profil/Demografi_Desa/Statistik_Penduduk';
 import DetailLembaga from './components/home_component/Section/Pemerintahan/Lembaga_Desa/Detail_Lembaga';
 import Layout from './Layout';
-
 import React from 'react';
 import Produk from './pages/Produk/Produk';
 import DetailKegiatan from './components/home_component/Section/Informasi Publik/Agenda_Kegiatan/Detail_Agenda';
@@ -34,8 +32,8 @@ import DetailProduk from './components/home_component/Section/Produk/Detail-Prod
 import Galeri_Kampung from './pages/Informasi Publik/Galeri_Kampung';
 import DataPenduduk from './pages/Profil/Demografi_Desa/Data_Penduduk';
 import Pembangunan from './pages/Transparansi/Pembangunan';
-
 import Arsip from './pages/Arsip/EArsip';
+import Detail_Pembangunan from './components/home_component/Section/Transparansi/Detail_Pembangunan';
 
 const App = () => {
   const isLogin = location.pathname.startsWith('/login');
@@ -110,6 +108,10 @@ const App = () => {
           <Route
             path='/transparansi/pembangunan-kampung'
             element={<Pembangunan />}
+          />
+          <Route
+            path='/transparansi/pembangunan-kampung/:slug'
+            element={<Detail_Pembangunan />}
           />
 
           {/* Pelayanan */}

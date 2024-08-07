@@ -62,7 +62,7 @@ const APBK = () => {
         <h1 className='w-full font-[Poppins] py-3 px-4 bg-teal-700 text-[16px] md:text-[24px] font-semibold text-white md:rounded-t-lg'>
           Anggaran Pembangunan dan Belanja Kampung
         </h1>
-        <div className='flex flex-col h-screen w-full shadow-md bg-white md:p-4 xl:p-5 '>
+        <div className='flex flex-col w-full md:shadow-md md:bg-white md:p-4 xl:p-5 '>
           <div className='h-full flex flex-col gap-3'>
             {currentItems.map((item, index) => (
               <div
@@ -71,11 +71,12 @@ const APBK = () => {
                 onClick={() => handleClick(indexOfFirstItem + index)}
               >
                 <div
-                  className='flex items-end px-3 py-2 md:rounded hover:scale-110 duration-500 h-[110px] xl:h-[160px] min-w-full'
+                  className=' relative flex items-end px-3 py-2 md:rounded lg:hover:scale-105 duration-500 h-[110px] md:h-80 xl:h-[160px] min-w-full'
                   style={{
                     backgroundImage: `url(${item.thumbnail})`,
                     backgroundSize: 'cover',
-                    backgroundPosition: 'top',
+                    backgroundPosition: 'center',
+                    borderRadius: '6px',
                   }}
                 >
                   <h1 className='text-white text-[8px] md:text-[10px] font-[Poppins]'>
@@ -119,15 +120,23 @@ const APBK = () => {
 const Modal = ({ item, onClose, onNext, onPrev }) => {
   return (
     <div
-      className='fixed flex-col inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'
+      className='fixed flex-col inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[999999999]'
       onClick={onClose}
     >
       <div
-        className='flex flex-col gap-3 bg-white p-4 rounded-md max-w-lg w-full'
+        className='flex relative flex-col gap-3 bg-white p-4 rounded-md max-w-lg w-full'
         onClick={(e) => e.stopPropagation()}
       >
         <div
-          className='flex justify-end w-full h-[300px] rounded-sm p-3'
+          onClick={onClose}
+          className='absolute right-5 top-5 p-1 bg-red-500 hover:bg-red-700 text-white w-fit h-fit rounded-full cursor-pointer'
+        >
+          <IconX className='h-3 w-3' />
+        </div>
+        <img src={item.thumbnail} alt='' className='rounded-md' />
+
+        {/* <div
+          className='flex justify-end w-full h-[550px] rounded-sm p-3'
           style={{
             backgroundImage: `url(${item.thumbnail})`,
             backgroundPosition: 'center',
@@ -141,7 +150,7 @@ const Modal = ({ item, onClose, onNext, onPrev }) => {
           >
             <IconX className='h-3 w-3' />
           </div>
-        </div>
+        </div> */}
         <div className='flex justify-between'>
           <button
             onClick={onPrev}
