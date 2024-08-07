@@ -112,72 +112,99 @@ const CrudComponent = ({ endpoint }) => {
   const filteredData = data.filter(item => item.judul.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="container mx-auto p-10">
-      <h1 className="text-2xl font-bold mb-4">{endpoint}</h1>
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Cari"
-          className="border px-4 py-2 rounded"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
-          onClick={handleAddNew}
-        >
-          <FaPlus className="mr-2" /> Add New Data
-        </button>
-      </div>
-      <div className="overflow-x-auto">
-        {loading ? (
-          <div className="flex justify-center items-center">
-            <ClipLoader color="#3b82f6" loading={loading} size={50} />
+
+    <div className="p-4">
+      <div className="mb-4 mt-10">
+        <div className="container mx-auto">
+          <div className="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="px-6 py-6 bg-white ">
+              <div className='pb-4 mb-4 border-b-2 border-gray-200'>
+                <div className="flex items-center justify-between min-h-10">
+                  <div>
+                    <h1 className="text-lg font-semibold text-secondary">{endpoint}</h1>
+                    <button
+                      className="bg-teal-500 text-white px-4 py-2 mt-5 rounded-md"
+                      onClick={handleAddNew}
+                    >
+                      Tambah data
+                    </button>
+                  </div>
+
+                  <input
+                    type="text"
+                    placeholder="Cari"
+                    className="block mt-11 p-2 text-sm placeholder-gray-400 border-2 border-gray-300 rounded-md shadow-sm appearance-none focus:border-primary focus:outline-none focus:ring-primary w-1/4"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+
+              </div>
+            </div>
+
+            <div className="overflow-x-auto px-6 pb-6">
+              {loading ? (
+                <div className="flex justify-center items-center">
+                  <ClipLoader color="#3b82f6" loading={loading} size={50} />
+                </div>
+              ) : (
+                <table className="min-w-full bg-white border">
+                  <thead>
+                    <tr>
+                      <th className="border px-4 py-2">Judul</th>
+                      <th className="border px-4 py-2">Isi</th>
+                      <th className="border px-4 py-2">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.map(item => (
+                      <tr key={item.slug}>
+                        <td className="border px-4 py-2">{item.judul}</td>
+                        <td className="border px-4 py-2">{item.isi}</td>
+                        <td class="p-3 whitespace-nowrap border px-4 py-2">
+                          <div class="flex">
+                            <button
+                              className="pr-2 text-teal-500 font-body"
+                              onClick={() => handleEdit(item)}
+                            >
+                              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                </path>
+                              </svg>
+                            </button>
+                            <button
+                              className="text-red-500 font-body"
+                              onClick={() => handleDelete(item.slug)}
+                            >
+                              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                </path>
+                              </svg>
+                            </button>
+                          </div>
+                        </td>
+
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+            {isOpen && (
+              <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyles} contentLabel="Edit Modal">
+                <EditModal
+                  data={currentData}
+                  onClose={() => setIsOpen(false)}
+                  onSave={handleSave}
+                />
+              </Modal>
+            )}
           </div>
-        ) : (
-          <table className="min-w-full bg-white border">
-            <thead>
-              <tr>
-                <th className="border px-4 py-2">Judul</th>
-                <th className="border px-4 py-2">Isi</th>
-                <th className="border px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map(item => (
-                <tr key={item.slug}>
-                  <td className="border px-4 py-2">{item.judul}</td>
-                  <td className="border px-4 py-2">{item.isi}</td>
-                  <td className="border px-4 py-2">
-                    <button
-                      className="bg-green-500 h-8 text-white px-4 py-2 rounded mr-2 flex items-center"
-                      onClick={() => handleEdit(item)}
-                    >
-                      <FaEdit className="mr-1" /> Edit
-                    </button>
-                    <button
-                      className="bg-red-500 mt-2 h-8 text-white px-4 py-2 rounded flex items-center"
-                      onClick={() => handleDelete(item.slug)}
-                    >
-                      <FaTrash className="mr-1" /> Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+
+        </div>
       </div>
-      {isOpen && (
-        <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyles} contentLabel="Edit Modal">
-          <EditModal
-            data={currentData}
-            onClose={() => setIsOpen(false)}
-            onSave={handleSave}
-          />
-        </Modal>
-      )}
-    </div>
+    </div >
+
   );
 };
 

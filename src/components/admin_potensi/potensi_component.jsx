@@ -3,6 +3,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import useAppContext from '../../context/useAppContext';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 
 const customStyles = {
@@ -99,6 +100,8 @@ const DashboardPost = ({ endpoint, title }) => {
 
 
     <div className="p-10">
+
+      <ToastContainer position="bottom-left" />
       <div className="container mx-auto" onClick={openModal}>
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
           <div class="px-6 py-6 bg-white ">

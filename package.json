@@ -40,6 +40,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
     "react-transition-group": "^4.4.5",
+    "sonner": "^1.5.0",
     "styled-components": "^6.1.12",
     "tabler": "^1.0.0-alpha.8",
     "xlsx": "^0.18.5"

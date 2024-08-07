@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppContext from '../../context/useAppContext';
 import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import Editor from '../ck-editor/ck-editor.jsx';
 
 const TentangKamiPostForm = ({ endpoint, title }) => {
@@ -24,7 +25,6 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
         setEditorKey(prevKey => prevKey + 1); // Ubah key untuk mereload CKEditor
       } catch (error) {
         console.error('Error fetching detail:', error);
-        toast.error('Error fetching detail');
       } finally {
         setLoading(false);
       }
@@ -57,11 +57,9 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      navigate(-1);
       toast.success('Data berhasil diperbarui');
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Error submitting form');
     } finally {
       setLoading(false);
     }
@@ -75,6 +73,9 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
       >
         Back
       </button>
+      <div>
+        <ToastContainer position="bottom-right" />
+      </div>
       <form onSubmit={handleSubmit} className="mb-8 bg-white p-6 rounded shadow-md">
         <h2 className="text-xl font-bold mb-6 text-center">{title}</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -86,14 +87,14 @@ const TentangKamiPostForm = ({ endpoint, title }) => {
         </div>
         <button
           type="submit"
-          className="mt-6 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
+          className="mt-6 w-full bg-teal-500 text-white py-2 rounded hover:bg-teal-700 transition duration-200"
         >
           Update Tentang Kami
         </button>
       </form>
       {loading && (
         <div className="flex justify-center items-center mb-4">
-          <div className="animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-solid border-t-transparent rounded-full"></div>
+          <div className="animate-spin inline-block w-8 h-8 border-4 border-teal-500 border-solid border-t-transparent rounded-full"></div>
         </div>
       )}
     </div>

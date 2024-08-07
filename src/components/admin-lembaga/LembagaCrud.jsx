@@ -64,7 +64,7 @@ const LembagaCRUD = () => {
                         Tambahkan Data
                       </button>
                     </div>
-                 
+
                     <input
                       type="text"
                       value={searchQuery}

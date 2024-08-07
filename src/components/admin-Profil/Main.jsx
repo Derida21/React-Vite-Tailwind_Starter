@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAppContext from '../../context/useAppContext';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import Editor from '../ck-editor/ck-editor.jsx';
 
 const ProfilKampung = () => {
@@ -123,10 +123,9 @@ const ProfilKampung = () => {
         form.append('logo', formData.logo);
       }
 
-      await axiosInstance.post('/profil', form);
+      let post = await axiosInstance.post('/profil', form);
+      toast.success(post.data.message);
 
-      navigate('/admin-dashboard/profil');
-      toast.success('Profil updated successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Error submitting form');
@@ -137,6 +136,8 @@ const ProfilKampung = () => {
 
   return (
     <div className="container mx-auto p-6 font-[Poppins]">
+
+      <ToastContainer position="bottom-right" />
       <form onSubmit={handleSubmit} className="mb-8 bg-white p-6 rounded shadow-md">
         <h2 className="text-xl font-bold mb-6 text-center">Profil Kampung</h2>
         <div className="max-w-md mx-auto mt-10">
