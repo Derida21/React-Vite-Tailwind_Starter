@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const Modal = ({ show, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
-    kode_arsip: '',
+    kode_file: '',
     file: null,
     nama_file: '',
     tanggal: '',
@@ -31,11 +31,11 @@ const Modal = ({ show, onClose, onSubmit }) => {
         <h2 className='text-xl mb-4'>Add New Data</h2>
         <form onSubmit={handleSubmit}>
           <div className='mb-4'>
-            <label className='block text-sm'>Kode Arsip</label>
+            <label className='block text-sm'>Kode file</label>
             <input
               type='text'
-              name='kode_arsip'
-              value={formData.kode_arsip}
+              name='kode_file'
+              value={formData.kode_file}
               onChange={handleChange}
               className='w-full p-2 border border-gray-300 rounded'
               required

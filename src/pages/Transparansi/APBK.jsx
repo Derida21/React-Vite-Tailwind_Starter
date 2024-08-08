@@ -12,7 +12,7 @@ const APBK = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get('http://nurul-huda.org/api/galeri');
+      const response = await axios.get('http://nurul-huda.org/api/apbk');
       setData(response.data.data.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -71,16 +71,16 @@ const APBK = () => {
                 onClick={() => handleClick(indexOfFirstItem + index)}
               >
                 <div
-                  className=' relative flex items-end px-3 py-2 md:rounded lg:hover:scale-105 duration-500 h-[110px] md:h-80 xl:h-[160px] min-w-full'
+                  className=' relative flex items-end px-3 py-2 md:rounded lg:hover:scale-105 duration-500 h-[110px] md:h-80 min-w-full'
                   style={{
-                    backgroundImage: `url(${item.thumbnail})`,
+                    backgroundImage: `url(${item.foto})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     borderRadius: '6px',
                   }}
                 >
-                  <h1 className='text-white text-[8px] md:text-[10px] font-[Poppins]'>
-                    {item.judul}
+                  <h1 className='capitalize text-white text-[8px] md:text-[10px] lg:text-xl font-[Poppins] font-bold'>
+                    {item.title}
                   </h1>
                 </div>
               </div>
@@ -133,7 +133,7 @@ const Modal = ({ item, onClose, onNext, onPrev }) => {
         >
           <IconX className='h-3 w-3' />
         </div>
-        <img src={item.thumbnail} alt='' className='rounded-md' />
+        <img src={item.foto} alt='' className='rounded-md' />
 
         {/* <div
           className='flex justify-end w-full h-[550px] rounded-sm p-3'

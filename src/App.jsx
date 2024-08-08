@@ -34,6 +34,7 @@ import DataPenduduk from './pages/Profil/Demografi_Desa/Data_Penduduk';
 import Pembangunan from './pages/Transparansi/Pembangunan';
 import Arsip from './pages/Arsip/EArsip';
 import Detail_Pembangunan from './components/home_component/Section/Transparansi/Detail_Pembangunan';
+import ProdukHukum from './pages/Informasi Publik/Produk_Hukum';
 
 const App = () => {
   const isLogin = location.pathname.startsWith('/login');
@@ -101,6 +102,10 @@ const App = () => {
           <Route
             path='/informasi-publik/galeri-kampung'
             element={<Galeri_Kampung />}
+          />
+          <Route
+            path='/informasi-publik/produk-hukum'
+            element={<ProdukHukum />}
           />
           {/* Transparansi */}
           <Route path='/transparansi/apbk' element={<APBK />} />
