@@ -1,17 +1,14 @@
-// src/components/PelayananCrud.js
-
 import React, { useState, useEffect } from 'react';
+import useAppContext from '../../context/useAppContext';
 import { FaEdit, FaPlus } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
 import Modal from 'react-modal';
-import useAppContext from '../../context/useAppContext';
 import { toast } from 'react-toastify';
 import PelayananModal from './pelayanan_modal';
-import CreatePelayananForm from './pelayanan_form';
 
 const customStyles = {
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
     zIndex: 1000,
   },
   content: {
@@ -31,21 +28,25 @@ Modal.setAppElement('#root');
 
 const PelayananCrud = () => {
   const [pelayananData, setPelayananData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPelayanan, setCurrentPelayanan] = useState(null);
   const { axiosInstance } = useAppContext();
-  const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState('');
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage, search]);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get('pelayanan');
-      setPelayananData(response.data.data);
+      const response = await axiosInstance.get(`/pelayanan?page=${currentPage}&search=${search}`);
+      setPelayananData(response.data.data || []);
+      setTotalPages(response.data.meta?.last_page || 1);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -55,41 +56,36 @@ const PelayananCrud = () => {
 
   const handleProcess = (pelayanan) => {
     setCurrentPelayanan(pelayanan);
-    setIsOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleAddNew = () => {
     setCurrentPelayanan(null);
-    setIsOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleSave = async (updatedPelayanan, setModalLoading) => {
     setModalLoading(true);
     try {
       if (currentPelayanan) {
-        // Process existing pelayanan
         const response = await axiosInstance.put(
           `pelayanan/${currentPelayanan.kode_pelayanan}/proses`,
-          {
-            nomor: updatedPelayanan.nomor,
-          },
-          { responseType: 'blob' } // Important for downloading files
+          { nomor: updatedPelayanan.nomor },
+          { responseType: 'blob' }
         );
         
-        // Create a link to download the file
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.pdf'); // Customize the file name
+        link.setAttribute('download', 'file.pdf');
         document.body.appendChild(link);
         link.click();
         link.parentNode.removeChild(link);
       } else {
-        // Create new pelayanan
         await axiosInstance.post('pelayanan', updatedPelayanan);
       }
       setIsOpen(false);
-      fetchData(); // Refresh data after saving
+      fetchData();
       toast.success('Pelayanan processed successfully');
     } catch (error) {
       console.error('Error processing pelayanan:', error);
@@ -99,73 +95,122 @@ const PelayananCrud = () => {
     }
   };
 
-  const filteredData = pelayananData.filter(item => item.nama_pelayanan.toLowerCase().includes(search.toLowerCase()));
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
-    <div className="container mx-auto p-10">
-      <h1 className="text-2xl font-bold mb-4">Daftar Pelayanan</h1>
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Cari Pelayanan"
-          className="border px-4 py-2 rounded"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
-          onClick={handleAddNew}
-        >
-          <FaPlus className="mr-2" /> Tambahkan Pelayanan
-        </button>
-      </div>
-      <div className="overflow-x-auto">
-        {loading ? (
-          <div className="flex justify-center items-center">
-            <ClipLoader color="#3b82f6" loading={loading} size={50} />
+    <div className="p-4 h-screen">
+      {!isOpen && (
+        <div className="mb-4 mt-10">
+          <div className="container mx-auto">
+            <div className="bg-white shadow-md rounded-lg overflow-hidden">
+              <div className="px-6 py-6 bg-white">
+                <div className="pb-4 mb-4 border-b-2 border-gray-200">
+                  <div className="flex items-center justify-between min-h-100">
+                    <div className="flex items-center">
+                      <button
+                        onClick={handleAddNew}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-semibold"
+                      >
+                        <FaPlus className="mr-2" /> Add New
+                      </button>
+                      <input
+                        type="text"
+                        value={search}
+                        onChange={handleSearch}
+                        placeholder="Search by name"
+                        className="block ml-4 p-2 text-sm placeholder-gray-400 border-2 border-gray-300 rounded-md shadow-sm appearance-none focus:border-primary focus:outline-none focus:ring-primary"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="overflow-x-auto px-6 pb-6">
+                {loading ? (
+                  <div className="text-center">
+                    <ClipLoader color="#3b82f6" loading={loading} size={50} />
+                  </div>
+                ) : pelayananData.length === 0 ? (
+                  <div className="text-center">No pelayanan available</div>
+                ) : (
+                  <table className="min-w-full bg-white border border-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="py-2 px-4 border-b text-left">Kode Pelayanan</th>
+                        <th className="py-2 px-4 border-b text-left">Jenis Pelayanan</th>
+                        <th className="py-2 px-4 border-b text-left">Nama Pelayanan</th>
+                        <th className="py-2 px-4 border-b text-left">Nama Pengaju</th>
+                        <th className="py-2 px-4 border-b text-left">No WA</th>
+                        <th className="py-2 px-4 border-b text-left">Status</th>
+                        <th className="py-2 px-4 border-b text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pelayananData.map((item) => (
+                        <tr key={item.kode_pelayanan}>
+                          <td className="py-2 px-4 border-b">{item.kode_pelayanan}</td>
+                          <td className="py-2 px-4 border-b">{item.jenis_pelayanan}</td>
+                          <td className="py-2 px-4 border-b">{item.nama_pelayanan}</td>
+                          <td className="py-2 px-4 border-b">{item.nama_pengaju}</td>
+                          <td className="py-2 px-4 border-b">{item.no_wa}</td>
+                          <td className="py-2 px-4 border-b">{item.status}</td>
+                          <td className="py-2 px-4 border-b">
+                            <div className="flex space-x-2">
+                              <button
+                                className="text-teal-500 font-body"
+                                onClick={() => handleProcess(item)}
+                              >
+                                <FaEdit className="w-5 h-5" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+              <div className="flex justify-center items-center mt-4 mb-4">
+                <button
+                  onClick={goToPreviousPage}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+                >
+                  Previous
+                </button>
+                <span className="text-sm text-gray-700 mx-4">Page {currentPage} of {totalPages}</span>
+                <button
+                  onClick={goToNextPage}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
-        ) : (
-          <table className="min-w-full bg-white border">
-            <thead>
-              <tr>
-                <th className="border px-4 py-2">Kode Pelayanan</th>
-                <th className="border px-4 py-2">Jenis Pelayanan</th>
-                <th className="border px-4 py-2">Nama Pelayanan</th>
-                <th className="border px-4 py-2">Nama Pengaju</th>
-                <th className="border px-4 py-2">No WA</th>
-                <th className="border px-4 py-2">Status</th>
-                <th className="border px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map(item => (
-                <tr key={item.kode_pelayanan}>
-                  <td className="border px-4 py-2">{item.kode_pelayanan}</td>
-                  <td className="border px-4 py-2">{item.jenis_pelayanan}</td>
-                  <td className="border px-4 py-2">{item.nama_pelayanan}</td>
-                  <td className="border px-4 py-2">{item.nama_pengaju}</td>
-                  <td className="border px-4 py-2">{item.no_wa}</td>
-                  <td className="border px-4 py-2">{item.status}</td>
-                  <td className="border px-4 py-2">
-                    <button
-                      className="bg-green-500 text-white px-4 py-2 rounded mr-2 flex items-center"
-                      onClick={() => handleProcess(item)}
-                    >
-                      <FaEdit className="mr-1" /> Process
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-      {isOpen && (
-        <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyles} contentLabel="Pelayanan Modal">
+        </div>
+      )}
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onRequestClose={() => setIsOpen(false)} style={customStyles} contentLabel="Pelayanan Modal">
           <PelayananModal
             pelayanan={currentPelayanan}
-            onClose={() => setIsOpen(false)}
-            onSave={handleSave}
+            onClose={() => setIsModalOpen(false)}
+            onSave={handleSave} 
           />
         </Modal>
       )}

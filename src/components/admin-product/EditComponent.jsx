@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import useAppContext from '../../context/useAppContext';
+import AlertComponent from '../utils/AlertComponent';
 
 const EditComponent = ({ slug, setEditMode, fetchData }) => {
   const { axiosInstance } = useAppContext();
   const [formData, setFormData] = useState({
-    title: '',
-    foto: null, // Use null for file input
+    nama_produk: '',
+    deskripsi: '',
+    no_wa: '',
+    foto: null,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -14,14 +17,14 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
 
   useEffect(() => {
     if (slug) {
-      fetchApbkDetails(slug);
+      fetchProdukDetails(slug);
     }
   }, [slug]);
 
-  const fetchApbkDetails = async (slug) => {
+  const fetchProdukDetails = async (slug) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(`/apbk/${slug}`);
+      const response = await axiosInstance.get(`/produk/${slug}`);
       if (response.data.success) {
         setFormData(response.data.data || {});
         setPreview(response.data.data.foto || '');
@@ -49,7 +52,9 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
     e.preventDefault();
     setLoading(true);
     const data = new FormData();
-    data.append('title', formData.title);
+    data.append('nama_produk', formData.nama_produk);
+    data.append('deskripsi', formData.deskripsi);
+    data.append('no_wa', formData.no_wa);
     if (formData.foto) {
       data.append('foto', formData.foto);
     }
@@ -57,18 +62,18 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
     try {
       let response;
       if (slug) {
-        response = await axiosInstance.put(`/apbk/${slug}`, data, {
+        response = await axiosInstance.put(`/produk/${slug}`, data, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       } else {
-        response = await axiosInstance.post('/apbk', data, {
+        response = await axiosInstance.post('/produk', data, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       }
       if (response.data.success) {
-        setSuccess('Post saved successfully!');
-        fetchData(); // Refresh the list after saving
-        setEditMode(false);
+        setSuccess('Produk saved successfully!');
+        fetchData();
+        setTimeout(() => setEditMode(false), 1000); // Close edit mode after a short delay
       } else {
         setError(response.data.message);
       }
@@ -85,18 +90,39 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
           <div className="px-6 py-6 bg-white">
             <h2 className="text-2xl font-bold mb-4">
-              {slug ? 'Edit Post' : 'Add New Post'}
+              {slug ? 'Edit Produk' : 'Add New Produk'}
             </h2>
             {loading && <div>Loading...</div>}
-            {error && <div className="text-red-500">{error}</div>}
-            {success && <div className="text-green-500">{success}</div>}
+            {error && <AlertComponent type="red" title="Error" message={error} onClose={() => setError(null)} />}
+            {success && <AlertComponent type="green" title="Success" message={success} onClose={() => setSuccess(null)} />}
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label className="block text-gray-700">Title</label>
+                <label className="block text-gray-700">Product Name</label>
                 <input
                   type="text"
-                  name="title"
-                  value={formData.title}
+                  name="nama_produk"
+                  value={formData.nama_produk}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Description</label>
+                <textarea
+                  name="deskripsi"
+                  value={formData.deskripsi}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">WhatsApp Number</label>
+                <input
+                  type="text"
+                  name="no_wa"
+                  value={formData.no_wa}
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded"
                   required
@@ -118,7 +144,6 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
                   />
                 )}
               </div>
-    
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"

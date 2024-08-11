@@ -1,250 +1,264 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
-import WargaModal from './WargaModal';
 import useAppContext from '../../context/useAppContext';
-
-
-Modal.setAppElement('#root');
+import EditComponent from './EditComponent'; // Ensure this is correctly imported
+import AlertComponent from '../utils/AlertComponent';
+import ConfirmationDialog from '../utils/ConfirmationDialog';
 
 const WargaList = () => {
   const { axiosInstance } = useAppContext();
   const [wargaList, setWargaList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentWarga, setCurrentWarga] = useState(null);
-  const [saving, setSaving] = useState(false);
-  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
-  const [wargaToDelete, setWargaToDelete] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [currentWargaId, setCurrentWargaId] = useState(null);
+  const [currentWargaName, setCurrentWargaName] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   useEffect(() => {
     fetchWarga();
-  }, []);
+  }, [currentPage, searchQuery]);
 
   const fetchWarga = async () => {
+    setLoading(true);
     try {
-      const response = await axiosInstance.get('/warga');
+      const response = await axiosInstance.get(`/warga?page=${currentPage}&search=${searchQuery}`);
       if (response.data.success) {
-        // Log the response data to debug
-        console.log(response.data.data);
-        // Ensure data is an array
-        setWargaList(response.data.data.data);
+        setWargaList(response.data.data || []);
+        setTotalPages(response.data.meta?.last_page || 1);
       } else {
         setError(response.data.message);
-      }
-      setLoading(false);
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
-  const openModal = (warga = null) => {
-    setCurrentWarga(warga);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setCurrentWarga(null);
-    setIsModalOpen(false);
-  };
-
-  const handleSave = async (warga) => {
-    setSaving(true);
-    const formData = new FormData();
-    formData.append('foto', warga.foto);
-    formData.append('kepala_keluarga', warga.kepala_keluarga);
-    formData.append('link_maps', warga.link_maps);
-
-
-    warga.anggota_keluarga.forEach((anggota, index) => {
-      formData.append(`anggota_keluarga[${index}][nama]`, anggota.nama);
-      formData.append(`anggota_keluarga[${index}][status]`, anggota.status);
-    });
-
-    try {
-      if (currentWarga) {
-        const response = await axiosInstance.put(`/warga/${currentWarga.id}`, formData);
-        if (response.data.success) {
-          fetchWarga();
-          closeModal();
-        } else {
-          setError(response.data.message);
-        }
-      } else {
-        console.log(warga)
-        const response = await axiosInstance.post('/warga', warga);
-        if (response.data.success) {
-          fetchWarga();
-          closeModal();
-        } else {
-          setError(response.data.message);
-        }
       }
     } catch (error) {
       setError(error.message);
     } finally {
-      setSaving(false);
+      setLoading(false);
     }
   };
 
-  const handleDelete = (warga) => {
-    setWargaToDelete(warga);
-    setIsConfirmingDelete(true);
+  const handleEdit = (id) => {
+    setCurrentWargaId(id);
+    setEditMode(true);
   };
 
-  const confirmDelete = async () => {
-    setIsConfirmingDelete(false);
+  const handleAddNew = () => {
+    setCurrentWargaId(null); // Clear current ID for adding new entry
+    setEditMode(true);
+  };
+
+  const handleDelete = async () => {
+    if (!currentWargaId) return;
+
     try {
-      const response = await axiosInstance.delete(`/warga/${wargaToDelete.id}`);
+      const response = await axiosInstance.delete(`/warga/${currentWargaId}`);
       if (response.data.success) {
-        fetchWarga();
+        setWargaList((prevList) => prevList.filter((item) => item.id !== currentWargaId));
+        setError({ type: 'green', title: 'Success', message: 'Warga deleted successfully!' });
+        setShowConfirmDialog(false);
       } else {
-        setError(response.data.message);
+        setError({ type: 'red', title: 'Error', message: response.data.message });
       }
     } catch (error) {
-      setError(error.message);
+      setError({ type: 'red', title: 'Error', message: error.message });
     }
   };
 
-  const cancelDelete = () => {
-    setIsConfirmingDelete(false);
-    setWargaToDelete(null);
+  const confirmDelete = (id, name) => {
+    setCurrentWargaId(id);
+    setCurrentWargaName(name);
+    setShowConfirmDialog(true);
   };
 
-  useEffect(() => {
-    let timer;
-    if (error) {
-      timer = setTimeout(() => {
-        setError(null);
-      }, 5000);
-    }
-    return () => clearTimeout(timer);
-  }, [error]);
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page on search
+  };
 
-  if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
-    <div className="container mx-auto p-5 relative">
-      <h1 className="text-3xl font-bold mb-5">Daftar Warga</h1>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-        onClick={() => openModal()}
-      >
-        Tambah Warga
-      </button>
-      {wargaList.length === 0 ? (
-        <div className="text-center">No warga available</div>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead>
-              <tr className="bg-gray-100 border-b">
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Photo
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Kepala Keluarga
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Anggota Keluarga
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Link Maps
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {wargaList.map((warga) => (
-                <tr key={warga.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <img
-                      src={warga.foto || 'default-photo-url'} // Handle missing photo
-                      alt={warga.kepala_keluarga}
-                      className="w-20 h-20 object-cover rounded"
+    <div className="p-4">
+      {!editMode && (
+        <div className="mb-4 mt-10">
+          <div className="container mx-auto">
+            <div className="bg-white shadow-md rounded-lg overflow-hidden">
+              <div className="px-6 py-6 bg-white">
+              <div className="pb-4 mb-4 border-b-2 border-gray-200">
+              <div className="flex items-center justify-between min-h-10">
+                    <div>
+                      <h1 className="text-lg font-semibold text-secondary">Data Warga</h1>
+                      <button
+                        className="bg-teal-500 text-white px-4 py-2 mt-5 rounded-md"
+                        onClick={handleAddNew}
+                      >
+                        Tambahkan Data
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={handleSearch}
+                      placeholder="Cari berdasarkan Nama"
+                      className="block mt-11 p-2 text-sm placeholder-gray-400 border-2 border-gray-300 rounded-md shadow-sm appearance-none focus:border-primary focus:outline-none focus:ring-primary w-1/4"
                     />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {warga.kepala_keluarga}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <ul>
-                      {warga.anggota_keluarga.map((anggota, index) => (
-                        <li key={index}>{anggota.nama} ({anggota.status})</li>
+                  </div>
+                </div>
+              </div>
+              <div className="overflow-x-auto px-6 pb-6">
+                {loading ? (
+                  <div className="text-center">Loading...</div>
+                ) : wargaList.length === 0 ? (
+                  <div className="text-center">No warga available</div>
+                ) : (
+                  <table className="min-w-full bg-white border border-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="py-2 px-4 border-b text-left">Photo</th>
+                        <th className="py-2 px-4 border-b text-left">Kepala Keluarga</th>
+                        <th className="py-2 px-4 border-b text-left">Anggota Keluarga</th>
+                        <th className="py-2 px-4 border-b text-left">Link Maps</th>
+                        <th className="py-2 px-4 border-b text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {wargaList.map((warga) => (
+                        <tr key={warga.id}>
+                          <td className="py-2 px-4 border-b">
+                            <img
+                              src={warga.foto || 'default-photo-url'}
+                              alt={warga.kepala_keluarga}
+                              className="w-20 h-20 object-cover rounded"
+                            />
+                          </td>
+                          <td className="py-2 px-4 border-b">{warga.kepala_keluarga}</td>
+                          <td className="py-2 px-4 border-b">
+                            {warga.anggota_keluarga && warga.anggota_keluarga.length > 0 ? (
+                              <ul>
+                                {warga.anggota_keluarga.map((anggota, index) => (
+                                  <li key={index}>{`${anggota.nama} (${anggota.status})`}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p>Be lum ada Anggota Keluarga</p>
+                            )}
+                          </td>
+                          <td className="py-2 px-4 border-b">
+                            {warga.link_maps !== '-' ? (
+                              <a
+                                href={warga.link_maps}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500 hover:underline"
+                              >
+                                Lihat di Peta
+                              </a>
+                            ) : (
+                              <p>No link available</p>
+                            )}
+                          </td>
+                          <td className="py-2 px-4 border-b">
+                            <div className="flex space-x-2">
+                              <button
+                                className="text-teal-500 font-body"
+                                onClick={() => handleEdit(warga.id)}
+                              >
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                  ></path>
+                                </svg>
+                              </button>
+                              <button
+                                className="text-red-500 font-body"
+                                onClick={() => confirmDelete(warga.id, warga.kepala_keluarga)}
+                              >
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
                       ))}
-                    </ul>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <a
-                      href={warga.link_maps}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
-                    >
-                      View on Maps
-                    </a>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                      onClick={() => openModal(warga)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-4 py-2 rounded"
-                      onClick={() => handleDelete(warga)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-      {isModalOpen && (
-        <WargaModal
-          warga={currentWarga}
-          onClose={closeModal}
-          onSave={handleSave}
-          saving={saving}
-        />
-      )}
-      {error && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-100 text-red-800 p-4 rounded-lg shadow-lg w-11/12 max-w-md z-50">
-          <p className="text-sm">{error}</p>
-        </div>
-      )}
-      {isConfirmingDelete && (
-        <div className="fixed inset-0 flex items-center justify-center p-4 z-40">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
-            <h2 className="text-xl font-bold mb-4">Confirm Deletion</h2>
-            <p className="mb-4">
-              Are you sure you want to delete this warga?
-            </p>
-            <div className="flex justify-end">
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-center items-center mt-4 mb-4">
               <button
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2"
-                onClick={cancelDelete}
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                Cancel
+                Sebelumnya
               </button>
+              <span className="text-sm text-gray-700 mx-4">Halaman {currentPage} dari {totalPages}</span>
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded"
-                onClick={confirmDelete}
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                Delete
+                Selanjutnya
               </button>
             </div>
           </div>
         </div>
+      )}
+      {editMode && (
+        <EditComponent
+          uuid={currentWargaId}
+          setEditMode={setEditMode}
+          fetchData={fetchWarga}
+        />
+      )}
+      {error && (
+        <AlertComponent
+          type={error.type}
+          title={error.title}
+          message={error.message}
+          onClose={() => setError(null)}
+        />
+      )}
+      {showConfirmDialog && (
+        <ConfirmationDialog
+          isOpen={showConfirmDialog}
+          onConfirm={handleDelete}
+          onCancel={() => setShowConfirmDialog(false)}
+          itemName={currentWargaName}
+        />
       )}
     </div>
   );

@@ -21,7 +21,7 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
   const fetchApbkDetails = async (slug) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(`/apbk/${slug}`);
+      const response = await axiosInstance.get(`/realisasi-apbk/${slug}`);
       if (response.data.success) {
         setFormData(response.data.data || {});
         setPreview(response.data.data.foto || '');
@@ -57,11 +57,11 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
     try {
       let response;
       if (slug) {
-        response = await axiosInstance.put(`/apbk/${slug}`, data, {
+        response = await axiosInstance.put(`/realisasi-apbk/${slug}`, data, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       } else {
-        response = await axiosInstance.post('/apbk', data, {
+        response = await axiosInstance.post('/realisasi-pbk', data, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       }
@@ -118,7 +118,7 @@ const EditComponent = ({ slug, setEditMode, fetchData }) => {
                   />
                 )}
               </div>
-    
+              {/* Add other form fields if necessary */}
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"

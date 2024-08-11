@@ -17,7 +17,7 @@ const KegiatanPostMain = () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get('/kegiatan');
-      setData(response.data.data.data);
+      setData(response.data.data);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast.error('Error fetching data');

@@ -31,12 +31,12 @@ const WargaModal = ({ warga, onClose, onSave }) => {
   useEffect(() => {
     if (warga) {
       setFormData({
-        foto: warga.foto,
-        kepala_keluarga: warga.kepala_keluarga,
-        anggota_keluarga: warga.anggota_keluarga, // Ensure this is an array
-        link_maps: warga.link_maps,
+        foto: warga.foto || '',
+        kepala_keluarga: warga.kepala_keluarga || '',
+        anggota_keluarga: warga.anggota_keluarga ? [...warga.anggota_keluarga] : [], // Handle null and ensure it's an array
+        link_maps: warga.link_maps || '',
       });
-      setImagePreview(warga.foto);
+      setImagePreview(warga.foto || null);
     }
   }, [warga]);
 
@@ -99,43 +99,49 @@ const WargaModal = ({ warga, onClose, onSave }) => {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">Anggota Keluarga</label>
-          {formData.anggota_keluarga.map((anggota, index) => (
-            <div key={index} className="mb-2">
-              <input
-                type="text"
-                name={`anggota_${index}_nama`}
-                value={anggota.nama}
-                onChange={(e) => {
-                  const newAnggota = [...formData.anggota_keluarga];
-                  newAnggota[index].nama = e.target.value;
-                  setFormData({ ...formData, anggota_keluarga: newAnggota });
-                }}
-                placeholder="Nama"
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-              <input
-                type="text"
-                name={`anggota_${index}_status`}
-                value={anggota.status}
-                onChange={(e) => {
-                  const newAnggota = [...formData.anggota_keluarga];
-                  newAnggota[index].status = e.target.value;
-                  setFormData({ ...formData, anggota_keluarga: newAnggota });
-                }}
-                placeholder="Status"
-                className="w-full p-2 border border-gray-300 rounded mt-2"
-              />
-            </div>
-          ))}
+          {formData.anggota_keluarga && formData.anggota_keluarga.length > 0 ? (
+            formData.anggota_keluarga.map((anggota, index) => (
+              <div key={index} className="mb-2">
+                <input
+                  type="text"
+                  name={`anggota_${index}_nama`}
+                  value={anggota.nama}
+                  onChange={(e) => {
+                    const newAnggota = [...formData.anggota_keluarga];
+                    newAnggota[index].nama = e.target.value;
+                    setFormData({ ...formData, anggota_keluarga: newAnggota });
+                  }}
+                  placeholder="Nama"
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                <input
+                  type="text"
+                  name={`anggota_${index}_status`}
+                  value={anggota.status}
+                  onChange={(e) => {
+                    const newAnggota = [...formData.anggota_keluarga];
+                    newAnggota[index].status = e.target.value;
+                    setFormData({ ...formData, anggota_keluarga: newAnggota });
+                  }}
+                  placeholder="Status"
+                  className="w-full p-2 border border-gray-300 rounded mt-2"
+                />
+              </div>
+            ))
+          ) : (
+            <p>Belum ada Anggota Keluarga</p>
+          )}
           <button
             type="button"
-            onClick={() => setFormData({
-              ...formData,
-              anggota_keluarga: [...formData.anggota_keluarga, { nama: '', status: '' }],
-            })}
-            className="bg-green-500 text-white px-4 py-2 rounded"
+            onClick={() =>
+              setFormData({
+                ...formData,
+                anggota_keluarga: [...formData.anggota_keluarga, { nama: '', status: '' }],
+              })
+            }
+            className="bg-green-500 text-white px-4 py-2 rounded mt-2"
           >
-            Add Anggota
+            Tambahkan Anggota Keluarga
           </button>
         </div>
         <div className="mb-4">
