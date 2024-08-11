@@ -13,10 +13,11 @@ const DataPenduduk = () => {
   const getData = async () => {
     try {
       const response = await axios.get(`http://nurul-huda.org/api/warga`);
-      setData(response.data.data.data);
-      setFilteredData(response.data.data.data);
+      const fetchedData = response.data?.data || []; // Safely accessing the data
+      setData(fetchedData);
+      setFilteredData(fetchedData);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching data:', error);
     }
   };
 
@@ -29,15 +30,16 @@ const DataPenduduk = () => {
     const filtered = data.filter(
       (item) =>
         item.kepala_keluarga.toLowerCase().includes(searchLower) ||
-        item.anggota_keluarga.some((anggota) =>
+        item.anggota_keluarga?.some((anggota) =>
           anggota.nama.toLowerCase().includes(searchLower)
         )
     );
     setFilteredData(filtered);
-    setCurrentPage(currentPage);
+    setCurrentPage(1); // Reset to first page after filtering
   }, [searchTerm, data]);
 
   const handleSearchChange = (event) => {
+    event.preventDefault();
     setSearchTerm(event.target.value);
   };
 
@@ -69,6 +71,7 @@ const DataPenduduk = () => {
           <form
             action=''
             className='relative w-full md:w-fit flex items-center'
+            onSubmit={(e) => e.preventDefault()} // Prevent form submission
           >
             <input
               type='text'
@@ -87,64 +90,86 @@ const DataPenduduk = () => {
         </div>
         <div className='flex flex-col justify-between w-full gap-4 md:p-5 md:border rounded-b-lg min-h-screen '>
           <div className='w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 '>
-            {currentData.map((item) => (
-              <div
-                key={item.id}
-                className='flex flex-col gap-4 p-3 border border-teal-700 rounded-lg'
-              >
-                <div className='flex flex-col gap-2 h-full'>
-                  {/* Foto */}
-                  <div
-                    className='h-[140px] rounded-md'
-                    style={{
-                      backgroundImage: `url(${item.foto})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  ></div>
-                  {/* Detail */}
-                  <div className='flex flex-col gap-1'>
-                    <div className='flex justify-between font-[Poppins] text-gray-700 text-[10px] font-semibold'>
-                      <h1>Kepala Keluarga : </h1>
-                      <span>{item.kepala_keluarga}</span>
-                    </div>
-                    <div className='flex flex-col gap-2 h-full'>
-                      <h1 className='font-[Poppins] text-gray-700 text-[10px]'>
-                        Anggota Keluarga :
-                      </h1>
-                      <table className='table-auto text-center font-[Poppins] text-gray-500 text-[8px] border'>
-                        <thead>
-                          <tr>
-                            <th className='border py-1'>No.</th>
-                            <th className='border py-1'>Nama</th>
-                            <th className='border py-1'>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {item.anggota_keluarga.map((anggota, index) => (
-                            <tr key={index}>
-                              <td className='border py-1'>{index + 1}</td>
-                              <td className='border py-1'>{anggota.nama}</td>
-                              <td className='border py-1'>{anggota.status}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+            {currentData.length > 0 ? (
+              currentData.map((item) => (
+                <div
+                  key={item.id}
+                  className='flex flex-col gap-4 p-3 border border-teal-700 rounded-lg'
+                >
+                  <div className='flex flex-col gap-2 h-full'>
+                    {/* Foto */}
+                    <div
+                      className='h-[140px] rounded-md'
+                      style={{
+                        backgroundImage: `url(${
+                          item.foto || 'https://via.placeholder.com/150' // Placeholder image if foto is null
+                        })`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                    ></div>
+                    {/* Detail */}
+                    <div className='flex flex-col gap-1'>
+                      <div className='flex justify-between font-[Poppins] text-gray-700 text-[10px] font-semibold'>
+                        <h1>Kepala Keluarga : </h1>
+                        <span>{item.kepala_keluarga}</span>
+                      </div>
+                      <div className='flex flex-col gap-2 h-full'>
+                        <h1 className='font-[Poppins] text-gray-700 text-[10px]'>
+                          Anggota Keluarga :
+                        </h1>
+                        {item.anggota_keluarga ? (
+                          <table className='table-auto text-center font-[Poppins] text-gray-500 text-[8px] border'>
+                            <thead>
+                              <tr>
+                                <th className='border py-1'>No.</th>
+                                <th className='border py-1'>Nama</th>
+                                <th className='border py-1'>Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {item.anggota_keluarga.map((anggota, index) => (
+                                <tr key={index}>
+                                  <td className='border py-1'>{index + 1}</td>
+                                  <td className='border py-1'>
+                                    {anggota.nama}
+                                  </td>
+                                  <td className='border py-1'>
+                                    {anggota.status}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        ) : (
+                          <p className='text-gray-500 text-[8px]'>
+                            Data Belum Tersedia
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
+                  <div className='flex items-center justify-center'>
+                    {item.link_maps &&
+                    item.link_maps !== '0' &&
+                    item.link_maps !== '-' ? (
+                      <Link
+                        to={item.link_maps}
+                        target='_blank'
+                        className='flex items-center font-[Poppins] text-[8px] text-teal-700 border border-teal-700 p-2 rounded hover:text-white hover:bg-teal-700'
+                      >
+                        <IconMap className='h-4' />
+                        <span>Lihat di Maps</span>
+                      </Link>
+                    ) : (
+                      <p className='text-gray-500 text-[8px]'>{null}</p>
+                    )}
+                  </div>
                 </div>
-                <div className='flex items-center justify-center'>
-                  <Link
-                    to={item.link_maps}
-                    target='_blank'
-                    className='flex items-center font-[Poppins] text-[8px] text-teal-700 border border-teal-700 p-2 rounded hover:text-white hover:bg-teal-700'
-                  >
-                    <IconMap className='h-4' />
-                    <span>Lihat di Maps</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className='w-full text-sm text-gray-500'>Loading..........</p>
+            )}
           </div>
           {/* Pagination */}
           <div className='flex items-center justify-between w-full '>

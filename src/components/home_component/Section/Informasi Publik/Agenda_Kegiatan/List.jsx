@@ -8,7 +8,7 @@ const List = () => {
   const getData = async () => {
     try {
       const response = await axios.get('http://nurul-huda.org/api/kegiatan');
-      setData(response.data.data.data);
+      setData(response.data.data);
     } catch (error) {
       console.error(error);
     }
