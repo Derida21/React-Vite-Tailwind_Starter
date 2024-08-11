@@ -15,7 +15,7 @@ const APBK_FIX = () => {
       const response = await axios.get(
         'http://nurul-huda.org/api/realisasi-apbk'
       );
-      setData(response.data.data.data);
+      setData(response.data.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }

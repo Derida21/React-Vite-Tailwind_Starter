@@ -45,7 +45,7 @@ import pembangunan from '../../assets/icon/1x/icon-pembangunan.png';
 
 function Home() {
   return (
-    <>
+    <div className='bg-slate-100'>
       {/* Carousel */}
       <div className='px-5 bg-slate-100 pt-16 pb-5 md:px-[60px] md:pt-[120px] lg:px-[80px] lg:pb-16 lg:pt-[130px] xl:px-[160px]'>
         <Carousel />
@@ -61,24 +61,28 @@ function Home() {
             src={penduduk}
             alt='data-penduduk'
             text='Insight Penduduk'
+            description='Menampilkan statistik warga kampung dari berbagai aspek'
           />
           <Icon
             href='/pelayanan'
             src={pelayanan}
             alt='pelayanan'
             text='Pelayanan'
+            description='Fitur yang di peruntukan kepada masyarakat untuk mempermudah proses administrasi'
           />
           <Icon
             href='/transparansi/apbk'
             src={keuangan}
             alt='keuangan-desa'
             text='Anggaran Kampung'
+            description='Melaksanakan proses transparansi kepada masyarakat kampung'
           />
           <Icon
             href='/transparansi/pembangunan-kampung'
             src={pembangunan}
             alt='pembangunan-desa'
             text='Pembangunan'
+            description='Menampilkan berbagai projek pembangunan yang sedang, akan, dan telah di laksanakan'
           />
         </div>
       </section>
@@ -98,7 +102,7 @@ function Home() {
         </div>
       </article>
       {/* Galeri */}
-      <section className='flex flex-col w-full bg-gradient-to-b from-teal-600 via-teal-700 to-teal-900 px-5 md:px-[60px] lg:px-20 xl:px-[160px] gap-5 lg:gap-[70px] py-10 lg:py-20 rounded-t-xl md:rounded-t-[36px]'>
+      <section className='flex flex-col w-full bg-teal-950 px-5 md:px-[60px] lg:px-20 xl:px-[160px] gap-5 lg:gap-[70px] py-10 lg:py-20 rounded-t-xl md:rounded-t-[36px]'>
         <div className='flex flex-col gap-5 md:gap-10 lg:gap-14'>
           <div className='w-full flex justify-center lg:text-3xl font-[Poppins] font-bold text-white'>
             Galeri Kampung
@@ -108,7 +112,7 @@ function Home() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

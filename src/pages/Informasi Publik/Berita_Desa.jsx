@@ -17,7 +17,7 @@ export default function BeritaDesa() {
   const getData = async () => {
     try {
       const response = await axios.get('http://nurul-huda.org/api/berita');
-      setData(response.data.data.data);
+      setData(response.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +47,7 @@ export default function BeritaDesa() {
 
   return (
     <div className='px-5 pb-5 pt-14 md:px-[60px] md:pt-[120px] md:pb-10 lg:px-[80px] lg:pt-[130px] xl:px-[160px]'>
-      <div className='w-full p-2 md:p-5 bg-white rounded-xl shadow border border-gray-300 flex-col justify-center items-start gap-2 md:gap-5 inline-flex'>
+      <div className='w-full p-2 md:p-5 bg-white rounded-xl flex-col justify-center items-start gap-2 md:gap-5 inline-flex'>
         {headline && (
           <Link
             to={`/informasi-publik/berita-kampung/${headline.slug}`}
@@ -66,10 +66,7 @@ export default function BeritaDesa() {
 
         <div className='w-full flex flex-col md:flex-row justify-between items-start gap-5'>
           {/* Main */}
-          <Items
-            text='Berita Lainnya'
-            className='w-full flex flex-col gap-2 lg:gap-5 md:p-4 md:border md:border-gray-300 rounded-md'
-          >
+          <Items className='w-full flex flex-col gap-2 lg:gap-5 md:p-4 md:border md:border-gray-300 rounded-md'>
             {others.map((news, index) => (
               <Card key={index} container='md:border-b-2 md:pb-5'>
                 <Link

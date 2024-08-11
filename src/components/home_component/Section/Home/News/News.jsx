@@ -10,8 +10,8 @@ const News = () => {
   const getData = async () => {
     try {
       const response = await axios.get('http://nurul-huda.org/api/berita');
-      console.log(response.data.data.data);
-      setData(response.data.data.data);
+      console.log(response.data.data);
+      setData(response.data.data);
     } catch (error) {
       if (!error.response) {
         console.error('Network error:', error);

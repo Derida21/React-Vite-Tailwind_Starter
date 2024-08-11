@@ -9,7 +9,7 @@ const Berita = () => {
   const getData = async () => {
     try {
       const response = await axios.get('http://nurul-huda.org/api/berita');
-      setData(response.data.data.data);
+      setData(response.data.data);
     } catch {}
   };
 

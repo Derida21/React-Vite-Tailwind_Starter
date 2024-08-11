@@ -1,4 +1,3 @@
-import { Thumbnail } from '../../components/home_component/Section/Informasi Publik/Thumbnail';
 import Card from '../../components/home_component/Section/Home/News/Card';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -12,8 +11,8 @@ function Produk() {
   const getData = async () => {
     try {
       const response = await axios.get('http://nurul-huda.org/api/produk');
-      setData(response.data.data.data);
-      console.log(response.data.data.data);
+      setData(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       console.error(error);
     }
