@@ -1,210 +1,239 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
-import ProductModal from './ProductModal';
 import useAppContext from '../../context/useAppContext';
-
-Modal.setAppElement('#root');
+import EditComponent from './EditComponent';
+import AlertComponent from '../utils/AlertComponent';
+import ConfirmationDialog from '../utils/ConfirmationDialog';
 
 const ProductList = () => {
   const { axiosInstance } = useAppContext();
-  const [products, setProducts] = useState([]);
+  const [produkList, setProdukList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState(null);
-  const [saving, setSaving] = useState(false);
-  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
-  const [productToDelete, setProductToDelete] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [currentProdukSlug, setCurrentProdukSlug] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [currentProdukName, setCurrentProdukName] = useState('');
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    fetchProduk();
+  }, [currentPage, searchQuery]);
 
-  const fetchProducts = async () => {
+  const fetchProduk = async () => {
+    setLoading(true);
     try {
-      const response = await axiosInstance.get('/produk');
+      const response = await axiosInstance.get(`/produk?page=${currentPage}&search=${searchQuery}`);
       if (response.data.success) {
-        setProducts(response.data.data.data);
+        setProdukList(response.data.data || []);
+        setTotalPages(response.data.meta?.last_page || 1);
       } else {
         setError(response.data.message);
-      }
-      setLoading(false);
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
-  const openModal = (product = null) => {
-    setCurrentProduct(product);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setCurrentProduct(null);
-    setIsModalOpen(false);
-  };
-
-  const handleSave = async (product) => {
-    setSaving(true);
-    const formData = new FormData();
-    formData.append('foto', product.foto);
-    formData.append('nama_produk', product.nama_produk);
-    formData.append('slug', product.slug);
-    formData.append('deskripsi', product.deskripsi);
-    formData.append('no_wa', product.no_wa);
-
-    try {
-      if (currentProduct) {
-        const response = await axiosInstance.put(`/produk/${currentProduct.slug}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        if (!response.data.success) {
-          setError(response.data.message);
-        }
-      } else {
-        const response = await axiosInstance.post('/produk', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        if (!response.data.success) {
-          setError(response.data.message);
-        }
-      }
-      fetchProducts();
-      closeModal();
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleDelete = (product) => {
-    setProductToDelete(product);
-    setIsConfirmingDelete(true);
-  };
-
-  const confirmDelete = async () => {
-    try {
-      const response = await axiosInstance.delete(`/produk/${productToDelete.slug}`);
-      if (!response.data.success) {
-        setError(response.data.message);
-      } else {
-        fetchProducts();
       }
     } catch (error) {
       setError(error.message);
     } finally {
-      setIsConfirmingDelete(false);
-      setProductToDelete(null);
+      setLoading(false);
     }
   };
 
-  const cancelDelete = () => {
-    setIsConfirmingDelete(false);
-    setProductToDelete(null);
+  const handleEdit = (slug) => {
+    setCurrentProdukSlug(slug);
+    setEditMode(true);
   };
 
-  useEffect(() => {
-    let timer;
-    if (error) {
-      timer = setTimeout(() => {
-        setError(null);
-      }, 5000); // Hide the error after 5 seconds
-    }
-    return () => clearTimeout(timer);
-  }, [error]);
+  const handleAddNew = () => {
+    setCurrentProdukSlug(null);
+    setEditMode(true);
+  };
 
-  if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
+  const handleDelete = async () => {
+    if (!currentProdukSlug) return;
+
+    try {
+      const response = await axiosInstance.delete(`/produk/${currentProdukSlug}`);
+      if (response.data.success) {
+        setProdukList((prevList) => prevList.filter((item) => item.slug !== currentProdukSlug));
+        setError({ type: 'green', title: 'Success', message: 'Produk deleted successfully!' });
+      } else {
+        setError({ type: 'red', title: 'Error', message: response.data.message });
+      }
+    } catch (error) {
+      setError({ type: 'red', title: 'Error', message: error.message });
+    } finally {
+      setShowConfirmDialog(false);
+    }
+  };
+
+  const confirmDelete = (slug, name) => {
+    setCurrentProdukSlug(slug);
+    setCurrentProdukName(name);
+    setShowConfirmDialog(true);
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
-    <div className="container mx-auto p-5 relative">
-      <h1 className="text-3xl font-bold mb-5">Produk</h1>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-        onClick={() => openModal()}
-      >
-        Tambahkan Produk
-      </button>
-      {products.length === 0 ? (
-        <div className="text-center">No products available</div>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead>
-              <tr className="bg-gray-100 border-b">
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WhatsApp</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {products.map((product) => (
-                <tr key={product.slug}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <img src={product.foto} alt={product.nama_produk} className="w-20 h-20 object-cover rounded"/>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.nama_produk}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.deskripsi.substring(0, 50)}...</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.no_wa}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                      onClick={() => openModal(product)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-4 py-2 rounded"
-                      onClick={() => handleDelete(product)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-      {isModalOpen && (
-        <ProductModal
-          product={currentProduct}
-          onClose={closeModal}
-          onSave={handleSave}
-          saving={saving}
-        />
-      )}
-      {error && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-100 text-red-800 p-4 rounded-lg shadow-lg w-11/12 max-w-md z-50">
-          <p className="text-sm">{error}</p>
-        </div>
-      )}
-      {isConfirmingDelete && (
-        <div className="fixed inset-0 flex items-center justify-center p-4 z-40">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
-            <h2 className="text-xl font-bold mb-4">Confirm Deletion</h2>
-            <p className="mb-4">Are you sure you want to delete this product?</p>
-            <div className="flex justify-end">
+    <div className="p-4 h-screen" >
+      {!editMode && (
+        <div className="mb-4 mt-10">
+          <div className="container mx-auto ">
+            <div className="bg-white shadow-md rounded-lg overflow-hidden">
+              <div className="px-6 py-6 bg-white">
+                <div className="pb-4 mb-4 border-b-2 border-gray-200">
+                  <div className="flex items-center justify-between min-h-100">
+                    <div className="flex items-center">
+                      <button
+                        onClick={handleAddNew}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-semibold"
+                      >
+                        Add New
+                      </button>
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        placeholder="Search by name"
+                        className="block ml-4 p-2 text-sm placeholder-gray-400 border-2 border-gray-300 rounded-md shadow-sm appearance-none focus:border-primary focus:outline-none focus:ring-primary"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="overflow-x-auto px-6 pb-6">
+                {loading ? (
+                  <div className="text-center">Loading...</div>
+                ) : produkList.length === 0 ? (
+                  <div className="text-center">No produk available</div>
+                ) : (
+                  <table className="min-w-full bg-white border border-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="py-2 px-4 border-b text-left">Photo</th>
+                        <th className="py-2 px-4 border-b text-left">Product Name</th>
+                        <th className="py-2 px-4 border-b text-left">Description</th>
+                        <th className="py-2 px-4 border-b text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {produkList.map((produk) => (
+                        <tr key={produk.slug}>
+                          <td className="py-2 px-4 border-b">
+                            <img
+                              src={produk.foto || 'default-photo-url'}
+                              alt={produk.nama_produk}
+                              className="w-20 h-20 object-cover rounded"
+                            />
+                          </td>
+                          <td className="py-2 px-4 border-b">{produk.nama_produk}</td>
+                          <td className="py-2 px-4 border-b">{produk.deskripsi}</td>
+                          <td className="py-2 px-4 border-b">
+                            <div className="flex space-x-2">
+                              <button
+                                className="text-teal-500 font-body"
+                                onClick={() => handleEdit(produk.slug)}
+                              >
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                  ></path>
+                                </svg>
+                              </button>
+                              <button
+                                className="text-red-500 font-body"
+                                onClick={() => confirmDelete(produk.slug, produk.nama_produk)}
+                              >
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-center items-center mt-4 mb-4">
               <button
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2"
-                onClick={cancelDelete}
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                Cancel
+                &lt;
               </button>
+              <span className="text-sm text-gray-700 mx-4">Halaman {currentPage} dari {totalPages}</span>
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded"
-                onClick={confirmDelete}
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                Delete
+                &gt;
               </button>
             </div>
           </div>
         </div>
+      )}
+      {editMode && (
+        <EditComponent
+          slug={currentProdukSlug}
+          setEditMode={setEditMode}
+          fetchData={fetchProduk}
+        />
+      )}
+      {error && (
+        <AlertComponent
+          type={error.type || 'red'}
+          title={error.title || 'Error'}
+          message={error.message || 'Something went wrong!'}
+          onClose={() => setError(null)}
+        />
+      )}
+      {showConfirmDialog && (
+        <ConfirmationDialog
+          isOpen={showConfirmDialog}
+          itemName={currentProdukName}
+          onConfirm={handleDelete}
+          onCancel={() => setShowConfirmDialog(false)}
+        />
       )}
     </div>
   );

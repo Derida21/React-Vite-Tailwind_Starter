@@ -37,8 +37,21 @@ import ProfilKampung from '../../components/admin-Profil/Main';
 
 import AdminVisiMisi from '../../components/admin_visi-misi/admin_visi_misi';
 
-import RealisasiAPBKCRUD from '../../components/realisasi_apbk/RealisasiAPBKCRUD';
+import RealisasiAPBKCRUD from '../../components/admin-realisasi_apbk/RealisasiAPBKCRUD';
 import APBKCRUD from '../../components/admin-apbk/APBKCRUD';
+
+import KegiatanList from '../../components/admin-kegiatan/v2/KegiatanList';
+import BeritaList from '../../components/admin-berita/v2/KegiatanList';
+//baru 
+
+
+
+import WargaPage from '../../components/admin/warga/WargaComponent';
+import LembagaComponent from '../../components/admin/lembaga/LembagaComponent';
+
+import PejabatPage from '../../components/admin/pejabat/PejabatComponent';
+import ProductComponent from '../../components/admin/produk/ProductComponent';
+
 const AdminDashboard = () => {
     const { category } = useParams();
     let cat = Data.find((categ) => categ.url === parseInt(category));
@@ -85,14 +98,34 @@ const AdminDashboard = () => {
                     <Routes>
                         <Route path='main' element={<Main />} />
                         <Route path='marketing' element={<Marketing />} />
-                        <Route path='berita/*' element={<PostRoutes />} />
+
+                        {/* <Route path='berita/*' element={<PostRoutes />} /> */}
+                        <Route path='berita' element={<BeritaList />} />
+
+
                         <Route path="lembaga" element={<LembagaCRUD />} />
                         {/* <Route path='lembaga' element={<LembagaList />} /> */}
+                        {/* <Route path="lembaga/*" element={<LembagaComponent />} /> */}
+
                         <Route path='belanja/*' element={<BelanjaRoutes />} />
-                        <Route path='kegiatan/*' element={<KegiatanRoutes />} />
+
+
+                        {/* <Route path='kegiatan/*' element={<KegiatanRoutes />} /> */}
+                        <Route path='kegiatan' element={<KegiatanList />} />
+
+                        {/* <Route path='produk' element={<ProductComponent/>} /> */}
                         <Route path='produk' element={<ProductList />} />
+
                         <Route path='keluarga' element={<WargaList />} />
+                        {/* <Route path='keluarga' element={<WargaPage />} />  */}
+{/* 
+                        <Route path='keluarga' element={<WargaPage />} />  */}
+
+
                         <Route path='pejabat' element={<PejabatList />} />
+
+                        {/* <Route path='pejabat' element={<PejabatPage />} /> */}
+
                         <Route path='profil' element={<ProfilKampung />} />
                         <Route path='realisasi-apbk' element = {<RealisasiAPBKCRUD/>}/>
                         <Route path='apbk' element = {<APBKCRUD/>}/>

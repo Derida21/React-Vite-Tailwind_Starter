@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import useAppContext from '../../context/useAppContext';
+import useAppContext from '../../../context/useAppContext';
 import EditComponent from './EditComponent';
-import AlertComponent from '../utils/AlertComponent';
-import ConfirmationDialog from '../utils/ConfirmationDialog';
+import AlertComponent from '../../utils/AlertComponent';
+import ConfirmationDialog from '../../utils/ConfirmationDialog';
 
-const PejabatList = () => {
+const BeritaList = () => {
   const { axiosInstance } = useAppContext();
-  const [pejabatList, setPejabatList] = useState([]);
+  const [activityList, setActivityList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [currentPejabatId, setCurrentPejabatId] = useState(null);
+  const [currentActivitySlug, setCurrentActivitySlug] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [currentPejabatName, setCurrentPejabatName] = useState('');
+  const [currentActivityTitle, setCurrentActivityTitle] = useState('');
 
   useEffect(() => {
-    fetchPejabat();
+    fetchActivities();
   }, [currentPage, searchQuery]);
 
-  const fetchPejabat = async () => {
+  const fetchActivities = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(`/pejabat?page=${currentPage}&search=${searchQuery}`);
+      const response = await axiosInstance.get(`/berita?page=${currentPage}&search=${searchQuery}`);
       if (response.data.success) {
-        setPejabatList(response.data.data || []);
+        setActivityList(response.data.data || []);
         setTotalPages(response.data.meta?.last_page || 1);
       } else {
         setError(response.data.message);
@@ -38,24 +38,24 @@ const PejabatList = () => {
     }
   };
 
-  const handleEdit = (id) => {
-    setCurrentPejabatId(id);
+  const handleEdit = (slug) => {
+    setCurrentActivitySlug(slug);
     setEditMode(true);
   };
 
   const handleAddNew = () => {
-    setCurrentPejabatId(null);
+    setCurrentActivitySlug(null);
     setEditMode(true);
   };
 
   const handleDelete = async () => {
-    if (!currentPejabatId) return;
+    if (!currentActivitySlug) return;
 
     try {
-      const response = await axiosInstance.delete(`/pejabat/${currentPejabatId}`);
+      const response = await axiosInstance.delete(`/berita/${currentActivitySlug}`);
       if (response.data.success) {
-        setPejabatList((prevList) => prevList.filter((item) => item.id !== currentPejabatId));
-        setError({ type: 'green', title: 'Success', message: 'Pejabat deleted successfully!' });
+        setActivityList((prevList) => prevList.filter((item) => item.slug !== currentActivitySlug));
+        setError({ type: 'green', title: 'Success', message: 'Activity deleted successfully!' });
       } else {
         setError({ type: 'red', title: 'Error', message: response.data.message });
       }
@@ -66,9 +66,9 @@ const PejabatList = () => {
     }
   };
 
-  const confirmDelete = (id, name) => {
-    setCurrentPejabatId(id);
-    setCurrentPejabatName(name);
+  const confirmDelete = (slug, title) => {
+    setCurrentActivitySlug(slug);
+    setCurrentActivityTitle(title);
     setShowConfirmDialog(true);
   };
 
@@ -90,65 +90,64 @@ const PejabatList = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-screen">
       {!editMode && (
         <div className="mb-4 mt-10">
           <div className="container mx-auto">
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
               <div className="px-6 py-6 bg-white">
                 <div className="pb-4 mb-4 border-b-2 border-gray-200">
-                  <div className="flex items-center justify-between min-h-10">
-                    <div>
-                      <h1 className="text-lg font-semibold text-secondary">Pejabat</h1>
+                  <div className="flex items-center justify-between min-h-100">
+                    <div className="flex items-center">
                       <button
-                        className="bg-teal-500 text-white px-4 py-2 mt-5 rounded-md"
                         onClick={handleAddNew}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-semibold"
                       >
-                        Tambahkan Data
+                        Tambahkan Berita Baru
                       </button>
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        placeholder="Cari Berdasarkan Nama"
+                        className="block ml-4 p-2 text-sm placeholder-gray-400 border-2 border-gray-300 rounded-md shadow-sm appearance-none focus:border-primary focus:outline-none focus:ring-primary"
+                      />
                     </div>
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={handleSearch}
-                      placeholder="Cari berdasarkan Nama"
-                      className="block mt-11 p-2 text-sm placeholder-gray-400 border-2 border-gray-300 rounded-md shadow-sm appearance-none focus:border-primary focus:outline-none focus:ring-primary w-1/4"
-                    />
                   </div>
                 </div>
               </div>
               <div className="overflow-x-auto px-6 pb-6">
                 {loading ? (
                   <div className="text-center">Loading...</div>
-                ) : pejabatList.length === 0 ? (
-                  <div className="text-center">No pejabat available</div>
+                ) : activityList.length === 0 ? (
+                  <div className="text-center">No activities available</div>
                 ) : (
                   <table className="min-w-full bg-white border border-gray-200">
                     <thead>
                       <tr>
-                        <th className="py-2 px-4 border-b text-left">Photo</th>
-                        <th className="py-2 px-4 border-b text-left">Name</th>
-                        <th className="py-2 px-4 border-b text-left">Position</th>
+                        <th className="py-2 px-4 border-b text-left">Thumbnail</th>
+                        <th className="py-2 px-4 border-b text-left">Judul</th>
+                        <th className="py-2 px-4 border-b text-left">Tanggal</th>
                         <th className="py-2 px-4 border-b text-left">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {pejabatList.map((pejabat) => (
-                        <tr key={pejabat.id}>
+                      {activityList.map((activity) => (
+                        <tr key={activity.slug}>
                           <td className="py-2 px-4 border-b">
                             <img
-                              src={pejabat.foto || 'default-photo-url'}
-                              alt={pejabat.nama}
+                              src={activity.thumbnail || 'default-thumbnail-url'}
+                              alt={activity.judul}
                               className="w-20 h-20 object-cover rounded"
                             />
                           </td>
-                          <td className="py-2 px-4 border-b">{pejabat.nama}</td>
-                          <td className="py-2 px-4 border-b">{pejabat.jabatan}</td>
+                          <td className="py-2 px-4 border-b">{activity.judul}</td>
+                          <td className="py-2 px-4 border-b">{activity.tanggal}</td>
                           <td className="py-2 px-4 border-b">
                             <div className="flex space-x-2">
                               <button
                                 className="text-teal-500 font-body"
-                                onClick={() => handleEdit(pejabat.id)}
+                                onClick={() => handleEdit(activity.slug)}
                               >
                                 <svg
                                   className="w-5 h-5"
@@ -167,7 +166,7 @@ const PejabatList = () => {
                               </button>
                               <button
                                 className="text-red-500 font-body"
-                                onClick={() => confirmDelete(pejabat.id, pejabat.nama)}
+                                onClick={() => confirmDelete(activity.slug, activity.judul)}
                               >
                                 <svg
                                   className="w-5 h-5"
@@ -194,50 +193,50 @@ const PejabatList = () => {
               </div>
             </div>
             <div className="flex justify-center items-center mt-4 mb-4">
-              {/* <button
+              <button
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
                 className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                Previous
+                 &lt;
               </button>
-              <span className="text-sm text-gray-700 mx-4">Page {currentPage} of {totalPages}</span>
+              <span className="text-sm text-gray-700 mx-4">Halaman {currentPage} dari {totalPages}</span>
               <button
                 onClick={goToNextPage}
                 disabled={currentPage === totalPages}
                 className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                Next
-              </button> */}
+                &gt;
+              </button>
             </div>
           </div>
         </div>
       )}
       {editMode && (
         <EditComponent
-          id={currentPejabatId}
+          slug={currentActivitySlug}
           setEditMode={setEditMode}
-          fetchData={fetchPejabat}
+          fetchData={fetchActivities}
         />
       )}
       {error && (
         <AlertComponent
-          type={error.type || 'red'}
-          title={error.title || 'Error'}
-          message={error.message || 'Something went wrong!'}
-          onClose={() => setError(null)}
-        />
-      )}
-      {showConfirmDialog && (
-        <ConfirmationDialog
-          isOpen={showConfirmDialog}
-          itemName={currentPejabatName}
-          onConfirm={handleDelete}
-          onCancel={() => setShowConfirmDialog(false)}
-        />
-      )}
-    </div>
+        type={error.type || 'red'}
+        title={error.title || 'Error'}
+        message={error.message || 'Something went wrong!'}
+        onClose={() => setError(null)}
+      />
+    )}
+    {showConfirmDialog && (
+      <ConfirmationDialog
+        isOpen={showConfirmDialog}
+        itemName={currentActivityTitle}
+        onConfirm={handleDelete}
+        onCancel={() => setShowConfirmDialog(false)}
+      />
+    )}
+  </div>
   );
-};
-
-export default PejabatList;
+  };
+  
+  export default BeritaList;
